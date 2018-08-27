@@ -1,9 +1,11 @@
 # -*- ruby -*-
 
 package_name = "lua-web-driver"
-module_name = "web-driver"
+module_name = "web_driver"
+base_name = "web-driver"
 
-/^#{module_name}\.VERSION = "(.+?)"/ =~ File.read("#{module_name}.lua")
+version_pattern = /^#{Regexp.escape(module_name)}\.VERSION = "(.+?)"/
+version_pattern =~ File.read("#{base_name}.lua")
 version = $1
 
 desc "Tag for #{version}"
@@ -51,17 +53,18 @@ namespace :version do
       raise "Specify new version as VERSION environment variable value"
     end
 
-    luacs_lua_content = File.read("#{module_name}.lua").gsub(/#{module_name}\.VERSION = ".+?"/) do
+    lua_content = File.read("#{base_name}.lua").gsub(version_pattern) do
       "#{module_name}.VERSION = \"#{new_version}\""
     end
-    File.open("#{module_name}.lua", "w") do |luacs_lua|
-      luacs_lua.print(luacs_lua_content)
+    File.open("#{base_name}.lua", "w") do |lua|
+      lua.print(lua_content)
     end
 
-    rockspec_content = File.read("luacs.rockspec").gsub(/package_version = ".+?"/) do
+    rockspec_content = File.read("#{package_name}.rockspec")
+    rockspec_content = rockspec_content.gsub(/package_version = ".+?"/) do
       "package_version = \"#{new_version}\""
     end
-    File.open("luacs.rockspec", "w") do |rockspec|
+    File.open("#{package_name}.rockspec", "w") do |rockspec|
       rockspec.print(rockspec_content)
     end
   end
