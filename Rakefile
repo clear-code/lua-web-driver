@@ -1,7 +1,7 @@
 # -*- ruby -*-
 
 package_name = "lua-web-driver"
-module_name = "webdriver"
+module_name = "web-driver"
 
 /^#{module_name}\.VERSION = "(.+?)"/ =~ File.read("#{module_name}.lua")
 version = $1
