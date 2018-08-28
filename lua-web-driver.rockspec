@@ -13,9 +13,12 @@ description = {
   homepage = "https://gitlab.com/clear-code/lua-web-driver",
   license = "MIT"
   -- Since 3.0
-  -- labels = {"css"},
+  -- labels = {"webdriver"},
 }
-dependencies = {}
+dependencies = {
+  "lua-requests",
+  "process"
+}
 build = {
   type = "builtin",
   modules = {},
