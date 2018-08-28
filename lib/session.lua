@@ -55,6 +55,26 @@ function methods:title()
   return response.json()["value"]
 end
 
+function methods:window_handle()
+  local response = requests.get(self:endpoint("window"))
+  return response.json()["value"]
+end
+
+function methods:close_window()
+  local response = requests.delete(self:endpoint("window"))
+  return response
+end
+
+function methods:switch_to_window(handle)
+  local response = requests.post(self:endpoint("window"), { data = { handle = handle } })
+  return response
+end
+
+function methods:window_handles()
+  local response = requests.get(self:endpoint("window/handles"))
+  return response.json()["value"]
+end
+
 function methods:endpoint(template)
   return self.base_url.."/"..template
 end
