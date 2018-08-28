@@ -87,6 +87,32 @@ function methods:switch_to_parent_frame()
   return response
 end
 
+function methods:window_rect()
+  local response = requests.get(self:endpoint("window/rect"))
+  return response.json()["value"]
+end
+
+-- rect = { height = h, width = w, x = position_x, y = position_y }
+function methods:set_window_rect(rect)
+  local response = requests.post(self:endpoint("window/rect"), { data = rect })
+  return response
+end
+
+function methods:window_maximize()
+  local response = requests.post(self:endpoint("window/maximize"), { data = {} })
+  return response
+end
+
+function methods:window_minimize()
+  local response = requests.post(self:endpoint("window/minimize"), { data = {} })
+  return response
+end
+
+function methods:window_fullscreen()
+  local response = requests.post(self:endpoint("window/fullscreen"), { data = {} })
+  return response
+end
+
 function methods:endpoint(template)
   return self.base_url.."/"..template
 end
