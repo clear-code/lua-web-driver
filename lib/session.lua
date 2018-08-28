@@ -1,5 +1,6 @@
 local requests = require "requests"
 
+-- https://www.w3.org/TR/webdriver1/
 local Session = {}
 
 local methods = {}
