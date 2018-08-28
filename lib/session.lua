@@ -14,6 +14,16 @@ function methods:destroy()
   requests.delete(self.base_url)
 end
 
+function methods:timeouts()
+  local response = requests.get(self:endpoint("timeouts"))
+  return response.json()["value"]
+end
+
+function methods:set_timeouts(timeouts)
+  local response = requests.post(self:endpoint("timeouts"), { data = timeouts })
+  return response
+end
+
 function methods:visit(url)
   local response = requests.post(self:endpoint("url"), { data = { url = url } })
   return response
