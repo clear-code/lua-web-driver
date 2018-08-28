@@ -21,7 +21,8 @@ end
 
 function methods:url()
   local response = requests.get(self:endpoint("url"))
-  return response.json()["url"]
+  return response.json()["value"]
+end
 end
 
 function methods:endpoint(template)
