@@ -35,6 +35,21 @@ function methods:url()
   return response.json()["value"]
 end
 
+function methods:back()
+  local response = requests.post(self:endpoint("back"), { data = {}})
+  return response
+end
+
+function methods:forward()
+  local response = requests.post(self:endpoint("forward"), { data = {}})
+  return response
+end
+
+function methods:refresh()
+  local response = requests.post(self:endpoint("refresh"), { data = {}})
+  return response
+end
+
 function methods:title()
   local response = requests.get(self:endpoint("title"))
   return response.json()["value"]
