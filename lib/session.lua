@@ -255,6 +255,17 @@ function methods:delete_cookies()
   return response
 end
 
+function methods:perform_actions(actions)
+  local endpoint = self:endpoint("actions")
+  local response = requests.post(endpoint, { data = { actions = actions } })
+  return response
+end
+
+function methods:release_actions()
+  local endpoint = self:endpoint("actions")
+  local response = requests.delete(endpoint)
+  return response
+end
 
 function methods:endpoint(template, params)
   local path, _ = template:gsub("%:([%w_]+)", params or {})
