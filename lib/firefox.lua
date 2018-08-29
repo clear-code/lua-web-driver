@@ -23,12 +23,22 @@ local DEFAULT_CAPABILITIES = {
   }
 }
 
-function methods:start()
+function methods:start(callback)
   local args = {
     "--port",
     DEFAULT_PORT
   }
   self.child_process = process.exec("geckodriver", args)
+  if not self:wait_for_ready() then
+    error("Timeout: geckodriver may not be running")
+  end
+  if callback then
+    local _, err = pcall(self:start_session, self.capabilities, callback)
+    self:stop()
+    if err then
+      error(err)
+    end
+  end
 end
 
 function methods:status()
@@ -37,11 +47,21 @@ function methods:status()
     success, response = pcall(requests.get, self.base_url.."status")
     process.nsleep(1000)
   until success
-  return response.json()
+  return response.json()["value"]
 end
 
 function methods:is_ready()
-  return self:status()["value"]["ready"]
+  return self:status()["ready"]
+end
+
+function method:wait_for_ready()
+  for _ = 1, 10 do
+    if self:is_ready() then
+      return true
+    end
+    process.nsleep(1000)
+  end
+  return false
 end
 
 function methods:stop()
