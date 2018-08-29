@@ -53,8 +53,11 @@ function methods:start_session(capabilities, callback)
   local session_id = response.json()["value"]["sessionId"]
   local session = Session.new(self.base_url, session_id)
   if callback then
-    callback(session)
+    local _, err = pcall(callback, session)
     session:destroy()
+    if err then
+      error(err)
+    end
   else
     return session
   end
