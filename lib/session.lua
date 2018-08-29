@@ -225,6 +225,37 @@ function methods:execute_script_async(script, args)
   return response
 end
 
+function methods:cookies()
+  local endpoint = self:endpoint("cookie")
+  local response = requests.get(endpoint)
+  return response.json()["value"]
+end
+
+function methods:cookie(name)
+  local endpoint = self:endpoint("cookie/:name", { name = name })
+  local response = requests.get(endpoint)
+  return response.json()["value"]
+end
+
+function methods:add_cookie(cookie)
+  local endpoint = self:endpoint("cookie")
+  local response = requests.post(endpoint, { data = { cookie = cookie } })
+  return response
+end
+
+function methods:delete_cookie(name)
+  local endpoint = self:endpoint("cookie/:name", { name = name })
+  local response = requests.delete(endpoint)
+  return response
+end
+
+function methods:delete_cookies()
+  local endpoint = self:endpoint("cookie")
+  local response = requests.delete(endpoint)
+  return response
+end
+
+
 function methods:endpoint(template, params)
   local path, _ = template:gsub("%:([%w_]+)", params or {})
   return self.base_url.."/"..path
