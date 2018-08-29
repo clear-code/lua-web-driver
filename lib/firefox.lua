@@ -54,7 +54,7 @@ function methods:is_ready()
   return self:status()["ready"]
 end
 
-function method:wait_for_ready()
+function methods:wait_for_ready()
   for _ = 1, 10 do
     if self:is_ready() then
       return true
