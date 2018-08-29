@@ -143,13 +143,13 @@ end
 function methods:is_element_selected(element_id)
   local endpoint = self:endpoint("element/:element_id/selected", { element_id = element_id })
   local response = requests.get(self:endpoint("element/"..element_id.."/selected"))
-  return response.json["value"]
+  return response.json()["value"]
 end
 
 function methods:element_attribute(element_id, name)
   local endpoint = self:endpoint("element/:element_id/attribute/:name", { element_id = element_id, name = name })
   local response = requests.get(endpoint)
-  return response
+  return response.json()["value"]
 end
 
 function methods:source()
