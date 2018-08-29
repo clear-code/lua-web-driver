@@ -113,8 +113,48 @@ function methods:window_fullscreen()
   return response
 end
 
-function methods:endpoint(template)
-  return self.base_url.."/"..template
+function methods:element_active()
+  local response = requests.get(self:endpoint("element/active"))
+  return response["value"]
+end
+
+function methods:element(strategy, finder)
+  local response = requests.post(self:endpoint("element"), { data = { using = strategy, value = finder } })
+  return response.json()["value"]
+end
+
+function methods:elements(strategy, finder)
+  local response = requests.post(self:endpoint("elements"), { data = { using = strategy, value = finder } })
+  return response.json()["value"]
+end
+
+function methods:element_from_element(element_id, strategy, finder)
+  local endpoint = self:endpoint("element/:element_id/element", { element_id = element_id })
+  local response = requests.post(endpoint, { data = { using = strategy, value = finder } })
+  return response.json()["value"]
+end
+
+function methods:elements_from_element(element_id, strategy, finder)
+  local endpoint = self:endpoint("element/:element_id/elements", { element_id = element_id })
+  local response = requests.post(endpoint, { data = { using = strategy, value = finder } })
+  return response.json()["value"]
+end
+
+function methods:is_element_selected(element_id)
+  local endpoint = self:endpoint("element/:element_id/selected", { element_id = element_id })
+  local response = requests.get(self:endpoint("element/"..element_id.."/selected"))
+  return response.json["value"]
+end
+
+function methods:element_attribute(element_id, name)
+  local endpoint = self:endpoint("element/:element_id/attribute/:name", { element_id = element_id, name = name })
+  local response = requests.get(endpoint)
+  return response
+end
+
+function methods:endpoint(template, params)
+  local path, _ = template:gsub("%:([%w_]+)", params or {})
+  return self.base_url.."/"..path
 end
 
 function Session.new(base_url, session_id)
