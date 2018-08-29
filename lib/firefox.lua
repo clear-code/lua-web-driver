@@ -33,7 +33,7 @@ function methods:start(callback)
     error("Timeout: geckodriver may not be running")
   end
   if callback then
-    local _, err = pcall(self:start_session, self.capabilities, callback)
+    local _, err = pcall(self.start_session, self, self.capabilities, callback)
     self:stop()
     if err then
       error(err)
