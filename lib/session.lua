@@ -200,6 +200,12 @@ function methods:element_clear(element_id)
   return response
 end
 
+function methods:element_send_keys(element_id)
+  local endpoint = self:endpoint("element/:element_id/value", { element_id = element_id })
+  local response = requests.post(endpoint, data = {})
+  return response
+end
+
 function methods:source()
   local response = requests.get(self:endpoint("source"))
   return response.json()["value"]
