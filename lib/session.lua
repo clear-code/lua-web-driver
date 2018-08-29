@@ -267,6 +267,27 @@ function methods:release_actions()
   return response
 end
 
+function methods:dismiss_alert()
+  local response = requests.post(self:endpoint("alert/dismiss"))
+  return response
+end
+
+function methods:accept_alert()
+  local response = requests.post(self:endpoint("alert/accept"))
+  return response
+end
+
+function methods:alert_text()
+  local response = requests.get(self:endpoint("alert/text"))
+  return response.json()["value"]
+end
+
+function methods:set_alert_text(text)
+  local endpoint = self:endpoint("alert/text")
+  local response = requests.get(endpoint, { data = { text = text } })
+  return response
+end
+
 function methods:endpoint(template, params)
   local path, _ = template:gsub("%:([%w_]+)", params or {})
   return self.base_url.."/"..path
