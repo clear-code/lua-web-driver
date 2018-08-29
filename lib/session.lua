@@ -288,6 +288,17 @@ function methods:set_alert_text(text)
   return response
 end
 
+function methods:screenshot()
+  local response = requests.get(self:endpoint("screenshot"))
+  return response.json()["value"]
+end
+
+function methods:element_screenshot(element_id)
+  local endpoint = self:endpoint("element/:element_id/screenshot", { element_id = element_id })
+  local response = requests.get(endpoint)
+  return response.json()["value"]
+end
+
 function methods:endpoint(template, params)
   local path, _ = template:gsub("%:([%w_]+)", params or {})
   return self.base_url.."/"..path
