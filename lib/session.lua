@@ -211,6 +211,20 @@ function methods:source()
   return response.json()["value"]
 end
 
+function methods:execute_script(script, args)
+  local endpoint = self:endpoint("execute/sync")
+  local response = requests.post(endpoint, { data = { script = script, args = (args or {1}) } })
+  -- TODO check status code
+  return response
+end
+
+function methods:execute_script_async(script, args)
+  local endpoint = self:endpoint("execute/async")
+  local response = requests.post(endpoint, { data = { script = script, args = (args or {1}) } })
+  -- TODO check status code
+  return response
+end
+
 function methods:endpoint(template, params)
   local path, _ = template:gsub("%:([%w_]+)", params or {})
   return self.base_url.."/"..path
