@@ -190,19 +190,19 @@ end
 
 function methods:element_click(element_id)
   local endpoint = self:endpoint("element/:element_id/click", { element_id = element_id })
-  local response = requests.post(endpoint, data = {})
+  local response = requests.post(endpoint, { data = {} })
   return response
 end
 
 function methods:element_clear(element_id)
   local endpoint = self:endpoint("element/:element_id/clear", { element_id = element_id })
-  local response = requests.post(endpoint, data = {})
+  local response = requests.post(endpoint, { data = {} })
   return response
 end
 
 function methods:element_send_keys(element_id)
   local endpoint = self:endpoint("element/:element_id/value", { element_id = element_id })
-  local response = requests.post(endpoint, data = {})
+  local response = requests.post(endpoint, { data = {} })
   return response
 end
 
