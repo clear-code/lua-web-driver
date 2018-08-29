@@ -15,6 +15,13 @@ end
 
 local DEFAULT_HOST = "localhost"
 local DEFAULT_PORT = "4444"
+local DEFAULT_CAPABILITIES = {
+  capabilities = {
+    alwaysMatch = {
+      acceptInsecureCerts = true
+    }
+  }
+}
 
 function methods:start()
   local args = {
@@ -60,10 +67,12 @@ end
 function FirefoxDriver.new(options)
   local host = options.host or DEFAULT_HOST
   local port = options.port or DEFAULT_PORT
+  local capabilities = options.capabilities or DEFAULT_CAPABILITIES
   local base_url = "http://"..host..":"..port.."/"
   local firefox_driver = {
     options = options,
-    base_url = base_url
+    base_url = base_url,
+    capabilities = capabilities
   }
   setmetatable(firefox_driver, metatable)
   return firefox_driver
