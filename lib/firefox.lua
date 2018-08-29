@@ -23,6 +23,10 @@ local DEFAULT_CAPABILITIES = {
   }
 }
 
+function methods:browser()
+  return "firefox"
+end
+
 function methods:start(callback)
   local args = {
     "--port",
