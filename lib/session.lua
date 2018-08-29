@@ -152,6 +152,11 @@ function methods:element_attribute(element_id, name)
   return response
 end
 
+function methods:source()
+  local response = requests.get(self:endpoint("source"))
+  return response.json()["value"]
+end
+
 function methods:endpoint(template, params)
   local path, _ = template:gsub("%:([%w_]+)", params or {})
   return self.base_url.."/"..path
