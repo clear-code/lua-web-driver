@@ -152,6 +152,54 @@ function methods:element_attribute(element_id, name)
   return response.json()["value"]
 end
 
+function methods:element_property(element_id, name)
+  local endpoint = self:endpoint("element/:element_id/property/:name", { element_id = element_id, name = name })
+  local response = requests.get(endpoint)
+  return response.json()["value"]
+end
+
+function methods:element_css(element_id, name)
+  local endpoint = self:endpoint("element/:element_id/css/:name", { element_id = element_id, name = name })
+  local response = requests.get(endpoint)
+  return response.json()["value"]
+end
+
+function methods:element_text(element_id)
+  local endpoint = self:endpoint("element/:element_id/text", { element_id = element_id })
+  local response = requests.get(endpoint)
+  return response.json()["value"]
+end
+
+function methods:element_tag(element_id)
+  local endpoint = self:endpoint("element/:element_id/name", { element_id = element_id })
+  local response = requests.get(endpoint)
+  return response.json()["value"]
+end
+
+function methods:element_rect(element_id)
+  local endpoint = self:endpoint("element/:element_id/rect", { element_id = element_id })
+  local response = requests.get(endpoint)
+  return response.json()["value"]
+end
+
+function methods:is_element_enabled(element_id)
+  local endpoint = self:endpoint("element/:element_id/enabled", { element_id = element_id })
+  local response = requests.get(endpoint)
+  return response.json()["value"]
+end
+
+function methods:element_click(element_id)
+  local endpoint = self:endpoint("element/:element_id/click", { element_id = element_id })
+  local response = requests.post(endpoint, data = {})
+  return response
+end
+
+function methods:element_clear(element_id)
+  local endpoint = self:endpoint("element/:element_id/clear", { element_id = element_id })
+  local response = requests.post(endpoint, data = {})
+  return response
+end
+
 function methods:source()
   local response = requests.get(self:endpoint("source"))
   return response.json()["value"]
