@@ -47,11 +47,14 @@ end
 
 function methods:status()
   local success, response
-  repeat
+  for _ = 1, 10 do
     success, response = pcall(requests.get, self.base_url.."status")
-    process.nsleep(1000)
-  until success
-  return response.json()["value"]
+    process.nsleep(10000)
+    if success then
+      return response.json()["value"]
+    end
+  end
+  return { ready = false, message = "Timeout: geckodriver may not be running" }
 end
 
 function methods:is_ready()
@@ -63,7 +66,7 @@ function methods:wait_for_ready()
     if self:is_ready() then
       return true
     end
-    process.nsleep(1000)
+    process.nsleep(10000)
   end
   return false
 end
