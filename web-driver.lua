@@ -8,8 +8,7 @@ web_driver.create = function(browser, options)
   if browser == "firefox" then
     return FirefoxDriver.new(options or {})
   else
-    -- unknown driver
-    exit(1)
+    error("Unknown browser: "..browser)
   end
 end
 
