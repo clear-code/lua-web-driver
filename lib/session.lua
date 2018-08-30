@@ -119,24 +119,34 @@ end
 
 function methods:element(strategy, finder)
   local response = requests.post(self:endpoint("element"), { data = { using = strategy, value = finder } })
-  return response.json()["value"]
+  local id = response.json()["value"]
+  return element_id_from(id)
 end
 
 function methods:elements(strategy, finder)
   local response = requests.post(self:endpoint("elements"), { data = { using = strategy, value = finder } })
-  return response.json()["value"]
+  local ids = {}
+  for i, id in ipairs(response.json()["value"]) do
+    ids[i] = element_id_from(id)
+  end
+  return ids
 end
 
 function methods:element_from_element(element_id, strategy, finder)
   local endpoint = self:endpoint("element/:element_id/element", { element_id = element_id })
   local response = requests.post(endpoint, { data = { using = strategy, value = finder } })
-  return response.json()["value"]
+  local id = response.json()["value"]
+  return element_id_from(id)
 end
 
 function methods:elements_from_element(element_id, strategy, finder)
   local endpoint = self:endpoint("element/:element_id/elements", { element_id = element_id })
   local response = requests.post(endpoint, { data = { using = strategy, value = finder } })
-  return response.json()["value"]
+  local ids = {}
+  for i, id in ipairs(response.json()["value"]) do
+    ids[i] = element_id_from(id)
+  end
+  return ids
 end
 
 function methods:is_element_selected(element_id)
@@ -301,6 +311,10 @@ end
 function methods:endpoint(template, params)
   local path, _ = template:gsub("%:([%w_]+)", params or {})
   return self.base_url.."/"..path
+end
+
+function element_id_from(id)
+  return id["ELEMENT"] or id["element-6066-11e4-a52e-4f735466cecf"]
 end
 
 function Session.new(base_url, session_id)
