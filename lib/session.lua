@@ -223,15 +223,23 @@ end
 function methods:execute_script(script, args)
   local endpoint = self:endpoint("execute/sync")
   local response = requests.post(endpoint, { data = { script = script, args = (args or {1}) } })
-  -- TODO check status code
-  return response
+  if response.status_code == 200 then
+    return response.json()["value"]
+  else
+    local value = response.json()["value"]
+    error(value["error"]..": "..value["message"])
+  end
 end
 
 function methods:execute_script_async(script, args)
   local endpoint = self:endpoint("execute/async")
   local response = requests.post(endpoint, { data = { script = script, args = (args or {1}) } })
-  -- TODO check status code
-  return response
+  if response.status_code == 200 then
+    return response.json()["value"]
+  else
+    local value = response.json()["value"]
+    error(value["error"]..": "..value["message"])
+  end
 end
 
 function methods:cookies()
