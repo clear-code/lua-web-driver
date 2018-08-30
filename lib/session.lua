@@ -75,13 +75,12 @@ function methods:window_handles()
   return response.json()["value"]
 end
 
--- TODO
+-- Support iframe only
 function methods:switch_to_frame(id)
   local response = requests.post(self:endpoint("frame"), { data = { id = id } })
   return response
 end
 
--- TODO
 function methods:switch_to_parent_frame()
   local response = requests.post(self:endpoint("frame/parent"), { data = {} })
   return response
