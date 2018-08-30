@@ -287,12 +287,12 @@ function methods:release_actions()
 end
 
 function methods:dismiss_alert()
-  local response = requests.post(self:endpoint("alert/dismiss"))
+  local response = requests.post(self:endpoint("alert/dismiss"), { data = {} })
   return response
 end
 
 function methods:accept_alert()
-  local response = requests.post(self:endpoint("alert/accept"))
+  local response = requests.post(self:endpoint("alert/accept"), { data = {} })
   return response
 end
 
