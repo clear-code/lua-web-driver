@@ -274,12 +274,14 @@ function methods:delete_cookies()
   return response
 end
 
+-- TODO
 function methods:perform_actions(actions)
   local endpoint = self:endpoint("actions")
   local response = requests.post(endpoint, { data = { actions = actions } })
   return response
 end
 
+-- TODO
 function methods:release_actions()
   local endpoint = self:endpoint("actions")
   local response = requests.delete(endpoint)
