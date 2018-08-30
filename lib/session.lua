@@ -209,6 +209,7 @@ function methods:element_clear(element_id)
   return response
 end
 
+-- TODO
 function methods:element_send_keys(element_id)
   local endpoint = self:endpoint("element/:element_id/value", { element_id = element_id })
   local response = requests.post(endpoint, { data = {} })
@@ -231,6 +232,7 @@ function methods:execute_script(script, args)
   end
 end
 
+-- TODO
 function methods:execute_script_async(script, args)
   local endpoint = self:endpoint("execute/async")
   local response = requests.post(endpoint, { data = { script = script, args = (args or {1}) } })
