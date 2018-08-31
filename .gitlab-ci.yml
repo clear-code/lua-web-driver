@@ -20,4 +20,4 @@ test-centos7:
     - luarocks install luaunit
     - luarocks install inspect
   script:
-    - luajit test/run-test.lua -v -p test_firefox
+    - luajit test/run-test.lua -v
