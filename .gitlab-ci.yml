@@ -1,10 +1,16 @@
+stages:
+  - test
+
 test-centos7:
   image: centos:7
+  stage: test
   before_script:
-    - echo before_script
-    - pwd
-    - env
+    - yum install -y epel-release
+    - yum install -y gcc git lua-devel luajit luajit-devel luarocks make m4 openssl-devel
+    - luarocks install lua-requests
+    - luarocks install process
+    - luarocks install lbase64
+    - luarocks install luaunit
+    - luarocks install inspect
   script:
-    - echo script
-    - pwd
-    - env
+    - luajit test/run-test.lua -v -p test_firefox
