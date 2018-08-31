@@ -1,0 +1,10 @@
+test-centos7:
+  image: centos:7
+  before_script:
+    - echo before_script
+    - pwd
+    - env
+  script:
+    - echo script
+    - pwd
+    - env
