@@ -5,8 +5,8 @@ test-centos7:
   image: centos:7
   stage: test
   before_script:
-    - yum install -y epel-release
-    - yum install -y gcc gcc-c++ git lua-devel luajit luajit-devel luarocks make m4 openssl-devel
+    - yum install -q -y epel-release
+    - yum install -q -y gcc gcc-c++ git lua-devel luajit luajit-devel luarocks make m4 openssl-devel
     - luarocks install lua-requests
     - luarocks install process
     - luarocks install lbase64
