@@ -21,7 +21,7 @@ end
 
 function TestFirefoxDriver:test_default_options()
   local driver = FirefoxDriver.new({})
-  luaunit.assert_equals(driver.base_url, "http://localhost:4444/")
+  luaunit.assert_equals(driver.bridge.base_url, "http://localhost:4444/")
 end
 
 function TestFirefoxDriver:test_wait_for_ready()
