@@ -1,12 +1,19 @@
 stages:
   - test
 
+variables:
+  GECKODRIVER_VERSION: "0.21.0"
+  DISPLAY: ":99.0"
+
 test-centos7:
   image: centos:7
   stage: test
   before_script:
     - yum install -q -y epel-release
-    - yum install -q -y gcc gcc-c++ git lua-devel luajit luajit-devel luarocks make m4 openssl-devel
+    - yum install -q -y gcc gcc-c++ git lua-devel luajit luajit-devel luarocks make m4 openssl-devel firefox
+    - curl -O https://github.com/mozilla/geckodriver/releases/download/v${GECKODRIVER_VERSION}/geckodriver-v${GECKODRIVER_VERSION}-linux64.tar.gz
+    - tar xf geckodriver-v${GECKODRIVER_VERSION}-linux64.tar.gz -C /usr/local/bin
+    - chmod +x /usr/local/bin/geckodriver
     - luarocks install lua-requests
     - luarocks install process
     - luarocks install lbase64
