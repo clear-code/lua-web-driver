@@ -140,6 +140,10 @@ function methods:source()
   return response.json()["value"]
 end
 
+function methods:xml()
+  return self:execute_script("return new XMLSerializer().serializeToString(document)")
+end
+
 function methods:execute_script(script, args)
   local response = self.bridge:execute_script(self.session_id, script, args)
   return response.json()["value"]

@@ -175,6 +175,38 @@ function TestSession:test_source()
   self.driver:start_session(nil, callback)
 end
 
+function TestSession:test_xml()
+  local callback = function(session)
+    session:visit("http://localhost:10080/index.html")
+    local expected = [[<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <style type="text/css" media="screen">
+      body { color: black; }
+      #p1 { color: red; }
+    </style>
+    <title>This is test html</title>
+  </head>
+  <body>
+    <p id="p1">Hello 1</p>
+    <p id="p2">Hello 2</p>
+    <p id="p3">Hello 3</p>
+    <input id="name" name="name" type="text" />
+    <label>
+      <input checked="checked" name="cheese" disabled="disabled" type="checkbox" />
+      Cheese
+    </label>
+    <label>
+      <input name="wine" type="checkbox" />
+      Wine
+    </label>
+  
+
+</body></html>]]
+    luaunit.assert_equals(session:xml(), expected)
+  end
+  self.driver:start_session(nil, callback)
+end
+
 function TestSession:test_execute_script()
   local callback = function(session)
     session:visit("http://localhost:10080/index.html")
