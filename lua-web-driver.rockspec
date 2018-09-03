@@ -16,6 +16,8 @@ description = {
   -- labels = {"webdriver"},
 }
 dependencies = {
+  "lbase64",
+  "inspect",
   "lua-requests",
   "process"
 }
