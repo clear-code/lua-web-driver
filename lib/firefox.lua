@@ -2,6 +2,7 @@ local process = require "process"
 
 local Bridge = require "lib/bridge"
 local Session = require "lib/session"
+local util = require("lib/util")
 
 local FirefoxDriver = {}
 
@@ -13,7 +14,7 @@ function metatable.__index(driver, key)
   return methods[key]
 end
 
-local DEFAULT_HOST = "localhost"
+local DEFAULT_HOST = "127.0.0.1"
 local DEFAULT_PORT = "4444"
 local DEFAULT_CAPABILITIES = {
   capabilities = {
@@ -29,8 +30,8 @@ end
 
 function methods:start(callback)
   local args = {
-    "--port",
-    DEFAULT_PORT
+    "--host", self.bridge.host,
+    "--port", self.bridge.port
   }
   self.child_process = process.exec("geckodriver", args)
   if not self:wait_for_ready() then
