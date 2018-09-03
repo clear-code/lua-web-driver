@@ -1,3 +1,4 @@
+local util = require "lib/util"
 local Element = {}
 
 local methods = {}
@@ -7,21 +8,17 @@ function metatable.__index(element, key)
   return methods[key]
 end
 
-function element_id_from(id)
-  return id["ELEMENT"] or id["element-6066-11e4-a52e-4f735466cecf"]
-end
-
 function methods:find_child_element(strategy, finder)
   local response = self.bridge:find_child_element(self.session_id, self.element_id, strategy, finder)
   local id = response.json()["value"]
-  return Element.new(self, element_id_from(id))
+  return Element.new(self, util.element_id_from(id))
 end
 
 function methods:find_child_elements(strategy, finder)
   local response = self.bridge:find_child_elements(self.session_id, self.element_id, strategy, finder)
   local elements = {}
   for i, id in ipairs(response.json()["value"]) do
-    elements[i] = Element.new(self, element_id_from(id))
+    elements[i] = Element.new(self, util.element_id_from(id))
   end
   return elements
 end

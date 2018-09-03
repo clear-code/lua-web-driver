@@ -1,15 +1,11 @@
 local Element = require("lib/element")
+local util = require("lib/util")
+
 -- https://www.w3.org/TR/webdriver1/
 local Session = {}
 
 local methods = {}
 local metatable = {}
-
-local inspect = require("inspect")
-
-function p(root, options)
-  print(inspect.inspect(root, options))
-end
 
 function metatable.__index(session, key)
   -- driver is a Session instance
@@ -120,14 +116,14 @@ end
 function methods:find_element(strategy, finder)
   local response = self.bridge:find_element(self.session_id, strategy, finder)
   local id = response.json()["value"]
-  return Element.new(self, element_id_from(id))
+  return Element.new(self, util.element_id_from(id))
 end
 
 function methods:find_elements(strategy, finder)
   local response = self.bridge:find_elements(self.session_id, strategy, finder)
   local elements = {}
   for i, id in ipairs(response.json()["value"]) do
-    elements[i] = Element.new(self, element_id_from(id))
+    elements[i] = Element.new(self, util.element_id_from(id))
   end
   return elements
 end
@@ -135,7 +131,7 @@ end
 function methods:get_active_element()
   local response = self.bridge:get_active_element(self.session_id)
   local id = response.json()["value"]
-  return Element.new(self, element_id_from(id))
+  return Element.new(self, util.element_id_from(id))
 end
 
 
@@ -220,10 +216,6 @@ end
 function methods:endpoint(template, params)
   local path, _ = template:gsub("%:([%w_]+)", params or {})
   return self.base_url.."/"..path
-end
-
-function element_id_from(id)
-  return id["ELEMENT"] or id["element-6066-11e4-a52e-4f735466cecf"]
 end
 
 function Session.new(driver, capabilities)
