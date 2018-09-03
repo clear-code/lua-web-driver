@@ -1,6 +1,6 @@
 local process = require "process"
-local requests = require "requests"
 
+local Bridge = require "lib/bridge"
 local Session = require "lib/session"
 
 local FirefoxDriver = {}
@@ -37,7 +37,7 @@ function methods:start(callback)
     error("Timeout: geckodriver may not be running")
   end
   if callback then
-    local _, err = pcall(self.start_session, self, self.capabilities, callback)
+    local _, err = pcall(callback, self)
     self:stop()
     if err then
       error(err)
@@ -48,8 +48,8 @@ end
 function methods:status()
   local success, response
   for _ = 1, 10 do
-    success, response = pcall(requests.get, self.base_url.."status")
-    process.nsleep(10000)
+    success, response = pcall(self.bridge.status, self.bridge)
+    process.nsleep(100000) -- 100 usec
     if success then
       return response.json()["value"]
     end
@@ -66,7 +66,7 @@ function methods:wait_for_ready()
     if self:is_ready() then
       return true
     end
-    process.nsleep(10000)
+    process.nsleep(100000) -- 100 usec
   end
   return false
 end
@@ -76,32 +76,20 @@ function methods:stop()
 end
 
 function methods:start_session(capabilities, callback)
-  local response = requests.post(self.base_url.."session", { data = capabilities })
-  local session_id = response.json()["value"]["sessionId"]
-  local session = Session.new(self.base_url, session_id)
   if callback then
-    local _, err = pcall(callback, session)
-    session:destroy()
-    if err then
-      error(err)
-    end
+    Session.start(self, capabilities, callback)
   else
-    return session
+    return Session.new(self, capabilities)
   end
-end
-
-function methods:stop_session(session_id)
-  requests.delete(self.base_url.."session/"..session_id)
 end
 
 function FirefoxDriver.new(options)
   local host = options.host or DEFAULT_HOST
   local port = options.port or DEFAULT_PORT
   local capabilities = options.capabilities or DEFAULT_CAPABILITIES
-  local base_url = "http://"..host..":"..port.."/"
   local firefox_driver = {
     options = options,
-    base_url = base_url,
+    bridge = Bridge.new(host, port),
     capabilities = capabilities
   }
   setmetatable(firefox_driver, metatable)
