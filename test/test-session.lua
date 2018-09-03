@@ -25,7 +25,7 @@ function TestSession:test_visit()
     luaunit.assert_equals(session:url(), "http://localhost:10080/index.html")
     luaunit.assert_equals(session:title(), "This is test html")
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_back_forward()
@@ -39,7 +39,7 @@ function TestSession:test_back_forward()
     session:forward()
     luaunit.assert_equals(session:url(), "http://localhost:10080/2.html")
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_refresh()
@@ -49,7 +49,7 @@ function TestSession:test_refresh()
     session:refresh()
     luaunit.assert_equals(session:url(), "http://localhost:10080/1.html")
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_window_handle()
@@ -59,7 +59,7 @@ function TestSession:test_window_handle()
     local response = session:switch_to_window(handle)
     luaunit.assert_equals(response.status_code, 200)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_window_handles()
@@ -68,7 +68,7 @@ function TestSession:test_window_handles()
     luaunit.assert_is_table(handles)
     luaunit.assert_equals(#handles, 1)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_frame()
@@ -85,7 +85,7 @@ function TestSession:test_frame()
     luaunit.assert_equals(element:get_text(), "parent")
     luaunit.assert_equals(session:title(), "This is parent frame")
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_window_rect()
@@ -96,7 +96,7 @@ function TestSession:test_window_rect()
     local expected = { height = 500, width = 500, x = 0, y = 0 }
     luaunit.assert_equals(rect, expected)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_window_fullscreen()
@@ -111,7 +111,7 @@ function TestSession:test_window_fullscreen()
     local actual = session:window_rect()
     luaunit.assert_equals(actual, expected)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_get_active_element()
@@ -119,7 +119,7 @@ function TestSession:test_get_active_element()
     session:visit("http://localhost:10080/index.html")
     luaunit.assert_not_nil(session:get_active_element())
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_find_element()
@@ -128,7 +128,7 @@ function TestSession:test_find_element()
     local element = session:find_element("css selector", "#p1")
     luaunit.assert_equals(element:get_text(), "Hello 1")
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_find_elements()
@@ -141,7 +141,7 @@ function TestSession:test_find_elements()
     end
     luaunit.assert_equals(actual, { "Hello 1", "Hello 2", "Hello 3" })
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_source()
@@ -172,7 +172,7 @@ function TestSession:test_source()
 </body></html>]]
     luaunit.assert_equals(session:source(), expected)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_xml()
@@ -204,7 +204,7 @@ function TestSession:test_xml()
 </body></html>]]
     luaunit.assert_equals(session:xml(), expected)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_execute_script()
@@ -214,7 +214,7 @@ function TestSession:test_execute_script()
     local response = session:execute_script(script)
     luaunit.assert_equals(response, 1)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_execute_script_with_error()
@@ -224,7 +224,7 @@ function TestSession:test_execute_script_with_error()
     luaunit.assert_error_msg_contains("javascript error: ReferenceError: x is not defined",
                                       session.execute_script, session, script)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_get_cookie()
@@ -233,7 +233,7 @@ function TestSession:test_get_cookie()
     luaunit.assert_equals(session:get_cookie("data1")["value"], "123")
     luaunit.assert_equals(session:get_cookie("data2")["value"], "456")
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_all_cookies()
@@ -242,7 +242,7 @@ function TestSession:test_all_cookies()
     local cookies = session:get_all_cookies()
     luaunit.assert_equals(#cookies, 2)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_add_cookie()
@@ -259,7 +259,7 @@ function TestSession:test_add_cookie()
     luaunit.assert_equals(#cookies, 3)
     luaunit.assert_equals(session:get_cookie("data3")["value"], "789")
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_delete_cookie()
@@ -271,7 +271,7 @@ function TestSession:test_delete_cookie()
     cookies = session:get_all_cookies()
     luaunit.assert_equals(#cookies, 1)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_accept_alert()
@@ -282,7 +282,7 @@ function TestSession:test_accept_alert()
     response = session:accept_alert()
     luaunit.assert_equals(response.status_code, 200)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_dismiss_alert()
@@ -293,7 +293,7 @@ function TestSession:test_dismiss_alert()
     response = session:dismiss_alert()
     luaunit.assert_equals(response.status_code, 200)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_accept_confirm()
@@ -305,7 +305,7 @@ function TestSession:test_accept_confirm()
     element = session:find_element("css selector", "#confirm")
     luaunit.assert_equals(element:get_text(), "Accept!")
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_dismiss_confirm()
@@ -317,7 +317,7 @@ function TestSession:test_dismiss_confirm()
     element = session:find_element("css selector", "#confirm")
     luaunit.assert_equals(element:get_text(), "Dismiss!")
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 local PNG_HEADER = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }
@@ -330,7 +330,7 @@ function TestSession:test_screenshot()
     local header = { binary:byte(0, 8) }
     luaunit.assert_equals(header, PNG_HEADER)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 
 function TestSession:test_element_screenshot()
@@ -342,6 +342,6 @@ function TestSession:test_element_screenshot()
     local header = { binary:byte(0, 8) }
     luaunit.assert_equals(header, PNG_HEADER)
   end
-  self.driver:start_session(nil, callback)
+  self.driver:start_session(callback)
 end
 

@@ -75,11 +75,11 @@ function methods:stop()
   self.child_process:kill()
 end
 
-function methods:start_session(capabilities, callback)
+function methods:start_session(callback)
   if callback then
-    Session.start(self, capabilities, callback)
+    Session.start(self, self.capabilities, callback)
   else
-    return Session.new(self, capabilities)
+    return Session.new(self, self.capabilities)
   end
 end
 
