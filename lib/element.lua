@@ -101,7 +101,10 @@ end
 function methods:screenshot(filename)
   local response = self.bridge:take_element_screenshot(self.session_id, self.element_id)
   local binary = base64.decode(response.json()["value"])
-  local filehandle = io.open(filename, "wb+")
+  local filehandle, err = io.open(filename, "wb+")
+  if err then
+    error(err)
+  end
   filehandle:write(binary)
   filehandle:close()
 end
