@@ -99,3 +99,18 @@ function TestElement:test_click()
   self.driver:start_session(nil, callback)
 end
 
+function TestElement:test_screenshot()
+  local callback = function(session)
+    session:visit("http://localhost:10080/index.html")
+    local element = session:find_element("css selector", "#p1")
+    local value = element:screenshot("tmp/element.png")
+    local filehandle, err = io.open("tmp/element.png", "rb")
+    local binary = filehandle:read("*a")
+    filehandle:close()
+    os.remove("tmp/element.png")
+    local header = { binary:byte(0, 8) }
+    luaunit.assert_equals(header, helper.PNG_HEADER)
+  end
+  self.driver:start_session(callback)
+end
+

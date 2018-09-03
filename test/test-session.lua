@@ -320,27 +320,16 @@ function TestSession:test_dismiss_confirm()
   self.driver:start_session(callback)
 end
 
-local PNG_HEADER = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }
-
 function TestSession:test_screenshot()
   local callback = function(session)
     session:visit("http://localhost:10080/index.html")
-    local value = session:screenshot()
-    local binary = base64.decode(value)
+    session:screenshot("tmp/session.png")
+    local filehandle, err = io.open("tmp/session.png", "rb")
+    local binary = filehandle:read("*a")
+    filehandle:close()
+    os.remove("tmp/session.png")
     local header = { binary:byte(0, 8) }
-    luaunit.assert_equals(header, PNG_HEADER)
-  end
-  self.driver:start_session(callback)
-end
-
-function TestSession:test_element_screenshot()
-  local callback = function(session)
-    session:visit("http://localhost:10080/index.html")
-    local element = session:find_element("css selector", "#p1")
-    local value = element:screenshot(id)
-    local binary = base64.decode(value)
-    local header = { binary:byte(0, 8) }
-    luaunit.assert_equals(header, PNG_HEADER)
+    luaunit.assert_equals(header, helper.PNG_HEADER)
   end
   self.driver:start_session(callback)
 end

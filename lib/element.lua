@@ -1,4 +1,5 @@
 local util = require "lib/util"
+local base64 = require("base64")
 local Element = {}
 
 local methods = {}
@@ -99,7 +100,10 @@ end
 
 function methods:screenshot(filename)
   local response = self.bridge:take_element_screenshot(self.session_id, self.element_id)
-  return response.json()["value"]
+  local binary = base64.decode(response.json()["value"])
+  local filehandle = io.open(filename, "wb+")
+  filehandle:write(binary)
+  filehandle:close()
 end
 
 

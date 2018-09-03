@@ -1,5 +1,6 @@
 local Element = require("lib/element")
 local util = require("lib/util")
+local base64 = require("base64")
 
 -- https://www.w3.org/TR/webdriver1/
 local Session = {}
@@ -226,7 +227,13 @@ end
 
 function methods:screenshot(filename)
   local response = self.bridge:take_screenshot(self.session_id)
-  return response.json()["value"]
+  local binary = base64.decode(response.json()["value"])
+  local filehandle, err = io.open(filename, "wb+")
+  if err then
+    error(err)
+  end
+  filehandle:write(binary)
+  filehandle:close()
 end
 
 function methods:endpoint(template, params)
