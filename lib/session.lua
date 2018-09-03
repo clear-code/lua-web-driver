@@ -128,6 +128,18 @@ function methods:find_elements(strategy, finder)
   return elements
 end
 
+function methods:css(finder)
+  return self:find_elements("css selector", finder)
+end
+
+function methods:xpath(finder)
+  return self:find_elements("xpath", finder)
+end
+
+function methods:links(finder)
+  return self:find_elements("link text", finder)
+end
+
 function methods:get_active_element()
   local response = self.bridge:get_active_element(self.session_id)
   local id = response.json()["value"]
