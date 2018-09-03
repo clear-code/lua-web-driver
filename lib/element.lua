@@ -8,6 +8,25 @@ function metatable.__index(element, key)
   return methods[key]
 end
 
+-- TODO: Support more patterns
+function metatable.__tostring(element)
+  local tag = element:get_tag_name()
+  local s = "<"..tag
+  local id = element:get_property("id")
+  util.p(id)
+  if id then
+    s = s..' id="'..id..'"'
+  end
+  if tag == "input" then
+    local type_property = element:get_property("type")
+    if type_propety then
+      s = s..' type="'..type_property'"'
+    end
+  end
+  s = s..">"
+  return s
+end
+
 function methods:find_child_element(strategy, finder)
   local response = self.bridge:find_child_element(self.session_id, self.element_id, strategy, finder)
   local id = response.json()["value"]
