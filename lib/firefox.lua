@@ -1,7 +1,7 @@
-local process = require "process"
+local process = require("process")
 
-local Bridge = require "lib/bridge"
-local Session = require "lib/session"
+local Bridge = require("lib/bridge")
+local Session = require("lib/session")
 local util = require("lib/util")
 
 local FirefoxDriver = {}
