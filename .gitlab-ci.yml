@@ -3,7 +3,6 @@ stages:
 
 variables:
   GECKODRIVER_VERSION: "0.21.0"
-  DISPLAY: ":99.0"
 
 test-centos7:
   image: centos:7
@@ -15,7 +14,7 @@ test-centos7:
     - tar xf geckodriver-v${GECKODRIVER_VERSION}-linux64.tar.gz -C /usr/local/bin
     - chmod +x /usr/local/bin/geckodriver
     - ls -l /usr/local/bin/geckodriver
-    - geckodriver --help
+    - geckodriver --version
     - ruby -v
     - luarocks install lua-requests
     - luarocks install process
