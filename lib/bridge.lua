@@ -123,7 +123,7 @@ function methods:switch_to_frame(session_id, id)
   return self:execute("switch_to_frame", { session_id = session_id }, { id = id })
 end
 
-function methods:switch_to_parent_frame(session_id, id)
+function methods:switch_to_parent_frame(session_id)
   return self:execute("switch_to_parent_frame", { session_id = session_id })
 end
 
