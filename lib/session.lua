@@ -239,12 +239,6 @@ function methods:screenshot(filename)
   filehandle:close()
 end
 
-function methods:endpoint(template, params)
-  local path, _ = template:gsub("%:([%w_]+)", params or {})
-  return self.base_url.."/"..path
-end
-
-
 --- Create new session.
 --
 -- @param driver
