@@ -19,7 +19,7 @@ matrix:
         - curl -L -O https://github.com/mozilla/geckodriver/releases/download/v${GECKODRIVER_VERSION}/geckodriver-v${GECKODRIVER_VERSION}-macos.tar.gz
         - tar xf geckodriver-v${GECKODRIVER_VERSION}-macos.tar.gz -C /usr/local/bin
         - chmod +x /usr/local/bin/geckodriver
-        - geckodriver -v
+        - geckodriver --version
         - ruby -v
         - curl -O http://luarocks.github.io/luarocks/releases/luarocks-${LUAROCKS_VERSION}.tar.gz
         - tar xf luarocks-${LUAROCKS_VERSION}.tar.gz
