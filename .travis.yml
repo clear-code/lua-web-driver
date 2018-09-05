@@ -16,7 +16,7 @@ matrix:
       addons:
         firefox: latest-esr
       install:
-        - brew update && brew install luajit ruby firefox
+        - brew update && brew install luajit ruby
         - curl -O https://github.com/mozilla/geckodriver/releases/download/v${GECKODRIVER_VERSION}/geckodriver-v${GECKODRIVER_VERSION}-macos.tar.gz
         - tar xf geckodriver-v${GECKODRIVER_VERSION}-macos.tar.gz -C /usr/local/bin
         - chmod +x /usr/local/bin/geckodriver
