@@ -1,4 +1,5 @@
 local requests = require("requests")
+local util = require("lib/util")
 
 local Commands = require("lib/commands")
 local Bridge = {}
@@ -8,11 +9,6 @@ local metatable = {}
 
 function metatable.__index(bridge, key)
   return methods[key]
-end
-local inspect = require("inspect")
-
-function p(root, options)
-  print(inspect.inspect(root, options))
 end
 
 function methods:execute(command, params, data)
