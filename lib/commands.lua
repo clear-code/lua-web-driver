@@ -103,7 +103,7 @@ local Commands = {
   --
   take_screenshot = { "get", "session/:session_id/screenshot" },
   take_element_screenshot = { "get", "session/:session_id/element/:element_id/screenshot" }
-  
- }
+
+}
 
 return Commands
