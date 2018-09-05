@@ -1,3 +1,6 @@
+--- The class to handle WebDriver's session
+--
+-- @classmod Session
 local Element = require("lib/element")
 local util = require("lib/util")
 local base64 = require("base64")
@@ -241,6 +244,11 @@ function methods:endpoint(template, params)
   return self.base_url.."/"..path
 end
 
+
+--- Create new session.
+--
+-- @param driver
+-- @param capabilities
 function Session.new(driver, capabilities)
   local response = driver.bridge:create_session(capabilities or driver.capabilities)
   local session_id = response.json()["value"]["sessionId"]
@@ -252,6 +260,7 @@ function Session.new(driver, capabilities)
   return session
 end
 
+--- Start new session.
 function Session.start(driver, capabilities, callback)
   local session = Session.new(driver, capabilities or driver.capabilities)
   if callback then

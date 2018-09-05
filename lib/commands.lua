@@ -1,3 +1,7 @@
+--- WebDriver API commands mapping
+--
+-- @classmod Commands
+-- @local
 local Commands = {
   status = { "get", "status" },
   --

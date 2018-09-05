@@ -1,3 +1,7 @@
+--- Utility class for internal use
+--
+-- @classmod Util
+-- @local
 local inspect = require("inspect")
 
 local util = {}

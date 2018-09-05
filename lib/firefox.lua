@@ -1,3 +1,6 @@
+--- Firefox driver
+--
+-- @classmod FirefoxDriver
 local process = require("process")
 
 local Bridge = require("lib/bridge")

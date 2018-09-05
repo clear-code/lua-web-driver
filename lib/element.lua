@@ -1,3 +1,6 @@
+--- The class to handle web elements
+--
+-- @classmod Element
 local util = require "lib/util"
 local base64 = require("base64")
 local Element = {}

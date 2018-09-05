@@ -1,3 +1,7 @@
+--- Internal API to send requests
+--
+-- @classmod Bridge
+-- @local
 local requests = require("requests")
 local util = require("lib/util")
 
