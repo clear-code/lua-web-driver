@@ -14,6 +14,9 @@ test-centos7:
     - curl -L -O https://github.com/mozilla/geckodriver/releases/download/v${GECKODRIVER_VERSION}/geckodriver-v${GECKODRIVER_VERSION}-linux64.tar.gz
     - tar xf geckodriver-v${GECKODRIVER_VERSION}-linux64.tar.gz -C /usr/local/bin
     - chmod +x /usr/local/bin/geckodriver
+    - ls -l /usr/local/bin/geckodriver
+    - geckodriver --help
+    - ruby -v
     - luarocks install lua-requests
     - luarocks install process
     - luarocks install lbase64
