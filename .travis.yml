@@ -27,7 +27,7 @@ matrix:
         - ./configure --lua-suffix=jit --with-lua-include=/usr/local/include/luajit-2.0
         - make build
         - sudo make install
-        - which luajit
+        - sudo ln -s /usr/local/bin/luajit /usr/local/bin/lua
         - cd ..
         - sudo luarocks install lua-requests
             CRYPTO_DIR=$(brew --prefix openssl)
