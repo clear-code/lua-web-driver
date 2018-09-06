@@ -1,5 +1,6 @@
 stages:
   - test
+  - deploy
 
 variables:
   GECKODRIVER_VERSION: "0.21.0"
@@ -23,3 +24,18 @@ test-centos7:
     - luarocks install inspect
   script:
     - luajit test/run-test.lua -v
+
+pages:
+  image: centos:7
+  state: deploy
+  before_script:
+    - yum install -q -y epel-release
+    - yum install -q -y gcc gcc-c++ git lua-devel luajit luajit-devel luarocks make m4 openssl-devel
+    - luarocks install ldoc
+  script:
+    - ldoc .
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
