@@ -16,25 +16,40 @@ function metatable.__index(session, key)
   return methods[key]
 end
 
+--- Destroy the session.
+-- <https://www.w3.org/TR/webdriver/#dfn-delete-session>
+-- @function Session:destroy
 function methods:destroy()
   self.bridge:delete_session(self.session_id)
 end
 
+--- Fetch timeouts
+-- <https://www.w3.org/TR/webdriver/#dfn-get-timeouts>
+-- @function Session:timeouts
+-- @return TODO
 function methods:timeouts()
   local response = self.bridge:timeouts(self.session_id)
   return response.json()["value"]
 end
 
+--- Set timeouts
+-- <https://www.w3.org/TR/webdriver/#dfn-timeouts>
+-- @function Session:set_timeouts
+-- @param timeouts
 function methods:set_timeouts(timeouts)
   local response = self.bridge:set_timeouts(self.session_id, timeouts)
   return response
 end
 
+--- Visit specified URL
+-- @function Session:visit
 function methods:visit(url)
   local response = self.bridge:get(self.session_id, url)
   return response
 end
 
+--- Retrieve current URL
+-- @function Session:url
 function methods:url()
   local response = self.bridge:get_current_url(self.session_id)
   return response.json()["value"]
@@ -228,6 +243,11 @@ function methods:set_alert_text(text)
   return response
 end
 
+
+--- Take screenshot.
+-- The screenshot is downloaded as PNG format and save to filename.
+-- @function Session:screenshot
+-- @param filename The filename to save screenshot
 function methods:screenshot(filename)
   local response = self.bridge:take_screenshot(self.session_id)
   local binary = base64.decode(response.json()["value"])
@@ -239,8 +259,9 @@ function methods:screenshot(filename)
   filehandle:close()
 end
 
---- Create new session.
---
+--- The constructor of Session class.
+-- <https://www.w3.org/TR/webdriver/#dfn-creating-a-new-session>
+-- @function Session.new
 -- @param driver
 -- @param capabilities
 function Session.new(driver, capabilities)
@@ -255,6 +276,11 @@ function Session.new(driver, capabilities)
 end
 
 --- Start new session.
+-- <https://www.w3.org/TR/webdriver/#dfn-creating-a-new-session>
+-- @function Session.start
+-- @param driver
+-- @param capabilities
+-- @param callback
 function Session.start(driver, capabilities, callback)
   local session = Session.new(driver, capabilities or driver.capabilities)
   if callback then
