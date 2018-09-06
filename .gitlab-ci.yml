@@ -1,6 +1,6 @@
 stages:
-  - build
   - test
+  - deploy
 
 variables:
   GECKODRIVER_VERSION: "0.21.0"
@@ -27,7 +27,7 @@ test-centos7:
 
 pages:
   image: centos:7
-  stage: build
+  stage: deploy
   before_script:
     - yum install -q -y epel-release
     - yum install -q -y gcc gcc-c++ git lua-devel luajit luajit-devel luarocks make m4 openssl-devel
