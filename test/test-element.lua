@@ -99,6 +99,18 @@ function TestElement:test_click()
   self.driver:start_session(nil, callback)
 end
 
+function TestElement:test_send_keys()
+  local callback = function(session)
+    session:visit("http://localhost:10080/index.html")
+    local element = session:find_element("css selector", 'input[name=name]')
+    local response = element:send_keys("This is test")
+    luaunit.assert_equals(response.status_code, 200)
+    luaunit.assert_equals(response.json()["value"], nil)
+    luaunit.assert_equals(element:get_property("value"), "This is test")
+  end
+  self.driver:start_session(nil, callback)
+end
+
 function TestElement:test_screenshot()
   local callback = function(session)
     session:visit("http://localhost:10080/index.html")
