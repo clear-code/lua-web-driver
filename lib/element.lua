@@ -96,8 +96,13 @@ function methods:clear()
   return response
 end
 
+--- Send keys to element
+-- TODO Support Element Send Keys specification
+-- <https://www.w3.org/TR/webdriver/#dfn-element-send-keys>
+-- @function Element:send_keys
+-- @param keys must be string
 function methods:send_keys(keys)
-  local response = self.bridge:element_send_keys(self.session_id, self.element_id, keys)
+  local response = self.bridge:element_send_keys(self.session_id, self.element_id, { text = keys })
   return response
 end
 
