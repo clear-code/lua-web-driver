@@ -22,13 +22,13 @@ function KeyActions:send_keys(options)
     local pos = 1
     while pos <= #options.keys do
       local key = string.char(options.keys:byte(pos))
-      self:key_down(key, device)
-      self:key_up(key, device)
+      self:key_down({ key = key, device = device })
+      self:key_up({ key = key, device = device })
     end
   elseif type(options.keys) == "table" then
     for index, key in pairs(options.keys) do
-      self:key_down(key, device)
-      self:key_up(key, device)
+      self:key_down({ key = key, device = device })
+      self:key_up({ key = key, device = device })
     end
   else
     error("invalid type: "..type(options.keys)..": "..util.inspect(options.keys))
