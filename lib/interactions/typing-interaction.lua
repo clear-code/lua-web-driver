@@ -33,3 +33,5 @@ function TypingInteraction.new(source, subtype, key)
   setmetatable(typing_interaction, metatable)
   return typing_interaction
 end
+
+return TypingInteraction
