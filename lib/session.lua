@@ -3,6 +3,7 @@
 -- @classmod Session
 local Element = require("lib/element")
 local Interactions = require("lib/interactions")
+local ActionBuilder = require("lib/action-builder")
 local util = require("lib/util")
 local base64 = require("base64")
 
