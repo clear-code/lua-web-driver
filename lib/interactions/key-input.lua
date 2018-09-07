@@ -1,3 +1,4 @@
+local util = require("lib/util")
 local KeyInput = {}
 local InputDevice = require("lib/interactions/input-device")
 local TypingInteraction = require("lib/interactions/typing-interaction")

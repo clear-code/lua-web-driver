@@ -1,3 +1,4 @@
+local util = require("lib/util")
 local Interaction = {}
 
 local methods = {}
