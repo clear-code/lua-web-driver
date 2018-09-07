@@ -211,9 +211,17 @@ function methods:delete_all_cookies()
   return response
 end
 
+--- Create ActionBuilder
+-- @function Session:action
+function methods:action(async)
+  local mouse
+  local keyboard
+  return ActionBuilder.new(self, mouse, keyboard, async or false)
+end
+
 -- TODO
 function methods:perform_actions(actions)
-  local response = self.bridge:perform_actions(self.session_id, actions)
+  local response = self.bridge:perform_actions(self.session_id, { actions = actions })
   return response
 end
 
