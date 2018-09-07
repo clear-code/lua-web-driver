@@ -22,7 +22,7 @@ function PointerActions:move_to(options)
     top = - top_offset + (options.down_by or 0)
   end
   pointer:create_pointer_move({ duration = DEFAULT_MOVE_DURATION, x = left, y = top, element = options.element })
-  self:tick(pointer)
+  self:tick({ pointer })
   return self
 end
 
@@ -35,7 +35,7 @@ end
 function PointerActions:move_to_location(x, y, device)
   local pointer = self:get_pointer(device)
   pointer:create_pointer_move({ duration = DEFAULT_MOVE_DURATION, x = x, y = y, origin = "viewport" })
-  tick(pointer)
+  self:tick({ pointer })
   return self
 end
 
@@ -96,7 +96,7 @@ end
 function PointerActions:button_action(button, action, device)
   local pointer = self:get_pointer(device)
   pointer[action](pointer, button)
-  self:tick(pointer)
+  self:tick({ pointer })
   return self
 end
 

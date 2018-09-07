@@ -46,7 +46,7 @@ function KeyActions:key_action(options)
     self.click(options.element)
   end
   key_input[options.action](key_input, options.key)
-  self:tick(key_input)
+  self:tick({ key_input })
   return self
 end
 
