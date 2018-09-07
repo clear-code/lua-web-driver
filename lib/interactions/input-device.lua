@@ -41,7 +41,7 @@ function InputDevice.new(name)
     name = name or util.uuid(),
     actions = {}
   }
-  setmetatable(device, matatable)
+  setmetatable(device, metatable)
   return device
 end
 
