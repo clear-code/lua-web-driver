@@ -10,6 +10,10 @@ function metatable.__index(typing_interaction, key)
   return methods[key]
 end
 
+function methods:encode()
+  return { type = self.type, value = self.key }
+end
+
 local SUBTYPES = {
   down  = "keyDown",
   up    = "keyUp",
