@@ -11,6 +11,10 @@ function metatable.__index(input_device, key)
   return methods[key]
 end
 
+function methods:type()
+  return "pointer"
+end
+
 function methods:encode()
   if self:is_no_actions() then
     return nil
