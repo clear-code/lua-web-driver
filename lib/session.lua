@@ -1,11 +1,11 @@
 --- The class to handle WebDriver's session
---
+-- <https://www.w3.org/TR/webdriver1/>
 -- @classmod Session
 local Element = require("lib/element")
+local Interactions = require("lib/interactions")
 local util = require("lib/util")
 local base64 = require("base64")
 
--- https://www.w3.org/TR/webdriver1/
 local Session = {}
 
 local methods = {}
@@ -214,8 +214,8 @@ end
 --- Create ActionBuilder
 -- @function Session:action
 function methods:action(async)
-  local mouse
-  local keyboard
+  local mouse = Interactions.pointer("mouse", "mouse")
+  local keyboard = Interactions.key("keyboard")
   return ActionBuilder.new(self, mouse, keyboard, async or false)
 end
 
