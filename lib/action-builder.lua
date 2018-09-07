@@ -96,7 +96,7 @@ end
 function ActionBuilder.new(session, mouse, keyboard, async)
   local builder = {
     session = session,
-    devises = { mouse, keyboard },
+    devices = { mouse, keyboard },
     async = async or false,
     actions = {}
   }
