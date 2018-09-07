@@ -25,6 +25,10 @@ function metatable.__tostring(element)
     if type_property then
       s = s..' type="'..type_property..'"'
     end
+    local name_property = element:get_property("name")
+    if name_property then
+      s = s..' name="'..name_property..'"'
+    end
   end
   s = s..">"
   return s
