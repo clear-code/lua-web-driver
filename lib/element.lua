@@ -17,7 +17,6 @@ function metatable.__tostring(element)
   local tag = element:get_tag_name()
   local s = "<"..tag
   local id = element:get_property("id")
-  util.p(id)
   if id then
     s = s..' id="'..id..'"'
   end
