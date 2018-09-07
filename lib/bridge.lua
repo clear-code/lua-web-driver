@@ -241,7 +241,7 @@ function methods:delete_all_cookies(session_id)
 end
 
 function methods:perform_actions(session_id, actions)
-  return self:execute("perform_actions", { session_id = session_id }, { actions = actions })
+  return self:execute("perform_actions", { session_id = session_id }, actions)
 end
 
 function methods:release_actions(session_id)
