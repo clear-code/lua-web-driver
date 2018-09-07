@@ -121,6 +121,7 @@ function methods:screenshot(filename)
 end
 
 function methods:to_data()
+  -- This method supports W3C WebDriver only
   return { ["element-6066-11e4-a52e-4f735466cecf"] = self.element_id }
 end
 
