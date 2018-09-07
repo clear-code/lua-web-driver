@@ -50,7 +50,7 @@ function KeyActions:key_action(options)
 end
 
 function KeyActions:get_key_input(device)
-  return get_device(device) or self:key_inputs()[1]
+  return self:get_device(device) or self:key_inputs()[1]
 end
 
 return KeyActions

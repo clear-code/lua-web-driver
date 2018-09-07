@@ -100,7 +100,7 @@ function PointerActions:button_action(button, action, device)
 end
 
 function PointerActions:get_pointer(device)
-  return get_device(device) or self:pointer_inputs()[1]
+  return self:get_device(device) or self:pointer_inputs()[1]
 end
 
 return PointerActions
