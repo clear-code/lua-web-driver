@@ -31,7 +31,7 @@ function methods:add_key_input(name)
 end
 
 function methods:get_device(name)
-  for index, device in ipairs(self:devices) do
+  for index, device in ipairs(self.devices) do
     if device.name == name then
       return device
     end
