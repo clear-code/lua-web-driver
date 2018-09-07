@@ -19,6 +19,14 @@ function methods:encode()
     x = self.x_offset,
     y = self.y_offset
   }
+  if self.origin then
+    if type(self.origin) == "string" then
+      output["origin"] = self.origin
+    else
+      -- self.origin is an Element
+      output["origin"] = self.origin:to_data()
+    end
+  end
   return output
 end
 
