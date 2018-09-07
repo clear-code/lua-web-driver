@@ -25,8 +25,8 @@ end
 
 function methods:is_no_actions()
   local actions = {}
-  for index, action in self.actions do
-    if action:type() ~= "pause" then
+  for index, action in ipairs(self.actions) do
+    if action["type"] ~= "pause" then
       table.insert(actions, action)
     end
   end
