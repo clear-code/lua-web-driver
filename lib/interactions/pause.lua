@@ -19,7 +19,7 @@ function methods:encode()
     ["type"] = self:type()
   }
   if self.duration then
-    output["duration"] = math.floor(self.duration * 1000)
+    output["duration"] = math.floor(self.duration)
   end
   return output
 end
