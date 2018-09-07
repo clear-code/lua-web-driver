@@ -23,15 +23,15 @@ local Interactions = {
   Pause = Pause
 }
 
-function Interaction.key(name)
+function Interactions.key(name)
   return KeyInput.new(name)
 end
 
-function Interaction.pointer(kind, name)
+function Interactions.pointer(kind, name)
   return PointerInput.new(kind, name)
 end
 
-function Interaction.none(name)
+function Interactions.none(name)
   return NoneInput.new(name)
 end
 
