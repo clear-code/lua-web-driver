@@ -24,6 +24,7 @@ function KeyActions:send_keys(options)
       local key = string.char(options.keys:byte(pos))
       self:key_down({ key = key, device = device })
       self:key_up({ key = key, device = device })
+      pos = pos + 1
     end
   elseif type(options.keys) == "table" then
     for index, key in pairs(options.keys) do
