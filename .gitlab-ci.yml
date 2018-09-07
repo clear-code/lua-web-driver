@@ -18,6 +18,7 @@ test-centos7:
     - geckodriver --version
     - ruby -v
     - luarocks install lua-requests
+    - luarocks install luautf8
     - luarocks install process
     - luarocks install lbase64
     - luarocks install luaunit

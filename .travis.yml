@@ -32,6 +32,7 @@ matrix:
         - sudo luarocks install lua-requests
             CRYPTO_DIR=$(brew --prefix openssl)
             OPENSSL_DIR=$(brew --prefix openssl)
+        - sudo luarocks install luautf8
         - sudo luarocks install process
         - sudo luarocks install lbase64
         - sudo luarocks install luaunit
