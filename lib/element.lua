@@ -116,6 +116,9 @@ function methods:screenshot(filename)
   filehandle:close()
 end
 
+function methods:to_data()
+  return { ["element-6066-11e4-a52e-4f735466cecf"] = self.element_id }
+end
 
 function Element.new(session, element_id)
   local element = {
