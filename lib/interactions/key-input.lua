@@ -14,7 +14,9 @@ function methods:type()
 end
 
 function methods:encode()
-  return nil if self:is_no_actions()
+  if self:is_no_actions() then
+    return nil
+  end
   local actions = {}
   for index, action in ipairs(self.actions) do
     table.insert(actions, action:encode())

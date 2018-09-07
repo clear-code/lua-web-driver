@@ -38,7 +38,7 @@ end
 
 function InputDevice.new(name)
   local device = {
-    name = name or util.uuid()
+    name = name or util.uuid(),
     actions = {}
   }
   setmetatable(device, matatable)
