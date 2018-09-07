@@ -76,7 +76,13 @@ function methods:pauses(device, number, duration)
 end
 
 function methods:perform()
-  local actions
+  local actions = {}
+  for index, device in ipairs(self.devices) do
+    local action = device:encode()
+    if action then
+      table.insert(actions, action)
+    end
+  end
   self.session:perform_actions(actions)
   self:clear_all_actions()
 end
