@@ -14,7 +14,7 @@ for key, method in pairs(KeyActions) do
 end
 
 local PointerActions = require("lib/interactions/pointer-actions")
-for key, method = in pairs(PointerActions) do
+for key, method in pairs(PointerActions) do
   methods[key] = method
 end
 
