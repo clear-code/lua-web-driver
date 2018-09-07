@@ -95,6 +95,21 @@ function methods:add_input(device)
   table.insert(self.devices, device)
 end
 
+function methods:tick(action_devices)
+  if self.async then
+    return nil
+  end
+  for _, device in ipairs(self.devices) do
+    local is_active = false
+    for _, action_device in ipairs(action_devices) do
+      is_active = is_active or (action_device == device)
+    end
+    if is_active then
+      device:create_pause()
+    end
+  end
+end
+
 function ActionBuilder.new(session, mouse, keyboard, async)
   local builder = {
     session = session,
