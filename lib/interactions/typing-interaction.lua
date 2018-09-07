@@ -28,6 +28,7 @@ function TypingInteraction.new(source, subtype, key)
   typing_interaction["type"] = assert_type(subtype)
   typing_interaction["key"] = Keys.encode_key(key)
   setmetatable(metatable, getmetatable(typing_interaction))
+  setmetatable(methods, getmetatable(typing_interaction))
   setmetatable(typing_interaction, metatable)
   return typing_interaction
 end

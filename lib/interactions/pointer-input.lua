@@ -1,3 +1,4 @@
+local util = require("lib/util")
 local PointerInput = {}
 local InputDevice = require("lib/interactions/input-device")
 local PointerMove = require("lib/interactions/pointer-move")
@@ -71,6 +72,7 @@ function PointerInput.new(kind, name)
   local pointer_input = InputDevice.new(name)
   pointer_input["kind"] = assert_kind(kind)
   setmetatable(metatable, getmetatable(pointer_input))
+  setmetatable(methods, getmetatable(pointer_input))
   setmetatable(pointer_input, metatable)
   return pointer_input
 end

@@ -19,6 +19,7 @@ end
 function PointerCancel.new(source)
   local pointer_cancel = Interaction.new(source)
   setmetatable(metatable, getmetatable(pointer_cancel))
+  setmetatable(methods, getmetatable(pointer_cancel))
   setmetatable(pointer_cancel, metatable)
   return pointer_cancel
 end

@@ -39,6 +39,7 @@ end
 function KeyInput.new(name)
   local key_input = InputDevice.new(name)
   setmetatable(metatable, getmetatable(key_input))
+  setmetatable(methods, getmetatable(key_input))
   setmetatable(key_input, metatable)
   return key_input
 end

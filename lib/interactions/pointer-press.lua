@@ -58,6 +58,7 @@ function PointerPress.new(source, direction, button)
   pointer_press["direction"] = assert_direction(direction)
   pointer_press["button"] = assert_button(button)
   setmetatable(metatable, getmetatable(pointer_press))
+  setmetatable(methods, getmetatable(pointer_press))
   setmetatable(pointer_press, metatable)
   return pointer_press
 end

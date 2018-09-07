@@ -30,6 +30,7 @@ function Pause.new(source, duration)
     pause["duration"] = duration * 1000
   end
   setmetatable(metatable, getmetatable(pause))
+  setmetatable(methods, getmetatable(pause))
   setmetatable(pause, metatable)
   return pause
 end

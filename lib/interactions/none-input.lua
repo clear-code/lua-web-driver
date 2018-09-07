@@ -30,6 +30,7 @@ end
 function NoneInput.new(name)
   local none_input = InputDevice.new()
   setmetatable(metatable, getmetatable(none_input))
+  setmetatable(methods, getmetatable(none_input))
   setmetatable(none_input, metatable)
   return none_input
 end

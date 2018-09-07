@@ -29,6 +29,7 @@ function PointerMove.new(source, duration, x, y, options)
   pointer_move["y_offset"] = y
   pointer_move["origin"] = options.element or options.origin
   setmetatable(metatable, getmetatable(pointer_move))
+  setmetatable(methods, getmetatable(pointer_move))
   setmetatable(pointer_move, metatable)
   return pointer_move
 end
