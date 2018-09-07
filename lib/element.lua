@@ -23,7 +23,7 @@ function metatable.__tostring(element)
   if tag == "input" then
     local type_property = element:get_property("type")
     if type_property then
-      s = s..' type="'..type_property'"'
+      s = s..' type="'..type_property..'"'
     end
   end
   s = s..">"
