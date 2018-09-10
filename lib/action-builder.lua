@@ -67,10 +67,8 @@ function methods:pause(device, duration)
 end
 
 function methods:pauses(device, number, duration)
-  local n = 0
-  while n < number do
+  for n = 1, number do
     device:create_pause(duration)
-    n = n + 1
   end
   return self
 end
