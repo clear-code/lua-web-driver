@@ -30,11 +30,10 @@ pages:
   image: centos:7
   stage: deploy
   before_script:
-    - yum install -q -y epel-release
-    - yum install -q -y gcc gcc-c++ git lua-devel luajit luajit-devel luarocks make m4 openssl-devel
-    - luarocks install ldoc
+    - cd docs
+    - bundle install
   script:
-    - ldoc .
+    - bundle exec jekyll build -d ../public
   artifacts:
     paths:
       - public

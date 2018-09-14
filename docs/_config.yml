@@ -1,0 +1,36 @@
+title: LuaWebDriver
+markdown: kramdown
+highlighter: rouge
+version: 1.0.0
+release_date: 2018-xx-xx
+copyright_year: 2018
+exclude:
+  - "Rakefile"
+  - "Gemfile"
+  - "Gemfile.lock"
+description:
+  en: This is a browser automation library using WebDriver API
+  ja: WebDriverAPIを使ったブラウザ自動操作ライブラリー
+
+kramdown:
+  input: GFM
+  smart_quotes: ["apos", "apos", "quot", "quot"]
+
+sass:
+  sass_dir: assets/stylesheets
+
+defaults:
+  - scope:
+      path: "ja"
+    values:
+      path_prefix: /ja/
+      layout: "base"
+      language: ja
+      country: JP
+  - scope:
+      path: ""
+    values:
+      path_prefix: /
+      layout: "base"
+      language: en
+      country: US
