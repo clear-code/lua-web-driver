@@ -31,8 +31,7 @@ function TestElement:test_get_attribute()
     luaunit.assert_equals(tostring(u1), "userdata: NULL")
     luaunit.assert_equals(tostring(u2), "userdata: NULL")
   end
-  local session = self.driver:start_session(nil, callback)
-  session:destroy()
+  self.driver:start_session(callback)
 end
 
 function TestElement:test_get_property()
@@ -46,8 +45,7 @@ function TestElement:test_get_property()
     luaunit.assert_equals(element:get_property("checked"), false)
     luaunit.assert_equals(element:get_property("disabled"), false)
   end
-  local session = self.driver:start_session(nil, callback)
-  session:destroy()
+  self.driver:start_session(callback)
 end
 
 function TestElement:test_get_css_value()
@@ -57,8 +55,7 @@ function TestElement:test_get_css_value()
     luaunit.assert_equals(element:get_css_value("color"), "rgb(255, 0, 0)")
     luaunit.assert_equals(element:get_css_value("background-color"), "rgba(0, 0, 0, 0)")
   end
-  local session = self.driver:start_session(nil, callback)
-  session:destroy()
+  self.driver:start_session(callback)
 end
 
 function TestElement:test_get_text()
@@ -67,8 +64,7 @@ function TestElement:test_get_text()
     local element = session:find_element("css selector", '#p2')
     luaunit.assert_equals(element:get_text(), "Hello 2")
   end
-  local session = self.driver:start_session(nil, callback)
-  session:destroy()
+  self.driver:start_session(callback)
 end
 
 function TestElement:test_get_tag_name()
@@ -77,8 +73,7 @@ function TestElement:test_get_tag_name()
     local element = session:find_element("css selector", '#p2')
     luaunit.assert_equals(element:get_tag_name(element_id), "p")
   end
-  local session = self.driver:start_session(nil, callback)
-  session:destroy()
+  self.driver:start_session(callback)
 end
 
 function TestElement:test_is_enabled()
@@ -90,8 +85,7 @@ function TestElement:test_is_enabled()
     element = session:find_element("css selector", "input[name=wine]")
     luaunit.assert_equals(element:is_enabled(), true)
   end
-  local session = self.driver:start_session(nil, callback)
-  session:destroy()
+  self.driver:start_session(callback)
 end
 
 function TestElement:test_click()
@@ -102,8 +96,7 @@ function TestElement:test_click()
     element:click()
     luaunit.assert_equals(element:get_property("checked"), true)
   end
-  local session = self.driver:start_session(nil, callback)
-  session:destroy()
+  self.driver:start_session(callback)
 end
 
 function TestElement:test_send_keys()
@@ -115,8 +108,7 @@ function TestElement:test_send_keys()
     luaunit.assert_equals(response.json()["value"], nil)
     luaunit.assert_equals(element:get_property("value"), "This is test")
   end
-  local session = self.driver:start_session(nil, callback)
-  session:destroy()
+  self.driver:start_session(callback)
 end
 
 function TestElement:test_screenshot()
@@ -131,7 +123,5 @@ function TestElement:test_screenshot()
     local header = { binary:byte(0, 8) }
     luaunit.assert_equals(header, helper.PNG_HEADER)
   end
-  local session = self.driver:start_session(nil, callback)
-  session:destroy()
+  self.driver:start_session(callback)
 end
-
