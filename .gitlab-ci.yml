@@ -23,6 +23,7 @@ test-centos7:
     - luarocks install lbase64
     - luarocks install luaunit
     - luarocks install inspect
+    - luarocks install lua-log
   script:
     - luajit test/run-test.lua -v
 
