@@ -205,7 +205,7 @@ end
 
 function methods:element_send_keys(session_id, element_id, keys)
   local params = { session_id = session_id, element_id = element_id }
-  return self:execute("element_clear", params, keys)
+  return self:execute("element_send_keys", params, keys)
 end
 
 function methods:get_page_source(session_id)
