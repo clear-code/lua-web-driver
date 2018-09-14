@@ -24,6 +24,7 @@ test-centos7:
     - luarocks install luaunit
     - luarocks install inspect
   script:
+    - geckodriver &
     - luajit test/run-test.lua -v
 
 pages:
