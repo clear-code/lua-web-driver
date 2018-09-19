@@ -32,6 +32,8 @@ pages:
   stage: deploy
   before_script:
     - cd docs
+    - gem install bundler
+    - bundler -v
     - bundle install
   script:
     - bundle exec jekyll build -d ../public
