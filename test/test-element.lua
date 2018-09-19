@@ -105,7 +105,7 @@ function TestElement:test_send_keys()
     local element = session:find_element("css selector", 'input[name=name]')
     local response = element:send_keys("This is test")
     luaunit.assert_equals(response.status_code, 200)
-    luaunit.assert_equals(response.json()["value"], nil)
+    luaunit.assert_equals(response.text, "{\"value\": null}")
     luaunit.assert_equals(element:get_property("value"), "This is test")
   end
   self.driver:start_session(callback)
