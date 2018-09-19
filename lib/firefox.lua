@@ -66,11 +66,11 @@ function methods:is_ready()
 end
 
 function methods:wait_for_ready()
-  for _ = 1, 10 do
+  for i = 1, 10 do
     if self:is_ready() then
       return true
     end
-    process.nsleep(100000) -- 100 usec
+    process.nsleep((100 * 10^3) * i) -- 100 usec * i
   end
   return false
 end
