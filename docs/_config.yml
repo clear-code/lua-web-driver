@@ -16,6 +16,8 @@ kramdown:
   input: GFM
   smart_quotes: ["apos", "apos", "quot", "quot"]
 
+baseurl: "/lua-web-driver"
+
 sass:
   sass_dir: assets/stylesheets
 
