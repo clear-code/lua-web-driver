@@ -28,7 +28,7 @@ test-centos7:
     - luajit test/run-test.lua -v
 
 pages:
-  image: centos:7
+  image: ruby:2.5
   stage: deploy
   before_script:
     - cd docs
