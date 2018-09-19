@@ -4,7 +4,7 @@ title: none
 
 <div class="jumbotron">
   <h1>LuaWebDriver</h1>
-  <p>{{ site.description.en }}</p>
+  <p>{{ site.description.ja }}</p>
   <p>最新版
      (<a href="news/#version-{{ site.version | replace:".", "-" }}">{{ site.version }}</a>)
      は{{ site.release_date }}にリリースされました。
