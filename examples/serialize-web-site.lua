@@ -1,9 +1,5 @@
-local options = {
-  args = { "-headless" }
-}
-
-local WebDriver = require("web-driver")
-local driver = WebDriver.create("firefox", options)
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
 
 function callback(session)
   session:visit("https://www.google.com/")
