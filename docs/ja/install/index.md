@@ -10,7 +10,7 @@ title: Install
 
   * [macOS](#macos)
 
-You must install [geckodriver][geckodriver] and [LuaRocks][luarocks] before installing LuaWebDriver.
+LuaWebDriverをインストールする前に、[geckodriver][geckodriver]と[luarocks][luarocks]をインストールしてください。
 
 ## CentOS {#centos}
 

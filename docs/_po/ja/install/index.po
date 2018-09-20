@@ -29,6 +29,8 @@ msgid ""
 "You must install [geckodriver][geckodriver] and [LuaRocks][luarocks] before in"
 "stalling LuaWebDriver."
 msgstr ""
+"LuaWebDriverをインストールする前に、[geckodriver][geckodriver]と[luarocks][luarocks]をインストール"
+"してください。"
 
 msgid "## CentOS {#centos}"
 msgstr ""
