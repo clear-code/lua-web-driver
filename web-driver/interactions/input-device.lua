@@ -1,5 +1,5 @@
-local util = require("lib/util")
-local Pause = require("lib/interactions/pause")
+local util = require("web-driver/util")
+local Pause = require("web-driver/interactions/pause")
 local InputDevice = {}
 
 local methods = {}

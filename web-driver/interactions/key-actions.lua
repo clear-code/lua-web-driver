@@ -1,4 +1,4 @@
-local util = require("lib/util")
+local util = require("web-driver/util")
 local KeyActions = {}
 
 -- { element = element, key = key, device = device }

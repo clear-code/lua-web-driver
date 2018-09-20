@@ -1,7 +1,7 @@
-local util = require("lib/util")
+local util = require("web-driver/util")
 local TypingInteraction = {}
-local Interaction = require("lib/interactions/interaction")
-local Keys = require("lib/keys")
+local Interaction = require("web-driver/interactions/interaction")
+local Keys = require("web-driver/keys")
 
 local methods = {}
 local metatable = {}

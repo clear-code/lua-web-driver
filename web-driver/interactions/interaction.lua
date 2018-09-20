@@ -1,4 +1,4 @@
-local util = require("lib/util")
+local util = require("web-driver/util")
 local Interaction = {}
 
 local methods = {}

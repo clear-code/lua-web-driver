@@ -1,5 +1,5 @@
 local PointerPress = {}
-local Interaction = require("lib/interactions/interaction")
+local Interaction = require("web-driver/interactions/interaction")
 
 local methods = {}
 local metatable = {}

@@ -1,9 +1,9 @@
-local util = require("lib/util")
+local util = require("web-driver/util")
 local PointerInput = {}
-local InputDevice = require("lib/interactions/input-device")
-local PointerMove = require("lib/interactions/pointer-move")
-local PointerPress = require("lib/interactions/pointer-press")
-local PointerCancel = require("lib/interactions/pointer-cancel")
+local InputDevice = require("web-driver/interactions/input-device")
+local PointerMove = require("web-driver/interactions/pointer-move")
+local PointerPress = require("web-driver/interactions/pointer-press")
+local PointerCancel = require("web-driver/interactions/pointer-cancel")
 
 local methods = {}
 local metatable = {}

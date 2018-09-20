@@ -1,5 +1,5 @@
 local luaunit = require("luaunit")
-local WebDriver = require("web-driver")
+local web_driver = require("web-driver")
 
 local base64 = require("base64")
 local helper = require("test/helper")
@@ -10,7 +10,7 @@ TestSession = {}
 
 function TestSession:setup()
   self.server = helper.start_server()
-  self.driver = WebDriver.create("firefox")
+  self.driver = web_driver.Firefox.new()
   self.driver:start()
 end
 

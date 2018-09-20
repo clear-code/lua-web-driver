@@ -1,5 +1,5 @@
 local NoneInput = {}
-local InputDevice = require("lib/interactions/input-device")
+local InputDevice = require("web-driver/interactions/input-device")
 
 local methods = {}
 local metatable = {}

@@ -3,9 +3,9 @@
 -- @classmod Bridge
 -- @local
 local requests = require("requests")
-local util = require("lib/util")
+local util = require("web-driver/util")
 
-local Commands = require("lib/commands")
+local Commands = require("web-driver/commands")
 local Bridge = {}
 
 local methods = {}

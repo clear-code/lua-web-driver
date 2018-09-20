@@ -1,10 +1,10 @@
 --- The class to handle WebDriver's session
 -- <https://www.w3.org/TR/webdriver1/>
 -- @classmod Session
-local Element = require("lib/element")
-local Interactions = require("lib/interactions")
-local ActionBuilder = require("lib/action-builder")
-local util = require("lib/util")
+local Element = require("web-driver/element")
+local Interactions = require("web-driver/interactions")
+local ActionBuilder = require("web-driver/action-builder")
+local util = require("web-driver/util")
 local base64 = require("base64")
 
 local Session = {}

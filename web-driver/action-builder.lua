@@ -1,4 +1,4 @@
-local util = require("lib/util")
+local util = require("web-driver/util")
 
 local ActionBuilder = {}
 
@@ -10,12 +10,12 @@ function metatable.__index(builder, key)
   return methods[key]
 end
 
-local KeyActions = require("lib/interactions/key-actions")
+local KeyActions = require("web-driver/interactions/key-actions")
 for key, method in pairs(KeyActions) do
   methods[key] = method
 end
 
-local PointerActions = require("lib/interactions/pointer-actions")
+local PointerActions = require("web-driver/interactions/pointer-actions")
 for key, method in pairs(PointerActions) do
   methods[key] = method
 end

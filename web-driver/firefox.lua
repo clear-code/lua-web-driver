@@ -3,9 +3,9 @@
 -- @classmod FirefoxDriver
 local process = require("process")
 
-local Bridge = require("lib/bridge")
-local Session = require("lib/session")
-local util = require("lib/util")
+local Bridge = require("web-driver/bridge")
+local Session = require("web-driver/session")
+local util = require("web-driver/util")
 
 local FirefoxDriver = {}
 
@@ -90,11 +90,13 @@ function methods:start_session(callback)
   end
 end
 
-local function set_browser_options(options)
+local function set_options(options)
   if not options then
-    return DEFAULT_CAPABILITIES
+    return DEFAULT_HOST, DEFAULT_PORT, DEFAULT_CAPABILITIES
   end
 
+  local host = options.host
+  local port = options.port
   local capabilities = {
     capabilities = {
       alwaysMatch = {
@@ -105,13 +107,11 @@ local function set_browser_options(options)
       }
     }
   }
-  return capabilities
+  return host, port, capabilities
 end
 
 function FirefoxDriver.new(options)
-  local host = options.host or DEFAULT_HOST
-  local port = options.port or DEFAULT_PORT
-  local capabilities = set_browser_options(options.args)
+  local host, port, capabilities = set_options(options)
   local firefox_driver = {
     options = options,
     bridge = Bridge.new(host, port),
