@@ -20,6 +20,14 @@ matrix:
         - chmod +x /usr/local/bin/geckodriver
         - geckodriver --version
         - ruby -v
+        - luarocks --help
+        - luarocks config
+        - luarocks --lua-dir=$(brew --prefix luajit) config
+        - sudo luarocks config
+        - sudo luarocks --lua-dir=$(brew --prefix luajit) config
+        - luarocks path --bin
+        - env
+        - echo sudo luarocks --lua-dir=$(brew --prefix luajit) install lua-requests
         - sudo luarocks --lua-dir=$(brew --prefix luajit) install lua-requests
             CRYPTO_DIR=$(brew --prefix openssl)
             OPENSSL_DIR=$(brew --prefix openssl)
