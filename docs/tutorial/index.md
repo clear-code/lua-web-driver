@@ -47,6 +47,38 @@ driver:start()
 driver:stop()
 ```
 
+## Visit to a website {#visit-to-website}
+
+You can use [`Session.visit`][session-visit] to visit a specific website with the web browser.
+
+First of all, you make a callback function for visit to a website.
+You specify the URL as the argument of [`Session.visit`][session-visit]
+
+Second, you specify your callback as the argument of [`Session.start`][session-start] and call [`Session.start`][session-start].
+the session is destroyed auto after calling your callback.
+
+Example:
+
+```lua
+local options = {
+  args = { "-headless" }
+}
+
+local WebDriver = require("web-driver")
+local driver = WebDriver.create("firefox", options)
+
+-- Make your callback
+function callback(session)
+-- Specify the URL as the argument of Session.visit
+  session:visit("https://www.google.com/")
+end
+
+driver:start()
+-- Specify your callback as the argument of Session.start
+driver:start_session(callback)
+driver:stop()
+```
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -59,5 +91,9 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [firefoxdriver-start]:../reference/firefoxdriver.html#start
 
 [firefoxdriver-stop]:../reference/firefoxdriver.html#stop
+
+[session-start]:../reference/session.html#start
+
+[session-visit]:../reference/session.html#visit
 
 [reference]:../reference/

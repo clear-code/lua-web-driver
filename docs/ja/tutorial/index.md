@@ -47,6 +47,38 @@ driver:start()
 driver:stop()
 ```
 
+## Webサイトへのアクセス
+
+[`Session.visit`][session-visit]を使って、Webブラウザーで特定のWebサイトへアクセスできます。
+
+まず最初に、Webサイトへアクセスするためのコールバック関数を作成します。
+[`Session.visit`][session-visit]の引数としてURLを指定します。
+
+次に、[`Session.start`][session-start]の引数としてコールバックを指定し、[`Session.start`][session-start]を呼び出します。
+セッションはコールバックを呼び出した後、自動的に破棄されます。
+
+例:
+
+```lua
+local options = {
+  args = { "-headless" }
+}
+
+local WebDriver = require("web-driver")
+local driver = WebDriver.create("firefox", options)
+
+-- コールバックを作成する
+function callback(session)
+-- Session.visitの引数としてURLを指定する
+  session:visit("https://www.google.com/")
+end
+
+driver:start()
+-- Session.startの引数としてコールバックを指定する
+driver:start_session(callback)
+driver:stop()
+```
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -59,5 +91,9 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [firefoxdriver-start]:../reference/firefoxdriver.html#start
 
 [firefoxdriver-stop]:../reference/firefoxdriver.html#stop
+
+[session-start]:../reference/session.html#start
+
+[session-visit]:../reference/session.html#visit
 
 [reference]:../reference/
