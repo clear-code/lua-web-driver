@@ -3,19 +3,8 @@ local WebDriver = require("web-driver")
 
 TestWebDriver = {}
 
-local capabilities = {
-  capabilities = {
-    alwaysMatch = {
-      acceptInsecureCerts = true,
-      ["moz:firefoxOptions"] = {
-        args = { "-headless" }
-      }
-    }
-  }
-}
-
 function TestWebDriver:test_firefox()
-  local driver = WebDriver.create("firefox", capabilities)
+  local driver = WebDriver.create("firefox")
   luaunit.assert_equals(driver:browser(), "firefox")
 end
 

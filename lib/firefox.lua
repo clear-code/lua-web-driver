@@ -22,7 +22,10 @@ local DEFAULT_PORT = "4444"
 local DEFAULT_CAPABILITIES = {
   capabilities = {
     alwaysMatch = {
-      acceptInsecureCerts = true
+      acceptInsecureCerts = true,
+      ["moz:firefoxOptions"] = {
+        args = { "-headless" }
+      }
     }
   }
 }

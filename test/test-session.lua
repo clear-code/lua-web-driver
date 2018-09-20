@@ -10,7 +10,7 @@ TestSession = {}
 
 function TestSession:setup()
   self.server = helper.start_server()
-  self.driver = WebDriver.create("firefox", capabilities)
+  self.driver = WebDriver.create("firefox")
   self.driver:start()
 end
 

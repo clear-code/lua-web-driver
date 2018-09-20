@@ -3,19 +3,8 @@ local FirefoxDriver = require("lib/firefox")
 
 TestFirefoxDriver = {}
 
-local capabilities = {
-  capabilities = {
-    alwaysMatch = {
-      acceptInsecureCerts = true,
-      ["moz:firefoxOptions"] = {
-        args = { "-headless" }
-      }
-    }
-  }
-}
-
 function TestFirefoxDriver:test_browser()
-  local driver = FirefoxDriver.new({ capabilities = capabilities })
+  local driver = FirefoxDriver.new()
   luaunit.assert_equals(driver:browser(), "firefox")
 end
 
