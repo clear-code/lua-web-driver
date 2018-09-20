@@ -13,6 +13,7 @@ You need to start WebDriver at first to start web browser.
 You can use [`WebDriver.create`][webdriver-create] and [`FirefoxDriver.start`][firefoxdriver-start] to start web browser as below example.
 
 Also you need to stop web browser when you finish your processing.
+
 You can use [`FirefoxDriver.stop`][firefoxdriver-stop] to stop web browser.
 
 Example:
@@ -20,6 +21,27 @@ Example:
 ```lua
 local WebDriver = require("web-driver")
 local driver = WebDriver.create("firefox")
+
+driver:start()
+driver:stop()
+```
+
+You can also start web browser as headless mode as below example.
+
+Note that browser options must set as value of args key.
+
+Example:
+
+```lua
+local WebDriver = require("web-driver")
+
+-- Make browser options as Lua's table
+-- Browser options must set as value of args key
+local options = {
+  args = { "-headless" }
+}
+
+local driver = WebDriver.create("firefox", browser_options)
 
 driver:start()
 driver:stop()

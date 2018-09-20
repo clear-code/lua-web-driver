@@ -13,6 +13,7 @@ Webブラウザーを起動するには、まず最初にWebDriverを起動し�
 以下のように、[`WebDriver.create`][webdriver-create]と[`FirefoxDriver.start`][firefoxdriver-start]を使って、Webブラウザーを起動できます。
 
 また、処理が終了したらWebブラウザーを停止する必要があります。
+
 [`FirefoxDriver.stop`][firefoxdriver-stop]を使って、Webブラウザーを停止できます。
 
 例:
@@ -20,6 +21,27 @@ Webブラウザーを起動するには、まず最初にWebDriverを起動し�
 ```lua
 local WebDriver = require("web-driver")
 local driver = WebDriver.create("firefox")
+
+driver:start()
+driver:stop()
+```
+
+以下の例のように、Webブラウザーをヘッドレスモードで起動することもできます。
+
+ブラウザーオプションは、argsキーの値として設定する必要があることに注意してください。
+
+例:
+
+```lua
+local WebDriver = require("web-driver")
+
+-- ブラウザーオプションをLuaのテーブルとして作成します
+-- ブラウザーオプションは、argsキーの値として設定する必要があります
+local options = {
+  args = { "-headless" }
+}
+
+local driver = WebDriver.create("firefox", browser_options)
 
 driver:start()
 driver:stop()
