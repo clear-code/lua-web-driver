@@ -1,0 +1,86 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid ""
+"---\n"
+"title: Tutorial\n"
+"---"
+msgstr ""
+"---\n"
+"title: チュートリアル\n"
+"---"
+
+msgid "# Tutorial"
+msgstr "# チュートリアル"
+
+msgid ""
+"This document describes how to use LuaWebDriver step by step. If you don't ins"
+"tall LuaWebDriver yet, [install][install] LuaWebDriver before you read this do"
+"cument."
+msgstr ""
+"このドキュメントは、LuaWebDriverの使い方を段階的に説明しています。まだ、LuaWebDriverを[インストール][install]していない場"
+"合は、このドキュメントを読む前にLuaWebDriverを[インストール][install]してください。"
+
+msgid "## Start and stop web browser {#start-stop-web-browser}"
+msgstr "## Webブラウザーの起動と停止 {#start-stop-web-browser}"
+
+msgid "You need to start WebDriver at first to start web browser."
+msgstr "Webブラウザーを起動するには、まず最初にWebDriverを起動します。"
+
+msgid ""
+"You can use [`WebDriver.create`][webdriver-create] and [`FirefoxDriver.start`]"
+"[firefoxdriver-start] to start web browser as below example."
+msgstr ""
+"以下のように、[`WebDriver.create`][webdriver-create]と[`FirefoxDriver.start`][firefoxd"
+"river-start]を使って、Webブラウザーを起動できます。"
+
+msgid ""
+"Also you need to stop web browser when you finish your processing.\n"
+"You can use [`FirefoxDriver.stop`][firefoxdriver-stop] to stop web browser."
+msgstr ""
+"また、処理が終了したらWebブラウザーを停止する必要があります。\n"
+"[`FirefoxDriver.stop`][firefoxdriver-stop]を使って、Webブラウザーを停止できます。"
+
+msgid "Example:"
+msgstr "例:"
+
+msgid ""
+"```lua\n"
+"local WebDriver = require(\"web-driver\")\n"
+"local driver = WebDriver.create(\"firefox\")"
+msgstr ""
+
+msgid ""
+"driver:start()\n"
+"driver:stop()\n"
+"```"
+msgstr ""
+
+msgid "## Next step {#next-step}"
+msgstr ""
+
+msgid ""
+"Now, you knew all major LuaWebDriver features! If you want to understand each "
+"feature, see [reference manual][reference] for each feature."
+msgstr ""
+
+msgid "[install]:../install/"
+msgstr ""
+
+msgid "[webdriver-create]:../reference/webdriver.html#create"
+msgstr ""
+
+msgid "[firefoxdriver-start]:../reference/firefoxdriver.html#start"
+msgstr ""
+
+msgid "[firefoxdriver-stop]:../reference/firefoxdriver.html#stop"
+msgstr ""
+
+msgid "[reference]:../reference/"
+msgstr ""
