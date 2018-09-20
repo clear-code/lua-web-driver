@@ -14,6 +14,7 @@ matrix:
       addons:
         firefox: latest-esr
       install:
+        - brew update > /dev/null
         - brew bundle
         - curl -L -O https://github.com/mozilla/geckodriver/releases/download/v${GECKODRIVER_VERSION}/geckodriver-v${GECKODRIVER_VERSION}-macos.tar.gz
         - tar xf geckodriver-v${GECKODRIVER_VERSION}-macos.tar.gz -C /usr/local/bin
