@@ -11,14 +11,7 @@ function helper.p(root, options)
 end
 
 helper.capabilities = {
-  capabilities = {
-    alwaysMatch = {
-      acceptInsecureCerts = true,
-      ["moz:firefoxOptions"] = {
-        args = { "-headless" }
-      }
-    }
-  }
+  args = { "-headless" }
 }
 
 function helper.start_server()

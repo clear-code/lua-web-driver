@@ -15,7 +15,7 @@ local capabilities = {
 }
 
 function TestWebDriver:test_firefox()
-  local driver = WebDriver.create("firefox", { capabilities = capabilities })
+  local driver = WebDriver.create("firefox", capabilities)
   luaunit.assert_equals(driver:browser(), "firefox")
 end
 

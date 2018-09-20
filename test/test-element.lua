@@ -9,7 +9,7 @@ TestElement = {}
 
 function TestElement:setup()
   self.server = helper.start_server()
-  self.driver = WebDriver.create("firefox", { capabilities = capabilities })
+  self.driver = WebDriver.create("firefox", capabilities)
   self.driver:start()
 end
 

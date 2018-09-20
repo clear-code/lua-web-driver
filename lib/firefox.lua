@@ -87,10 +87,28 @@ function methods:start_session(callback)
   end
 end
 
+local function set_browser_options(options)
+  if not options then
+    return DEFAULT_CAPABILITIES
+  end
+
+  local capabilities = {
+    capabilities = {
+      alwaysMatch = {
+        acceptInsecureCerts = true,
+        ["moz:firefoxOptions"] = {
+          args = options
+        }
+      }
+    }
+  }
+  return capabilities
+end
+
 function FirefoxDriver.new(options)
   local host = options.host or DEFAULT_HOST
   local port = options.port or DEFAULT_PORT
-  local capabilities = options.capabilities or DEFAULT_CAPABILITIES
+  local capabilities = set_browser_options(options.args)
   local firefox_driver = {
     options = options,
     bridge = Bridge.new(host, port),
