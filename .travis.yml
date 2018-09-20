@@ -15,27 +15,19 @@ matrix:
       addons:
         firefox: latest-esr
       install:
-        - brew update && brew install luajit ruby
+        - brew update && brew install luajit luarocks ruby
         - curl -L -O https://github.com/mozilla/geckodriver/releases/download/v${GECKODRIVER_VERSION}/geckodriver-v${GECKODRIVER_VERSION}-macos.tar.gz
         - tar xf geckodriver-v${GECKODRIVER_VERSION}-macos.tar.gz -C /usr/local/bin
         - chmod +x /usr/local/bin/geckodriver
         - geckodriver --version
         - ruby -v
-        - curl -O http://luarocks.github.io/luarocks/releases/luarocks-${LUAROCKS_VERSION}.tar.gz
-        - tar xf luarocks-${LUAROCKS_VERSION}.tar.gz
-        - cd luarocks-${LUAROCKS_VERSION}
-        - ./configure --lua-suffix=jit --with-lua-include=/usr/local/include/luajit-2.0
-        - make build
-        - sudo make install
-        - sudo ln -s /usr/local/bin/luajit /usr/local/bin/lua
-        - cd ..
-        - sudo luarocks install lua-requests
+        - sudo luarocks --lua-dir=$(brew --prefix luajit) install lua-requests
             CRYPTO_DIR=$(brew --prefix openssl)
             OPENSSL_DIR=$(brew --prefix openssl)
-        - sudo luarocks install luautf8
-        - sudo luarocks install process
-        - sudo luarocks install lbase64
-        - sudo luarocks install luaunit
-        - sudo luarocks install inspect
+        - sudo luarocks --lua-dir=$(brew --prefix luajit) install luautf8
+        - sudo luarocks --lua-dir=$(brew --prefix luajit) install process
+        - sudo luarocks --lua-dir=$(brew --prefix luajit) install lbase64
+        - sudo luarocks --lua-dir=$(brew --prefix luajit) install luaunit
+        - sudo luarocks --lua-dir=$(brew --prefix luajit) install inspect
       script:
         - luajit test/run-test.lua
