@@ -11,6 +11,7 @@ This document describes how to use LuaWebDriver step by step. If you don't insta
 You need to start WebDriver at first to start web browser.
 
 You can use [`WebDriver.create`][webdriver-create] and [`FirefoxDriver.start`][firefoxdriver-start] to start web browser as below example.
+Web browser starts in headless mode with default.
 
 Also you need to stop web browser when you finish your processing.
 
@@ -21,27 +22,6 @@ Example:
 ```lua
 local WebDriver = require("web-driver")
 local driver = WebDriver.create("firefox")
-
-driver:start()
-driver:stop()
-```
-
-You can also start web browser as headless mode as below example.
-
-Note that browser options must set as value of args key.
-
-Example:
-
-```lua
-local WebDriver = require("web-driver")
-
--- Make browser options as Lua's table
--- Browser options must set as value of args key
-local options = {
-  args = { "-headless" }
-}
-
-local driver = WebDriver.create("firefox", browser_options)
 
 driver:start()
 driver:stop()
@@ -60,12 +40,8 @@ the session is destroyed auto after calling your callback.
 Example:
 
 ```lua
-local options = {
-  args = { "-headless" }
-}
-
 local WebDriver = require("web-driver")
-local driver = WebDriver.create("firefox", options)
+local driver = WebDriver.create("firefox")
 
 -- Make your callback
 function callback(session)
