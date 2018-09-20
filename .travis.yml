@@ -10,12 +10,11 @@ matrix:
   include:
     - os: osx
       env:
-        LUAROCKS_VERSION: 2.4.3
         GECKODRIVER_VERSION: 0.21.0
       addons:
         firefox: latest-esr
       install:
-        - brew update && brew install luajit luarocks ruby
+        - brew bundle
         - curl -L -O https://github.com/mozilla/geckodriver/releases/download/v${GECKODRIVER_VERSION}/geckodriver-v${GECKODRIVER_VERSION}-macos.tar.gz
         - tar xf geckodriver-v${GECKODRIVER_VERSION}-macos.tar.gz -C /usr/local/bin
         - chmod +x /usr/local/bin/geckodriver
