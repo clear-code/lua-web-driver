@@ -276,10 +276,14 @@ end
 function TestSession:test_accept_alert()
   local callback = function(session)
     session:visit("http://localhost:10080/alert.html")
-    local response = session:accept_alert()
-    luaunit.assert_equals(response.status_code, 200)
-    response = session:accept_alert()
-    luaunit.assert_equals(response.status_code, 200)
+    local n_alerts = 0
+    for i = 1, 10 do
+      local success, _ = pcall(function() session:accept_alert() end)
+      if success then
+        n_alerts = n_alerts + 1
+      end
+    end
+    luaunit.assert_equals(n_alerts, 2)
   end
   self.driver:start_session(callback)
 end
@@ -287,10 +291,14 @@ end
 function TestSession:test_dismiss_alert()
   local callback = function(session)
     session:visit("http://localhost:10080/alert.html")
-    local response = session:dismiss_alert()
-    luaunit.assert_equals(response.status_code, 200)
-    response = session:dismiss_alert()
-    luaunit.assert_equals(response.status_code, 200)
+    local n_alerts = 0
+    for i = 1, 10 do
+      local success, _ = pcall(function() session:dismiss_alert() end)
+      if success then
+        n_alerts = n_alerts + 1
+      end
+    end
+    luaunit.assert_equals(n_alerts, 2)
   end
   self.driver:start_session(callback)
 end
