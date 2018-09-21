@@ -22,12 +22,8 @@ matrix:
         - sudo -H luarocks install luarocks-fetch-gitrec
         - LUAROCKS="sudo -H luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit)"
         - VERSION=$(grep VERSION web-driver.lua | sed -e 's/.*"\(.*\)"/\1/g')
-        - sed
-            -e "s@url = .*@url = \"file://${PWD}/\",@g"
-            -e 's@dir = .*@@g'
-            web-driver.rockspec >
-            web-driver-${VERSION}-0.rockspec
-        - ${LUAROCKS} install web-driver-*.rockspec
+        - cp web-driver.rockspec web-driver-${VERSION}-0.rockspec
+        - ${LUAROCKS} make web-driver-${VERSION}-0.rockspec
             CRYPTO_DIR=$(brew --prefix openssl)
             OPENSSL_DIR=$(brew --prefix openssl)
         - rm -rf web-driver.lua web-driver
