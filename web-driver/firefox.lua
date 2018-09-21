@@ -1,19 +1,18 @@
---- Firefox driver
+--- WebDriver for Firefox
 --
--- @classmod FirefoxDriver
+-- @classmod Firefox
 local process = require("process")
 
 local Bridge = require("web-driver/bridge")
 local Session = require("web-driver/session")
 local util = require("web-driver/util")
 
-local FirefoxDriver = {}
+local Firefox = {}
 
 local methods = {}
 local metatable = {}
 
-function metatable.__index(driver, key)
-  -- driver is a FirefoxDriver instance
+function metatable.__index(firefox, key)
   return methods[key]
 end
 
@@ -34,11 +33,11 @@ function methods:browser()
   return "firefox"
 end
 
-local function ensure_running(driver, geckodriver_process, geckodriver_command)
+local function ensure_running(firefox, geckodriver_process, geckodriver_command)
   local timeout_sec = 1.0
   local n_tries = 10
   for i = 1, n_tries do
-    local success, _ = pcall(driver.bridge.status, driver.bridge)
+    local success, _ = pcall(firefox.bridge.status, firefox.bridge)
     if success then
       return true
     end
@@ -115,15 +114,15 @@ local function set_options(options)
   return host, port, capabilities
 end
 
-function FirefoxDriver.new(options)
+function Firefox.new(options)
   local host, port, capabilities = set_options(options)
-  local firefox_driver = {
+  local firefox = {
     options = options,
     bridge = Bridge.new(host, port),
     capabilities = capabilities
   }
-  setmetatable(firefox_driver, metatable)
-  return firefox_driver
+  setmetatable(firefox, metatable)
+  return firefox
 end
 
-return FirefoxDriver
+return Firefox

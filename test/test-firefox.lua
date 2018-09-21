@@ -1,23 +1,23 @@
 local luaunit = require("luaunit")
-local FirefoxDriver = require("web-driver/firefox")
+local Firefox = require("web-driver/firefox")
 
-TestFirefoxDriver = {}
+TestFirefox = {}
 
-function TestFirefoxDriver:test_browser()
-  local driver = FirefoxDriver.new()
-  luaunit.assert_equals(driver:browser(), "firefox")
+function TestFirefox:test_browser()
+  local firefox = Firefox.new()
+  luaunit.assert_equals(firefox:browser(), "firefox")
 end
 
-function TestFirefoxDriver:test_default_options()
-  local driver = FirefoxDriver.new()
-  luaunit.assert_equals(driver.bridge.base_url, "http://127.0.0.1:4444/")
+function TestFirefox:test_default_options()
+  local firefox = Firefox.new()
+  luaunit.assert_equals(firefox.bridge.base_url, "http://127.0.0.1:4444/")
 end
 
-function TestFirefoxDriver:test_start_without_callback()
-  local driver = FirefoxDriver.new()
-  driver:start()
-  local session = driver:start_session()
+function TestFirefox:test_start_without_callback()
+  local firefox = Firefox.new()
+  firefox:start()
+  local session = firefox:start_session()
   session:destroy()
-  driver:stop()
+  firefox:stop()
 end
 
