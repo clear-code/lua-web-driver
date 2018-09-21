@@ -8,15 +8,15 @@ Currently, this library supports [geckodriver](https://github.com/mozilla/geckod
 Use [LuaRocks](https://luarocks.org/).
 
 ```
-$ luarocks install lua-web-driver
+$ luarocks install web-driver
 ```
 
 ## Usage
 
 ```lua
-local WebDriver = require("web-driver")
+local web_driver = require("web-driver")
 
-local driver = WebDriver.create("firefox")
+local firefox = web_driver.Firefox.new(")
 
 function callback(session)
   session:visit("http://example.com")
@@ -25,9 +25,9 @@ function callback(session)
   print(session:source())
 end
 
-driver:start()
-driver:start_session(callback)
-driver:stop()
+firefox:start()
+firefox:start_session(callback)
+firefox:stop()
 ```
 
 ## License
