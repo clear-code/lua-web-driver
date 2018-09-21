@@ -42,7 +42,7 @@ function methods:start(callback)
   }
   local child_process, err = process.exec(command_name, args)
   if err then
-     error("lua-web-driver: Failed to execute " .. command_name .. ": " .. err)
+    error("lua-web-driver: Failed to execute " .. command_name .. ": " .. err)
   end
   self.child_process = child_process
   if not self:wait_for_ready() then
