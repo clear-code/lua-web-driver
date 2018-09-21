@@ -21,21 +21,14 @@ matrix:
         - chmod +x /usr/local/bin/geckodriver
         - geckodriver --version
         - ruby -v
-        - luarocks --help
-        - luarocks config
-        - luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit) config
-        - sudo -H luarocks config
-        - sudo -H luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit) config
-        - luarocks path --bin
-        - env
-        - echo sudo luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit) install lua-requests
-        - sudo -H luarocks --lua-dir=$(brew --prefix luajit) install lua-requests
+        - LUAROCKS="sudo -H luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit)"
+        - ${LUAROCKS} install lua-requests
             CRYPTO_DIR=$(brew --prefix openssl)
             OPENSSL_DIR=$(brew --prefix openssl)
-        - sudo -H luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit) install luautf8
-        - sudo -H luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit) install process
-        - sudo -H luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit) install lbase64
-        - sudo -H luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit) install luaunit
-        - sudo -H luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit) install inspect
+        - ${LUAROCKS} install luautf8
+        - ${LUAROCKS} install process
+        - ${LUAROCKS} install lbase64
+        - ${LUAROCKS} install luaunit
+        - ${LUAROCKS} install inspect
       script:
         - luajit test/run-test.lua
