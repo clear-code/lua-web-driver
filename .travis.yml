@@ -21,6 +21,7 @@ matrix:
         - chmod +x /usr/local/bin/geckodriver
         - geckodriver --version
         - ruby -v
+        - sudo -H luarocks install luarocks-fetch-gitrec
         - LUAROCKS="sudo -H luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit)"
         - ${LUAROCKS} install lua-requests
             CRYPTO_DIR=$(brew --prefix openssl)
