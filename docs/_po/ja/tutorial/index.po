@@ -27,25 +27,25 @@ msgstr ""
 "このドキュメントは、LuaWebDriverの使い方を段階的に説明しています。まだ、LuaWebDriverを[インストール][install]していない場"
 "合は、このドキュメントを読む前にLuaWebDriverを[インストール][install]してください。"
 
-msgid "## Start and stop web browser {#start-stop-web-browser}"
+msgid "## Start and stop Web browser {#start-stop-web-browser}"
 msgstr "## Webブラウザーの起動と停止 {#start-stop-web-browser}"
 
-msgid "You need to start WebDriver at first to start web browser."
+msgid "You need to start WebDriver at first to start Web browser."
 msgstr "Webブラウザーを起動するには、まず最初にWebDriverを起動します。"
 
 msgid ""
 "You can use [`WebDriver.create`][webdriver-create] and [`FirefoxDriver.start`]"
-"[firefoxdriver-start] to start web browser as below example.\n"
+"[firefoxdriver-start] to start Web browser as below example.\n"
 "Web browser starts in headless mode with default."
 msgstr ""
 "以下のように、[`WebDriver.create`][webdriver-create]と[`FirefoxDriver.start`][firefoxd"
 "river-start]を使って、Webブラウザーを起動できます。\n"
 "Webブラウザーはデフォルトでヘッドレスモードで起動します。"
 
-msgid "Also you need to stop web browser when you finish your processing."
+msgid "Also you need to stop Web browser when you finish your processing."
 msgstr "また、処理が終了したらWebブラウザーを停止する必要があります。"
 
-msgid "You can use [`FirefoxDriver.stop`][firefoxdriver-stop] to stop web browser."
+msgid "You can use [`FirefoxDriver.stop`][firefoxdriver-stop] to stop Web browser."
 msgstr "[`FirefoxDriver.stop`][firefoxdriver-stop]を使って、Webブラウザーを停止できます。"
 
 msgid "Example:"
@@ -63,16 +63,16 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "## Visit to a website {#visit-to-website}"
+msgid "## Visit to a Website {#visit-to-website}"
 msgstr "## Webサイトへのアクセス"
 
 msgid ""
-"You can use [`Session.visit`][session-visit] to visit a specific website with "
-"the web browser."
+"You can use [`Session.visit`][session-visit] to visit a specific Website with "
+"the Web browser."
 msgstr "[`Session.visit`][session-visit]を使って、Webブラウザーで特定のWebサイトへアクセスできます。"
 
 msgid ""
-"First of all, you make a callback function for visit to a website.\n"
+"First of all, you make a callback function for visit to a Website.\n"
 "You specify the URL as the argument of [`Session.visit`][session-visit]"
 msgstr ""
 "まず最初に、Webサイトへアクセスするためのコールバック関数を作成します。\n"
@@ -113,20 +113,20 @@ msgstr ""
 "driver:stop()\n"
 "```"
 
-msgid "## Serialize to website {#serialize-to-website}"
+msgid "## Serialize to Website {#serialize-to-website}"
 msgstr "## Wbeサイトのシリアライズ {#serialize-to-website}"
 
-msgid "You can use [`Session.xml`][session-xml] to serialize a website as XML."
+msgid "You can use [`Session.xml`][session-xml] to serialize a Website as XML."
 msgstr "[`Session.xml`][session-xml]を使ってWebサイトをXMLとしてシリアライズできます。"
 
-msgid "First of all, you visit to a website to serialize as below example."
+msgid "First of all, you visit to a Website to serialize as below example."
 msgstr "まずはじめに、以下の例のようにシリアライズするWebサイトへアクセスします。"
 
 msgid "Second, you call [`Session.xml`][session-xml]."
 msgstr "次に、[`Session.xml`][session-xml]を呼び出します。"
 
 msgid ""
-"Then you can serialize a current website as XML.\n"
+"Then you can serialize a current Website as XML.\n"
 "You can use this XML as Lua's string."
 msgstr "そうすると、現在のWebサイトをXMLとしてシリアライズできます。このXMLはLuaの文字列として使えます。"
 
