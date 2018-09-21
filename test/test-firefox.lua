@@ -3,9 +3,9 @@ local Firefox = require("web-driver/firefox")
 
 TestFirefox = {}
 
-function TestFirefox:test_browser()
+function TestFirefox:test_name()
   local firefox = Firefox.new()
-  luaunit.assert_equals(firefox:browser(), "firefox")
+  luaunit.assert_equals(firefox:name(), "firefox")
 end
 
 function TestFirefox:test_default_options()

@@ -29,7 +29,7 @@ local DEFAULT_CAPABILITIES = {
   }
 }
 
-function methods:browser()
+function methods:name()
   return "firefox"
 end
 
