@@ -28,6 +28,7 @@ end
 local function ensure_running(firefox, geckodriver_process, geckodriver_command)
   local timeout = firefox.start_timeout
   local n_tries = 100
+  local sleep_ns_per_trie = (timeout / n_tries) * (10 ^ 6)
   for i = 1, n_tries do
     local success, _ = pcall(firefox.bridge.status, firefox.bridge)
     if success then
@@ -39,10 +40,25 @@ local function ensure_running(firefox, geckodriver_process, geckodriver_command)
       error("lua-web-driver: Firefox: " ..
               "Failed to run: <" .. geckodriver_command .. ">")
     end
-    process.nsleep((timeout / n_tries) * (10 ^ 6))
+    process.nsleep(sleep_ns_per_trie)
   end
+
+  local finished = false
   geckodriver_process:kill()
-  process.waitpid(geckodriver_process:pid(), process.WNOHANG)
+  for i = 1, n_tries do
+    local status, err = process.waitpid(geckodriver_process:pid(),
+                                        process.WNOHANG)
+    if status then
+      finished = true
+      break
+    end
+    process.nsleep(sleep_ns_per_trie)
+  end
+  if not finished then
+    local SIGKILL = 9
+    geckodriver_process:kill(SIGKILL)
+    process.waitpid(geckodriver_process:pid())
+  end
   error("lua-web-driver: Firefox: " ..
           "Failed to run in " .. timeout .. " seconds: " ..
           "<" .. geckodriver_command .. ">")
