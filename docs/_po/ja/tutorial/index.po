@@ -113,6 +113,28 @@ msgstr ""
 "driver:stop()\n"
 "```"
 
+msgid "## Serialize to website {#serialize-to-website}"
+msgstr "## Wbeサイトのシリアライズ {#serialize-to-website}"
+
+msgid "You can use [`Session.xml`][session-xml] to serialize a website as XML."
+msgstr "[`Session.xml`][session-xml]を使ってWebサイトをXMLとしてシリアライズできます。"
+
+msgid "First of all, you visit to a website to serialize as below example."
+msgstr "まずはじめに、以下の例のようにシリアライズするWebサイトへアクセスします。"
+
+msgid "Second, you call [`Session.xml`][session-xml]."
+msgstr "次に、[`Session.xml`][session-xml]を呼び出します。"
+
+msgid ""
+"Then you can serialize a current website as XML.\n"
+"You can use this XML as Lua's string."
+msgstr "そうすると、現在のWebサイトをXMLとしてシリアライズできます。このXMLはLuaの文字列として使えます。"
+
+msgid ""
+"```lua\n"
+"```"
+msgstr ""
+
 msgid "## Next step {#next-step}"
 msgstr ""
 
@@ -137,6 +159,9 @@ msgid "[session-start]:../reference/session.html#start"
 msgstr ""
 
 msgid "[session-visit]:../reference/session.html#visit"
+msgstr ""
+
+msgid "[session-xml]:../reference/session.html#xml"
 msgstr ""
 
 msgid "[reference]:../reference/"

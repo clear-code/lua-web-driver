@@ -55,6 +55,21 @@ driver:start_session(callback)
 driver:stop()
 ```
 
+## Wbeサイトのシリアライズ {#serialize-to-website}
+
+[`Session.xml`][session-xml]を使ってWebサイトをXMLとしてシリアライズできます。
+
+まずはじめに、以下の例のようにシリアライズするWebサイトへアクセスします。
+
+次に、[`Session.xml`][session-xml]を呼び出します。
+
+そうすると、現在のWebサイトをXMLとしてシリアライズできます。このXMLはLuaの文字列として使えます。
+
+例:
+
+```lua
+```
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -71,5 +86,7 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-start]:../reference/session.html#start
 
 [session-visit]:../reference/session.html#visit
+
+[session-xml]:../reference/session.html#xml
 
 [reference]:../reference/

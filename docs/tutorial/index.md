@@ -55,6 +55,22 @@ driver:start_session(callback)
 driver:stop()
 ```
 
+## Serialize to website {#serialize-to-website}
+
+You can use [`Session.xml`][session-xml] to serialize a website as XML.
+
+First of all, you visit to a website to serialize as below example.
+
+Second, you call [`Session.xml`][session-xml].
+
+Then you can serialize a current website as XML.
+You can use this XML as Lua's string.
+
+Example:
+
+```lua
+```
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -71,5 +87,7 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-start]:../reference/session.html#start
 
 [session-visit]:../reference/session.html#visit
+
+[session-xml]:../reference/session.html#xml
 
 [reference]:../reference/
