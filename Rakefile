@@ -1,6 +1,6 @@
 # -*- ruby -*-
 
-package_name = "lua-web-driver"
+package_name = "web-driver"
 module_name = "web_driver"
 base_name = "web-driver"
 
