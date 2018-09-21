@@ -156,6 +156,25 @@ msgstr ""
 "[`Session.screenshot`][session-screenshot]の引数は1つです。\n"
 "[`Session.screenshot`][session-screenshot]の引数はファイル名を指定します。"
 
+msgid "## Move to website {#move-to-website}"
+msgstr "## Webサイトの移動 {#move-to-website}"
+
+msgid ""
+"You can use [`Session.back`][session-back] and [`Session.forward`][session-for"
+"ward] to move a website."
+msgstr ""
+"[`Session.back`][session-back]と[`Session.forward`][session-forward]を使って、Webサイト"
+"を移動できます。"
+
+msgid ""
+"If you want to back to the previous website, you call [`Session.back`][session"
+"-back].\n"
+"If you want to go to next the website, you call [`Session.forward`][session-fo"
+"rward]."
+msgstr ""
+"前のWebサイトへ戻りたい場合は、[`Session.back`][session-back]を呼び出します。\n"
+"次のWebサイトへ進みたい場合は、[`Session.forward`][session-forward]を呼び出します。"
+
 msgid "## Button operation on website {#button-operation-on-website}"
 msgstr "## Webサイト上のボタン操作"
 
@@ -253,6 +272,12 @@ msgid "[session-xml]:../reference/session.html#xml"
 msgstr ""
 
 msgid "[session-screenshot]:../reference/session.html#screenshot"
+msgstr ""
+
+msgid "[session-back]:../reference/session.html#back"
+msgstr ""
+
+msgid "[session-forward]:../reference/session.html#forward"
 msgstr ""
 
 msgid "[session-accept-alert]:../reference/session.html#accept_alert"

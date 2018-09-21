@@ -87,8 +87,19 @@ Example:
 ```lua
 ```
 
-## Button operation on website {#button-operation-on-website}
+## Move to website {#move-to-website}
 
+You can use [`Session.back`][session-back] and [`Session.forward`][session-forward] to move a website.
+
+If you want to back to the previous website, you call [`Session.back`][session-back].
+If you want to go to next the website, you call [`Session.forward`][session-forward].
+
+Example:
+
+```lua
+```
+
+## Button operation on website {#button-operation-on-website}
 
 You can use [`Session.accept_alert`][session-accept-alert] and [`Session.dismiss_alert`][session-dismiss-alert] to button operation on website.
 
@@ -149,6 +160,10 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-xml]:../reference/session.html#xml
 
 [session-screenshot]:../reference/session.html#screenshot
+
+[session-back]:../reference/session.html#back
+
+[session-forward]:../reference/session.html#forward
 
 [session-accept-alert]:../reference/session.html#accept_alert
 

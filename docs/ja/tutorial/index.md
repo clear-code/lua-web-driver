@@ -86,8 +86,19 @@ driver:stop()
 ```lua
 ```
 
-## Webサイト上のボタン操作
+## Webサイトの移動 {#move-to-website}
 
+[`Session.back`][session-back]と[`Session.forward`][session-forward]を使って、Webサイトを移動できます。
+
+前のWebサイトへ戻りたい場合は、[`Session.back`][session-back]を呼び出します。
+次のWebサイトへ進みたい場合は、[`Session.forward`][session-forward]を呼び出します。
+
+例:
+
+```lua
+```
+
+## Webサイト上のボタン操作
 
 [`Session.accept_alert`][session-accept-alert]と[`Session.dismiss_alert`][session-dismiss-alert]を使って、Webサイト上のボタンを操作できます。
 
@@ -147,6 +158,10 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-xml]:../reference/session.html#xml
 
 [session-screenshot]:../reference/session.html#screenshot
+
+[session-back]:../reference/session.html#back
+
+[session-forward]:../reference/session.html#forward
 
 [session-accept-alert]:../reference/session.html#accept_alert
 
