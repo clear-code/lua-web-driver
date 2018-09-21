@@ -96,7 +96,6 @@ local function apply_options(firefox, options)
   firefox.capabilities = {
     capabilities = {
       alwaysMatch = {
-        acceptInsecureCerts = true,
         ["moz:firefoxOptions"] = {
           args = options.args or DEFAULT_ARGS
         }
