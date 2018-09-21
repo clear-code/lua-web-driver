@@ -10,10 +10,6 @@ function helper.p(root, options)
   print(inspect.inspect(root, options))
 end
 
-helper.capabilities = {
-  args = { "-headless" }
-}
-
 function helper.start_server()
   local server = process.exec("ruby", { "-run", "-e", "httpd", "--", "--port", "10080", "test/fixtures" })
   local success, response

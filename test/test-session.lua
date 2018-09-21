@@ -4,7 +4,6 @@ local web_driver = require("web-driver")
 local base64 = require("base64")
 local helper = require("test/helper")
 local p = helper.p
-local capabilities = helper.capabilities
 
 TestSession = {}
 
