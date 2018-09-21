@@ -268,6 +268,29 @@ msgstr ""
 "ent.get_attribute`][element-get-attribute]の引数には、属性名を指定します。取得した属性値は、Luaの文字列として使"
 "えます。"
 
+msgid "## Get text of element {#get-text-element}"
+msgstr "## 要素のテキストの取得 {#get-attribute-element}"
+
+msgid ""
+"You can use [`Element.get_text`][element-get-text] to get text of sepecific el"
+"ement."
+msgstr "[`Element.get_text`][element-get-text]を使って特定の要素のテキストを取得できます。"
+
+msgid ""
+"First of all, you get element object for getting text with [`Session.find_elem"
+"ent`][session-find-element]."
+msgstr ""
+"まずはじめに、[`Session.find_element`][session-find-element]を使って、テキストを取得するための要素オブジェクト"
+"を取得します。"
+
+msgid ""
+"Second, you call [`Element.get_text`][element-get-text] of acquired element ob"
+"ject.\n"
+"You can use acquired value of the test as Lua's string."
+msgstr ""
+"次に、取得した要素オブジェクトの[`Element.get_text`][element-get-text]を呼び出します。取得したテキストの値は、Luaの"
+"文字列として使えます。"
+
 msgid "## Next step {#next-step}"
 msgstr ""
 
@@ -319,6 +342,9 @@ msgid "[element-send-keys]:../reference/element.html#send_keys"
 msgstr ""
 
 msgid "[element-get-attribute]:../reference/element.html#get_attribute"
+msgstr ""
+
+msgid "[element-get-text]:../reference/element.html#text"
 msgstr ""
 
 msgid "[reference]:../reference/"

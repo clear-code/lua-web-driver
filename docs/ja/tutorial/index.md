@@ -151,6 +151,19 @@ driver:stop()
 ```lua
 ```
 
+## 要素のテキストの取得 {#get-attribute-element}
+
+[`Element.get_text`][element-get-text]を使って特定の要素のテキストを取得できます。
+
+まずはじめに、[`Session.find_element`][session-find-element]を使って、テキストを取得するための要素オブジェクトを取得します。
+
+次に、取得した要素オブジェクトの[`Element.get_text`][element-get-text]を呼び出します。取得したテキストの値は、Luaの文字列として使えます。
+
+例:
+
+```lua
+```
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -185,5 +198,7 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [element-send-keys]:../reference/element.html#send_keys
 
 [element-get-attribute]:../reference/element.html#get_attribute
+
+[element-get-text]:../reference/element.html#text
 
 [reference]:../reference/
