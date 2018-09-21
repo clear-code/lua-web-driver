@@ -35,11 +35,16 @@ function methods:browser()
 end
 
 function methods:start(callback)
+  local command_name = "geckodriver"
   local args = {
     "--host", self.bridge.host,
     "--port", self.bridge.port
   }
-  self.child_process = process.exec("geckodriver", args)
+  local child_process, err = process.exec(command_name, args)
+  if err then
+     error("lua-web-driver: Failed to execute " .. command_name .. ": " .. err)
+  end
+  self.child_process = child_process
   if not self:wait_for_ready() then
     error("Timeout: geckodriver may not be running")
   end
