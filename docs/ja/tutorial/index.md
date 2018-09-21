@@ -70,6 +70,22 @@ driver:stop()
 ```lua
 ```
 
+## スクリーンショットの取得 {#take-screenshot}
+
+[`Session.screenshot`][session-screenshot]を使って現在のWebサイトのスクリーンショットを取得できます。
+スクリーンショットは、PNG形式で取得されます。
+
+まずはじめに、以下の例のようにシリアライズするWebサイトへアクセスします。
+
+次に[`Session.screenshot`][session-screenshot]を呼び出します。
+[`Session.screenshot`][session-screenshot]の引数は1つです。
+[`Session.screenshot`][session-screenshot]の引数はファイル名を指定します。
+
+例:
+
+```lua
+```
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -88,5 +104,7 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-visit]:../reference/session.html#visit
 
 [session-xml]:../reference/session.html#xml
+
+[session-screenshot]:../reference/session.html#screenshot
 
 [reference]:../reference/

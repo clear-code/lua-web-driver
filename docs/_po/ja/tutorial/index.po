@@ -135,6 +135,27 @@ msgid ""
 "```"
 msgstr ""
 
+msgid "## Take a screenshot {#take-screenshot}"
+msgstr "## スクリーンショットの取得 {#take-screenshot}"
+
+msgid ""
+"You can use [`Session.screenshot`][session-screenshot] to take a screenshot of"
+" current Website.\n"
+"The screenshot is taken in PNG format."
+msgstr ""
+"[`Session.screenshot`][session-screenshot]を使って現在のWebサイトのスクリーンショットを取得できます。\n"
+"スクリーンショットは、PNG形式で取得されます。"
+
+msgid ""
+"Second, you call [`Session.screenshot`][session-screenshot].\n"
+"[`Session.screenshot`][session-screenshot] has one argument.\n"
+"You specify the file name as the argument of [`Session.screenshot`][session-sc"
+"reenshot]."
+msgstr ""
+"次に[`Session.screenshot`][session-screenshot]を呼び出します。\n"
+"[`Session.screenshot`][session-screenshot]の引数は1つです。\n"
+"[`Session.screenshot`][session-screenshot]の引数はファイル名を指定します。"
+
 msgid "## Next step {#next-step}"
 msgstr ""
 
@@ -162,6 +183,9 @@ msgid "[session-visit]:../reference/session.html#visit"
 msgstr ""
 
 msgid "[session-xml]:../reference/session.html#xml"
+msgstr ""
+
+msgid "[session-screenshot]:../reference/session.html#screenshot"
 msgstr ""
 
 msgid "[reference]:../reference/"

@@ -71,6 +71,22 @@ Example:
 ```lua
 ```
 
+## Take a screenshot {#take-screenshot}
+
+You can use [`Session.screenshot`][session-screenshot] to take a screenshot of current Website.
+The screenshot is taken in PNG format.
+
+First of all, you visit to a Website to serialize as below example.
+
+Second, you call [`Session.screenshot`][session-screenshot].
+[`Session.screenshot`][session-screenshot] has one argument.
+You specify the file name as the argument of [`Session.screenshot`][session-screenshot].
+
+Example:
+
+```lua
+```
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -89,5 +105,7 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-visit]:../reference/session.html#visit
 
 [session-xml]:../reference/session.html#xml
+
+[session-screenshot]:../reference/session.html#screenshot
 
 [reference]:../reference/
