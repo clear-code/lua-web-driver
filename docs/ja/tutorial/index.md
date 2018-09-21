@@ -106,7 +106,7 @@ driver:stop()
 
 次に、"OK"ボタンを押したい場合は、[`Session.accept_alert`][session-accept-alert]を呼び出します。
 
-"Cancel"ボタンを押したい場合は、[``Session.dismiss_alert][session-dismiss-alert]を呼び出します。
+"Cancel"ボタンを押したい場合は、[`Session.dismiss_alert`][session-dismiss-alert]を呼び出します。
 
 例:
 

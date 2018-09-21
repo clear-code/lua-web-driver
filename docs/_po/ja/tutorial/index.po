@@ -196,7 +196,7 @@ msgstr "次に、\"OK\"ボタンを押したい場合は、[`Session.accept_aler
 msgid ""
 "If you want to push a \"Cancel\" button, you call [`Session.dismiss_alert`][sess"
 "ion-dismiss-alert]."
-msgstr "\"Cancel\"ボタンを押したい場合は、[``Session.dismiss_alert][session-dismiss-alert]を呼び出します。"
+msgstr "\"Cancel\"ボタンを押したい場合は、[`Session.dismiss_alert`][session-dismiss-alert]を呼び出します。"
 
 msgid "```lua"
 msgstr ""
