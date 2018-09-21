@@ -196,6 +196,33 @@ msgstr ""
 "[`Session.find_element`][session-find-element]は、以下のようにCSSセレクタを使って、特定の要素を取得できます"
 "。"
 
+msgid "## Input string into specific a dialog {#input-string-into-dialog}"
+msgstr "## 特定のダイアログへの文字列入力 {#input-string-into-dialog}"
+
+msgid ""
+"You can use [`Element.send_keys`][element-send-keys] to input string into spec"
+"ific a dialog."
+msgstr "[`Element.send_keys`][element-send-keys]を使って、特定のダイアログに文字列を入力できます。"
+
+msgid "First of all, you visit a website to input string into a dialog."
+msgstr "まずはじめに、ダイアログに文字列を入力するWebサイトへアクセスします。"
+
+msgid ""
+"Second, you get element object for inputting string with [`Session.find_elemen"
+"t`][session-find-element].\""
+msgstr ""
+"次に、[`Session.find_element`][session-find-element]を使って、文字列を入力するための要素オブジェクトを取得しま"
+"す。"
+
+msgid ""
+"Third, you call [`Element.send_keys`][element-send-keys] of acquired element o"
+"bject.\n"
+"You specify input string as the argument of [`Element.send_keys`][element-send"
+"-keys]."
+msgstr ""
+"次に、取得した要素オブジェクトの[`Element.send_keys`][element-send-keys]を呼び出します。[`Element.send"
+"_keys`][element-send-keys]の引数には、入力文字列を指定します。"
+
 msgid "## Next step {#next-step}"
 msgstr ""
 
@@ -235,6 +262,9 @@ msgid "[session-dismiss-alert]:../reference/session.html#dismiss_alert"
 msgstr ""
 
 msgid "[session-find-element]:../reference/session.html#find_element"
+msgstr ""
+
+msgid "[element-send-keys]:../reference/element.html#send_keys"
 msgstr ""
 
 msgid "[reference]:../reference/"

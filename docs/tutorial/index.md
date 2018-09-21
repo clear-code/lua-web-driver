@@ -113,6 +113,22 @@ Example:
 
 ```
 
+## Input string into specific a dialog {#input-string-into-dialog}
+
+You can use [`Element.send_keys`][element-send-keys] to input string into specific a dialog.
+
+First of all, you visit a website to input string into a dialog.
+
+Second, you get element object for inputting string with [`Session.find_element`][session-find-element]."
+
+Third, you call [`Element.send_keys`][element-send-keys] of acquired element object.
+You specify input string as the argument of [`Element.send_keys`][element-send-keys].
+
+Example:
+
+```lua
+```
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -139,5 +155,7 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-dismiss-alert]:../reference/session.html#dismiss_alert
 
 [session-find-element]:../reference/session.html#find_element
+
+[element-send-keys]:../reference/element.html#send_keys
 
 [reference]:../reference/

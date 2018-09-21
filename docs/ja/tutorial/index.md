@@ -112,6 +112,21 @@ driver:stop()
 
 ```
 
+## 特定のダイアログへの文字列入力 {#input-string-into-dialog}
+
+[`Element.send_keys`][element-send-keys]を使って、特定のダイアログに文字列を入力できます。
+
+まずはじめに、ダイアログに文字列を入力するWebサイトへアクセスします。
+
+次に、[`Session.find_element`][session-find-element]を使って、文字列を入力するための要素オブジェクトを取得します。
+
+次に、取得した要素オブジェクトの[`Element.send_keys`][element-send-keys]を呼び出します。[`Element.send_keys`][element-send-keys]の引数には、入力文字列を指定します。
+
+例:
+
+```lua
+```
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -138,5 +153,7 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-dismiss-alert]:../reference/session.html#dismiss_alert
 
 [session-find-element]:../reference/session.html#find_element
+
+[element-send-keys]:../reference/element.html#send_keys
 
 [reference]:../reference/
