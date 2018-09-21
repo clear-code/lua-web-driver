@@ -138,6 +138,19 @@ driver:stop()
 ```lua
 ```
 
+## 要素の属性の取得 {#get-attribute-element}
+
+[`Element.get_attribute`][element-get-attribute]を使って特定の要素の属性を取得できます。
+
+まずはじめに、[`Session.find_element`][session-find-element]を使って、属性を取得するための要素オブジェクトを取得します。
+
+次に、取得した要素オブジェクトの[`Element.get_attribute`][element-get-attribute]を呼び出します。[`Element.get_attribute`][element-get-attribute]の引数には、属性名を指定します。取得した属性値は、Luaの文字列として使えます。
+
+例:
+
+```lua
+```
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -170,5 +183,7 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-find-element]:../reference/session.html#find_element
 
 [element-send-keys]:../reference/element.html#send_keys
+
+[element-get-attribute]:../reference/element.html#get_attribute
 
 [reference]:../reference/

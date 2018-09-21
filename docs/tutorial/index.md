@@ -140,6 +140,21 @@ Example:
 ```lua
 ```
 
+## Get attribute of element {#get-attribute-element}
+
+You can use [`Element.get_attribute`][element-get-attribute] to get attribute of specific element.
+
+First of all, you get element object for getting attribute with [`Session.find_element`][session-find-element].
+
+Second, you call [`Element.get_attribute`][element-get-attribute] of acquired element object.
+You specify attribute name as the argument of [`Element.get_attribute`][element-get-attribute].
+You can use acquired value of the attribute as Lua's string.
+
+Example:
+
+```lua
+```
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -172,5 +187,7 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-find-element]:../reference/session.html#find_element
 
 [element-send-keys]:../reference/element.html#send_keys
+
+[element-get-attribute]:../reference/element.html#get_attribute
 
 [reference]:../reference/
