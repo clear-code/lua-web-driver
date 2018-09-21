@@ -29,9 +29,9 @@ test-centos7:
     - chmod +x /usr/local/bin/geckodriver
     - VERSION=$(grep VERSION web-driver.lua | sed -e 's/.*"\(.*\)"/\1/g')
     - cp web-driver.rockspec web-driver-${VERSION}-0.rockspec
-    - ${LUAROCKS} build web-driver-${VERSION}-0.rockspec
+    - luarocks build web-driver-${VERSION}-0.rockspec
     - rm -rf web-driver.lua web-driver
-    - ${LUAROCKS} install luaunit
+    - luarocks install luaunit
   script:
     - luajit test/run-test.lua
 
