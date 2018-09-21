@@ -86,6 +86,32 @@ driver:stop()
 ```lua
 ```
 
+## Webサイト上のボタン操作
+
+
+[`Session.accept_alert`][session-accept-alert]と[`Session.dismiss_alert`][session-dismiss-alert]を使って、Webサイト上のボタンを操作できます。
+
+まずはじめに、以下の例のようにボタンを操作するWebサイトへアクセスします。
+
+次に、"OK"ボタンを押したい場合は、[`Session.accept_alert`][session-accept-alert]を呼び出します。
+
+"Cancel"ボタンを押したい場合は、[``Session.dismiss_alert][session-dismiss-alert]を呼び出します。
+
+例:
+
+```lua
+
+```
+
+また、[`Session.find_element`][session-find-element]を使って、特定のダイアログ上のボタンを操作できます。
+[`Session.find_element`][session-find-element]は、以下のようにCSSセレクタを使って、特定の要素を取得できます。
+
+例:
+
+```lua
+
+```
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -106,5 +132,11 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-xml]:../reference/session.html#xml
 
 [session-screenshot]:../reference/session.html#screenshot
+
+[session-accept-alert]:../reference/session.html#accept_alert
+
+[session-dismiss-alert]:../reference/session.html#dismiss_alert
+
+[session-find-element]:../reference/session.html#find_element
 
 [reference]:../reference/

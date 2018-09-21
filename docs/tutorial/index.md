@@ -87,6 +87,32 @@ Example:
 ```lua
 ```
 
+## Button operation on website {#button-operation-on-website}
+
+
+You can use [`Session.accept_alert`][session-accept-alert] and [`Session.dismiss_alert`][session-dismiss-alert] to button operation on website.
+
+First of all, you visit a website to button operation as below example.
+
+Second, If you want to push a "OK" button, you call [`Session.accept_alert`][session-accept-alert].
+
+If you want to push a "Cancel" button, you call [`Session.dismiss_alert`][session-dismiss-alert].
+
+Example:
+
+```lua
+
+```
+
+Also, if you want to operation button on the specific dialog, you can use [`Session.find_element`][session-find-element] to specify dialog as below example.
+[`Session.find_element`][session-find-element] is get specify element with css selector as below.
+
+Example:
+
+```lua
+
+```
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -107,5 +133,11 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-xml]:../reference/session.html#xml
 
 [session-screenshot]:../reference/session.html#screenshot
+
+[session-accept-alert]:../reference/session.html#accept_alert
+
+[session-dismiss-alert]:../reference/session.html#dismiss_alert
+
+[session-find-element]:../reference/session.html#find_element
 
 [reference]:../reference/
