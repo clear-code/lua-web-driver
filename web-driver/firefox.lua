@@ -18,12 +18,13 @@ end
 
 local DEFAULT_HOST = "127.0.0.1"
 local DEFAULT_PORT = "4444"
+local DEFAULT_ARGS = { "-headless" }
 local DEFAULT_CAPABILITIES = {
   capabilities = {
     alwaysMatch = {
       acceptInsecureCerts = true,
       ["moz:firefoxOptions"] = {
-        args = { "-headless" }
+        args = DEFAULT_ARGS
       }
     }
   }
@@ -94,19 +95,19 @@ function methods:start_session(callback)
   end
 end
 
-local function set_options(options)
+local function deconstruct_options(options)
   if not options then
     return DEFAULT_HOST, DEFAULT_PORT, DEFAULT_CAPABILITIES
   end
 
-  local host = options.host
-  local port = options.port
+  local host = options.host or DEFAULT_HOST
+  local port = options.port or DEFAULT_PORT
   local capabilities = {
     capabilities = {
       alwaysMatch = {
         acceptInsecureCerts = true,
         ["moz:firefoxOptions"] = {
-          args = options
+          args = options.args or DEFAULT_ARGS
         }
       }
     }
@@ -115,9 +116,8 @@ local function set_options(options)
 end
 
 function Firefox.new(options)
-  local host, port, capabilities = set_options(options)
+  local host, port, capabilities = deconstruct_options(options)
   local firefox = {
-    options = options,
     bridge = Bridge.new(host, port),
     capabilities = capabilities
   }
