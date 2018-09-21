@@ -10,7 +10,7 @@ examples = { "examples" }
 package = "."
 format = "discount"
 sort_modules=true
-file = { "web-driver.lua", "lib" }
+file = { "web-driver.lua", "web-driver" }
 readme = "README.md"
 kind_names = { topic = "Manual", module = "Libraries" }
 tparam_alias("array","array")
