@@ -34,20 +34,43 @@ function methods:browser()
   return "firefox"
 end
 
+local function ensure_running(driver, geckodriver_process, geckodriver_command)
+  local timeout_sec = 1.0
+  local n_tries = 10
+  for i = 1, n_tries do
+    local success, _ = pcall(driver.bridge.status, driver.bridge)
+    if success then
+      return true
+    end
+    local status, err = process.waitpid(geckodriver_process:pid(),
+                                        process.WNOHANG)
+    if status then
+      error("lua-web-driver: Firefox: " ..
+              "Failed to run: <" .. geckodriver_command .. ">")
+    end
+    process.nsleep((timeout_sec / n_tries) * (10 ^ 6))
+  end
+  geckodriver_process:kill()
+  process.waitpid(geckodriver_process:pid(), process.WNOHANG)
+  error("lua-web-driver: Firefox: " ..
+          "Failed to run in " .. timeout_sec .. " seconds: " ..
+          "<" .. geckodriver_command .. ">")
+end
+
 function methods:start(callback)
-  local command_name = "geckodriver"
+  local command = "geckodriver"
   local args = {
     "--host", self.bridge.host,
     "--port", self.bridge.port
   }
-  local child_process, err = process.exec(command_name, args)
+  local geckodriver_process, err = process.exec(command, args)
   if err then
-    error("lua-web-driver: Failed to execute " .. command_name .. ": " .. err)
+    error("lua-web-driver: Firefox: " ..
+            "Failed to execute: <" .. command .. ">: " ..
+            err)
   end
-  self.child_process = child_process
-  if not self:wait_for_ready() then
-    error("Timeout: geckodriver may not be running")
-  end
+  ensure_running(self, geckodriver_process, command)
+  self.geckodriver_process = geckodriver_process
   if callback then
     local _, err = pcall(callback, self)
     self:stop()
@@ -57,34 +80,11 @@ function methods:start(callback)
   end
 end
 
-function methods:status()
-  local success, response
-  for _ = 1, 10 do
-    success, response = pcall(self.bridge.status, self.bridge)
-    process.nsleep(100000) -- 100 usec
-    if success then
-      return response.json()["value"]
-    end
-  end
-  return { ready = false, message = "Timeout: geckodriver may not be running" }
-end
-
-function methods:is_ready()
-  return self:status()["ready"]
-end
-
-function methods:wait_for_ready()
-  for i = 1, 10 do
-    if self:is_ready() then
-      return true
-    end
-    process.nsleep((100 * 10^3) * i) -- 100 usec * i
-  end
-  return false
-end
-
 function methods:stop()
-  self.child_process:kill()
+  if not self.geckodriver_process then
+    return
+  end
+  self.geckodriver_process:kill()
 end
 
 function methods:start_session(callback)
