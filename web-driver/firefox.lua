@@ -21,6 +21,14 @@ local DEFAULT_PORT = "4444"
 local DEFAULT_ARGS = { "-headless" }
 local DEFAULT_START_TIMEOUT = 5
 
+local start_timeout_env = process.getenv()["LUA_WEB_DRIVER_START_TIMEOUT"]
+if start_timeout_env then
+  local start_timeout_env_value = tonumber(start_timeout_env, 10)
+  if start_timeout_env_value then
+    DEFAULT_START_TIMEOUT = start_timeout_env_value
+  end
+end
+
 function methods:name()
   return "firefox"
 end
