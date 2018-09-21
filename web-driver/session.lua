@@ -293,11 +293,13 @@ end
 function Session.start(driver, capabilities, callback)
   local session = Session.new(driver, capabilities or driver.capabilities)
   if callback then
-    local _, err = pcall(callback, session)
+    local success, return_value = pcall(callback, session)
     session:destroy()
-    if err then
+    if not success then
+      local err = return_value
       error(err)
     end
+    return return_value
   else
     return session
   end
