@@ -80,7 +80,7 @@ function methods:get_text()
                       })
 end
 
-function methods:get_element_tag_name()
+function methods:get_tag_name()
   return self:execute("get",
                       "session/:session_id/element/:element_id/name",
                       {
