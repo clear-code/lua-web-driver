@@ -113,10 +113,10 @@ function TestSession:test_window_fullscreen()
   self.driver:start_session(callback)
 end
 
-function TestSession:test_get_active_element()
+function TestSession:test_active_element()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
-    luaunit.assert_not_nil(session:get_active_element())
+    luaunit.assert_not_nil(session:active_element())
   end
   self.driver:start_session(callback)
 end
@@ -238,7 +238,7 @@ end
 function TestSession:test_all_cookies()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/cookie.html")
-    local cookies = session:get_all_cookies()
+    local cookies = session:all_cookies()
     luaunit.assert_equals(#cookies, 2)
   end
   self.driver:start_session(callback)
@@ -247,14 +247,14 @@ end
 function TestSession:test_add_cookie()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/cookie.html")
-    local cookies = session:get_all_cookies()
+    local cookies = session:all_cookies()
     luaunit.assert_equals(#cookies, 2)
     local cookie = {
       name = "data3",
       value = "789",
     }
     session:add_cookie(cookie)
-    cookies = session:get_all_cookies()
+    cookies = session:all_cookies()
     luaunit.assert_equals(#cookies, 3)
     luaunit.assert_equals(session:get_cookie("data3")["value"], "789")
   end
@@ -264,10 +264,10 @@ end
 function TestSession:test_delete_cookie()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/cookie.html")
-    local cookies = session:get_all_cookies()
+    local cookies = session:all_cookies()
     luaunit.assert_equals(#cookies, 2)
     session:delete_cookie("data1")
-    cookies = session:get_all_cookies()
+    cookies = session:all_cookies()
     luaunit.assert_equals(#cookies, 1)
   end
   self.driver:start_session(callback)
@@ -327,10 +327,10 @@ function TestSession:test_dismiss_confirm()
   self.driver:start_session(callback)
 end
 
-function TestSession:test_screenshot()
+function TestSession:test_save_screenshot()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
-    session:screenshot("tmp/session.png")
+    session:save_screenshot("tmp/session.png")
     local file_handle, err = io.open("tmp/session.png", "rb")
     local binary = file_handle:read("*a")
     file_handle:close()
