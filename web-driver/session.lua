@@ -136,14 +136,14 @@ end
 function methods:find_element(strategy, finder)
   local response = self.client:find_element(strategy, finder)
   local id = response.json()["value"]
-  return Element.new(self, util.element_id_from(id))
+  return Element.new(self, id)
 end
 
 function methods:find_elements(strategy, finder)
   local response = self.client:find_elements(strategy, finder)
   local elements = {}
   for i, id in ipairs(response.json()["value"]) do
-    elements[i] = Element.new(self, util.element_id_from(id))
+    elements[i] = Element.new(self, id)
   end
   return elements
 end
@@ -163,7 +163,7 @@ end
 function methods:active_element()
   local response = self.client:get_active_element()
   local id = response.json()["value"]
-  return Element.new(self, util.element_id_from(id))
+  return Element.new(self, id)
 end
 
 function methods:source()

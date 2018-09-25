@@ -38,14 +38,14 @@ end
 function methods:find_child_element(strategy, finder)
   local response = self.client:find_child_element(strategy, finder)
   local id = response.json()["value"]
-  return Element.new(self.session, util.element_id_from(id))
+  return Element.new(self.session, id)
 end
 
 function methods:find_child_elements(strategy, finder)
   local response = self.client:find_child_elements(strategy, finder)
   local elements = {}
   for i, id in ipairs(response.json()["value"]) do
-    elements[i] = Element.new(self.session, util.element_id_from(id))
+    elements[i] = Element.new(self.session, id)
   end
   return elements
 end
@@ -127,6 +127,10 @@ function methods:to_data()
 end
 
 function Element.new(session, id)
+  if type(id) == "table" then
+    -- Why should we check "ELEMENT" here?
+    id = id["ELEMENT"] or id["element-6066-11e4-a52e-4f735466cecf"]
+  end
   local element = {
     client = ElementClient.new(session.client.host,
                                session.client.port,
