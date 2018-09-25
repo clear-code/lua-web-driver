@@ -20,7 +20,7 @@ end
 -- <https://www.w3.org/TR/webdriver/#dfn-delete-session>
 -- @function Session:destroy
 function methods:destroy()
-  self.bridge:delete_session(self.session_id)
+  self.bridge:delete_session(self.id)
 end
 
 --- Fetch timeouts
@@ -28,7 +28,7 @@ end
 -- @function Session:timeouts
 -- @return TODO
 function methods:timeouts()
-  local response = self.bridge:timeouts(self.session_id)
+  local response = self.bridge:timeouts(self.id)
   return response.json()["value"]
 end
 
@@ -37,109 +37,109 @@ end
 -- @function Session:set_timeouts
 -- @param timeouts
 function methods:set_timeouts(timeouts)
-  local response = self.bridge:set_timeouts(self.session_id, timeouts)
+  local response = self.bridge:set_timeouts(self.id, timeouts)
   return response
 end
 
 --- Navigate the current top-level browsing context to to the specified URL
 -- @function Session:visit
 function methods:navigate_to(url)
-  local response = self.bridge:navigate_to(self.session_id, url)
+  local response = self.bridge:navigate_to(self.id, url)
   return response
 end
 
 --- Retrieve current URL
 -- @function Session:url
 function methods:url()
-  local response = self.bridge:get_current_url(self.session_id)
+  local response = self.bridge:get_current_url(self.id)
   return response.json()["value"]
 end
 
 function methods:back()
-  local response = self.bridge:go_back(self.session_id)
+  local response = self.bridge:go_back(self.id)
   return response
 end
 
 function methods:forward()
-  local response = self.bridge:go_forward(self.session_id)
+  local response = self.bridge:go_forward(self.id)
   return response
 end
 
 function methods:refresh()
-  local response = self.bridge:refresh(self.session_id)
+  local response = self.bridge:refresh(self.id)
   return response
 end
 
 function methods:title()
-  local response = self.bridge:get_title(self.session_id)
+  local response = self.bridge:get_title(self.id)
   return response.json()["value"]
 end
 
 function methods:window_handle()
-  local response = self.bridge:get_window_handle(self.session_id)
+  local response = self.bridge:get_window_handle(self.id)
   return response.json()["value"]
 end
 
 function methods:close_window()
-  local response = self.bridge:close_window(self.session_id)
+  local response = self.bridge:close_window(self.id)
   return response
 end
 
 function methods:switch_to_window(handle)
-  local response = self.bridge:switch_to_window(self.session_id, handle)
+  local response = self.bridge:switch_to_window(self.id, handle)
   return response
 end
 
 function methods:window_handles()
-  local response = self.bridge:get_window_handles(self.session_id)
+  local response = self.bridge:get_window_handles(self.id)
   return response.json()["value"]
 end
 
 function methods:maximize_window()
-  local response = self.bridge:maximize_window(self.session_id)
+  local response = self.bridge:maximize_window(self.id)
   return response
 end
 
 function methods:minimize_window()
-  local response = self.bridge:minimize_window(self.session_id)
+  local response = self.bridge:minimize_window(self.id)
   return response
 end
 
 function methods:fullscreen_window()
-  local response = self.bridge:fullscreen_window(self.session_id)
+  local response = self.bridge:fullscreen_window(self.id)
   return response
 end
 
 function methods:window_rect()
-  local response = self.bridge:get_window_rect(self.session_id)
+  local response = self.bridge:get_window_rect(self.id)
   return response.json()["value"]
 end
 
 -- rect = { height = h, width = w, x = position_x, y = position_y }
 function methods:set_window_rect(rect)
-  local response = self.bridge:set_window_rect(self.session_id, rect)
+  local response = self.bridge:set_window_rect(self.id, rect)
   return response
 end
 
 -- Support iframe only
 function methods:switch_to_frame(id)
-  local response = self.bridge:switch_to_frame(self.session_id, id)
+  local response = self.bridge:switch_to_frame(self.id, id)
   return response
 end
 
 function methods:switch_to_parent_frame()
-  local response = self.bridge:switch_to_parent_frame(self.session_id)
+  local response = self.bridge:switch_to_parent_frame(self.id)
   return response
 end
 
 function methods:find_element(strategy, finder)
-  local response = self.bridge:find_element(self.session_id, strategy, finder)
+  local response = self.bridge:find_element(self.id, strategy, finder)
   local id = response.json()["value"]
   return Element.new(self, util.element_id_from(id))
 end
 
 function methods:find_elements(strategy, finder)
-  local response = self.bridge:find_elements(self.session_id, strategy, finder)
+  local response = self.bridge:find_elements(self.id, strategy, finder)
   local elements = {}
   for i, id in ipairs(response.json()["value"]) do
     elements[i] = Element.new(self, util.element_id_from(id))
@@ -160,14 +160,14 @@ function methods:links(finder)
 end
 
 function methods:get_active_element()
-  local response = self.bridge:get_active_element(self.session_id)
+  local response = self.bridge:get_active_element(self.id)
   local id = response.json()["value"]
   return Element.new(self, util.element_id_from(id))
 end
 
 
 function methods:source()
-  local response = self.bridge:get_page_source(self.session_id)
+  local response = self.bridge:get_page_source(self.id)
   return response.json()["value"]
 end
 
@@ -176,38 +176,38 @@ function methods:xml()
 end
 
 function methods:execute_script(script, args)
-  local response = self.bridge:execute_script(self.session_id, script, args)
+  local response = self.bridge:execute_script(self.id, script, args)
   return response.json()["value"]
 end
 
 -- TODO
 function methods:execute_script_async(script, args)
-  local response = self.bridge:execute_async_script(self.session_id, script, args)
+  local response = self.bridge:execute_async_script(self.id, script, args)
   return response.json()["value"]
 end
 
 function methods:get_all_cookies()
-  local response = self.bridge:get_all_cookies(self.session_id)
+  local response = self.bridge:get_all_cookies(self.id)
   return response.json()["value"]
 end
 
 function methods:get_cookie(name)
-  local response = self.bridge:get_cookie(self.session_id, name)
+  local response = self.bridge:get_cookie(self.id, name)
   return response.json()["value"]
 end
 
 function methods:add_cookie(cookie)
-  local response = self.bridge:add_cookie(self.session_id, cookie)
+  local response = self.bridge:add_cookie(self.id, cookie)
   return response
 end
 
 function methods:delete_cookie(name)
-  local response = self.bridge:delete_cookie(self.session_id, name)
+  local response = self.bridge:delete_cookie(self.id, name)
   return response
 end
 
 function methods:delete_all_cookies()
-  local response = self.bridge:delete_all_cookies(self.session_id)
+  local response = self.bridge:delete_all_cookies(self.id)
   return response
 end
 
@@ -221,33 +221,33 @@ end
 
 -- TODO
 function methods:perform_actions(actions)
-  local response = self.bridge:perform_actions(self.session_id, { actions = actions })
+  local response = self.bridge:perform_actions(self.id, { actions = actions })
   return response
 end
 
 -- TODO
 function methods:release_actions()
-  local response = self.bridge:release_actions(self.session_id)
+  local response = self.bridge:release_actions(self.id)
   return response
 end
 
 function methods:dismiss_alert()
-  local response = self.bridge:dismiss_alert(self.session_id)
+  local response = self.bridge:dismiss_alert(self.id)
   return response
 end
 
 function methods:accept_alert()
-  local response = self.bridge:accept_alert(self.session_id)
+  local response = self.bridge:accept_alert(self.id)
   return response
 end
 
 function methods:alert_text()
-  local response = self.bridge:get_alert_text(self.session_id)
+  local response = self.bridge:get_alert_text(self.id)
   return response.json()["value"]
 end
 
 function methods:set_alert_text(text)
-  local response = self.bridge:set_alert_text(self.session_id, text)
+  local response = self.bridge:set_alert_text(self.id, text)
   return response
 end
 
@@ -257,7 +257,7 @@ end
 -- @function Session:screenshot
 -- @param filename The filename to save screenshot
 function methods:screenshot(filename)
-  local response = self.bridge:take_screenshot(self.session_id)
+  local response = self.bridge:take_screenshot(self.id)
   local binary = base64.decode(response.json()["value"])
   local file_handle, err = io.open(filename, "wb+")
   if err then
@@ -278,7 +278,7 @@ function Session.new(driver, capabilities)
   local session_id = response.json()["value"]["sessionId"]
   local session = {
     bridge = driver.bridge,
-    session_id = session_id
+    id = session_id,
   }
   setmetatable(session, metatable)
   return session
