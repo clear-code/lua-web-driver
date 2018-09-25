@@ -1,4 +1,6 @@
 local util = require("web-driver/util")
+local KeyActions = require("web-driver/interactions/key-actions")
+local PointerActions = require("web-driver/interactions/pointer-actions")
 
 local ActionBuilder = {}
 
@@ -6,18 +8,9 @@ local methods = {}
 local metatable = {}
 
 function metatable.__index(builder, key)
-  -- builder is a ActionBuilder instance
-  return methods[key]
-end
-
-local KeyActions = require("web-driver/interactions/key-actions")
-for key, method in pairs(KeyActions) do
-  methods[key] = method
-end
-
-local PointerActions = require("web-driver/interactions/pointer-actions")
-for key, method in pairs(PointerActions) do
-  methods[key] = method
+  return methods[key] or
+    PointerActions[key] or
+    KeyActions[key]
 end
 
 function methods:add_pointer_input(kind, name)
