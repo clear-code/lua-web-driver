@@ -85,7 +85,7 @@ local function ensure_running(firefox, geckodriver_process, geckodriver_command)
           "<" .. geckodriver_command .. ">")
 end
 
-local function apply_geckodriver_args(self)
+local function make_geckodriver_args(self)
   local args = {
     "--host", self.bridge.host,
     "--port", self.bridge.port
@@ -99,7 +99,7 @@ end
 
 function methods:start(callback)
   local command = "geckodriver"
-  local args = apply_geckodriver_args(self)
+  local args = make_geckodriver_args(self)
   local geckodriver_process, err = process.exec(command, args)
   if err then
     error("lua-web-driver: Firefox: " ..
