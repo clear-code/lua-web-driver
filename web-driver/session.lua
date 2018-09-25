@@ -274,7 +274,8 @@ end
 -- @param driver
 -- @param capabilities
 function Session.new(driver, capabilities)
-  local response = driver.bridge:create_session(capabilities or driver.capabilities)
+  capabilities = capabilities or driver.capabilities
+  local response = driver.bridge:create_session(capabilities)
   local session_id = response.json()["value"]["sessionId"]
   local session = {
     bridge = driver.bridge,
@@ -291,7 +292,7 @@ end
 -- @param capabilities
 -- @param callback
 function Session.start(driver, capabilities, callback)
-  local session = Session.new(driver, capabilities or driver.capabilities)
+  local session = Session.new(driver, capabilities)
   if callback then
     local success, return_value = pcall(callback, session)
     session:destroy()

@@ -127,9 +127,9 @@ end
 
 function methods:start_session(callback)
   if callback then
-    Session.start(self, self.capabilities, callback)
+    Session.start(self, nil, callback)
   else
-    return Session.new(self, self.capabilities)
+    return Session.new(self)
   end
 end
 
