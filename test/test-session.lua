@@ -18,9 +18,9 @@ function TestSession:teardown()
   self.server:kill()
 end
 
-function TestSession:test_visit()
+function TestSession:test_navigate_to()
   local callback = function(session)
-    session:visit("http://localhost:10080/index.html")
+    session:navigate_to("http://localhost:10080/index.html")
     luaunit.assert_equals(session:url(), "http://localhost:10080/index.html")
     luaunit.assert_equals(session:title(), "This is test html")
   end
@@ -29,9 +29,9 @@ end
 
 function TestSession:test_back_forward()
   local callback = function(session)
-    session:visit("http://localhost:10080/1.html")
+    session:navigate_to("http://localhost:10080/1.html")
     luaunit.assert_equals(session:url(), "http://localhost:10080/1.html")
-    session:visit("http://localhost:10080/2.html")
+    session:navigate_to("http://localhost:10080/2.html")
     luaunit.assert_equals(session:url(), "http://localhost:10080/2.html")
     session:back()
     luaunit.assert_equals(session:url(), "http://localhost:10080/1.html")
@@ -43,7 +43,7 @@ end
 
 function TestSession:test_refresh()
   local callback = function(session)
-    session:visit("http://localhost:10080/1.html")
+    session:navigate_to("http://localhost:10080/1.html")
     luaunit.assert_equals(session:url(), "http://localhost:10080/1.html")
     session:refresh()
     luaunit.assert_equals(session:url(), "http://localhost:10080/1.html")
@@ -72,7 +72,7 @@ end
 
 function TestSession:test_frame()
   local callback = function(session)
-    session:visit("http://localhost:10080/frame.html")
+    session:navigate_to("http://localhost:10080/frame.html")
     luaunit.assert_equals(session:title(), "This is parent frame")
     local response = session:switch_to_frame(0)
     luaunit.assert_equals(response.status_code, 200)
@@ -89,7 +89,7 @@ end
 
 function TestSession:test_window_rect()
   local callback = function(session)
-    session:visit("http://localhost:10080/index.html")
+    session:navigate_to("http://localhost:10080/index.html")
     session:set_window_rect({ height = 500, width = 500, x = 0, y = 0 })
     local rect = session:window_rect()
     local expected = { height = 500, width = 500, x = 0, y = 0 }
@@ -100,7 +100,7 @@ end
 
 function TestSession:test_window_fullscreen()
   local callback = function(session)
-    session:visit("http://localhost:10080/index.html")
+    session:navigate_to("http://localhost:10080/index.html")
     local rect = { height = 500, width = 500, x = 0, y = 0 }
     local expected = { height = 500, width = 500, x = 0, y = 0 }
     session:set_window_rect(rect)
@@ -115,7 +115,7 @@ end
 
 function TestSession:test_get_active_element()
   local callback = function(session)
-    session:visit("http://localhost:10080/index.html")
+    session:navigate_to("http://localhost:10080/index.html")
     luaunit.assert_not_nil(session:get_active_element())
   end
   self.driver:start_session(callback)
@@ -123,7 +123,7 @@ end
 
 function TestSession:test_find_element()
   local callback = function(session)
-    session:visit("http://localhost:10080/index.html")
+    session:navigate_to("http://localhost:10080/index.html")
     local element = session:find_element("css selector", "#p1")
     luaunit.assert_equals(element:get_text(), "Hello 1")
   end
@@ -132,7 +132,7 @@ end
 
 function TestSession:test_find_elements()
   local callback = function(session)
-    session:visit("http://localhost:10080/index.html")
+    session:navigate_to("http://localhost:10080/index.html")
     local elements = session:find_elements("css selector", "p")
     local actual = {}
     for index, element in ipairs(elements) do
@@ -145,7 +145,7 @@ end
 
 function TestSession:test_source()
   local callback = function(session)
-    session:visit("http://localhost:10080/index.html")
+    session:navigate_to("http://localhost:10080/index.html")
     local expected = [[<html><head>
     <style type="text/css" media="screen">
       body { color: black; }
@@ -176,7 +176,7 @@ end
 
 function TestSession:test_xml()
   local callback = function(session)
-    session:visit("http://localhost:10080/index.html")
+    session:navigate_to("http://localhost:10080/index.html")
     local expected = [[<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
     <style type="text/css" media="screen">
@@ -208,7 +208,7 @@ end
 
 function TestSession:test_execute_script()
   local callback = function(session)
-    session:visit("http://localhost:10080/index.html")
+    session:navigate_to("http://localhost:10080/index.html")
     local script = [[return 1]]
     local response = session:execute_script(script)
     luaunit.assert_equals(response, 1)
@@ -218,7 +218,7 @@ end
 
 function TestSession:test_execute_script_with_error()
   local callback = function(session)
-    session:visit("http://localhost:10080/index.html")
+    session:navigate_to("http://localhost:10080/index.html")
     local script = [[return 1 + x]]
     luaunit.assert_error_msg_contains("javascript error: ReferenceError: x is not defined",
                                       session.execute_script, session, script)
@@ -228,7 +228,7 @@ end
 
 function TestSession:test_get_cookie()
   local callback = function(session)
-    session:visit("http://localhost:10080/cookie.html")
+    session:navigate_to("http://localhost:10080/cookie.html")
     luaunit.assert_equals(session:get_cookie("data1")["value"], "123")
     luaunit.assert_equals(session:get_cookie("data2")["value"], "456")
   end
@@ -237,7 +237,7 @@ end
 
 function TestSession:test_all_cookies()
   local callback = function(session)
-    session:visit("http://localhost:10080/cookie.html")
+    session:navigate_to("http://localhost:10080/cookie.html")
     local cookies = session:get_all_cookies()
     luaunit.assert_equals(#cookies, 2)
   end
@@ -246,7 +246,7 @@ end
 
 function TestSession:test_add_cookie()
   local callback = function(session)
-    session:visit("http://localhost:10080/cookie.html")
+    session:navigate_to("http://localhost:10080/cookie.html")
     local cookies = session:get_all_cookies()
     luaunit.assert_equals(#cookies, 2)
     local cookie = {
@@ -263,7 +263,7 @@ end
 
 function TestSession:test_delete_cookie()
   local callback = function(session)
-    session:visit("http://localhost:10080/cookie.html")
+    session:navigate_to("http://localhost:10080/cookie.html")
     local cookies = session:get_all_cookies()
     luaunit.assert_equals(#cookies, 2)
     session:delete_cookie("data1")
@@ -275,7 +275,7 @@ end
 
 function TestSession:test_accept_alert()
   local callback = function(session)
-    session:visit("http://localhost:10080/alert.html")
+    session:navigate_to("http://localhost:10080/alert.html")
     local n_alerts = 0
     for i = 1, 10 do
       local success, _ = pcall(function() session:accept_alert() end)
@@ -290,7 +290,7 @@ end
 
 function TestSession:test_dismiss_alert()
   local callback = function(session)
-    session:visit("http://localhost:10080/alert.html")
+    session:navigate_to("http://localhost:10080/alert.html")
     local n_alerts = 0
     for i = 1, 10 do
       local success, _ = pcall(function() session:dismiss_alert() end)
@@ -305,7 +305,7 @@ end
 
 function TestSession:test_accept_confirm()
   local callback = function(session)
-    session:visit("http://localhost:10080/confirm.html")
+    session:navigate_to("http://localhost:10080/confirm.html")
     local element = session:find_element("css selector", "#button")
     element:click()
     session:accept_alert()
@@ -317,7 +317,7 @@ end
 
 function TestSession:test_dismiss_confirm()
   local callback = function(session)
-    session:visit("http://localhost:10080/confirm.html")
+    session:navigate_to("http://localhost:10080/confirm.html")
     local element = session:find_element("css selector", "#button")
     element:click()
     session:dismiss_alert()
@@ -329,7 +329,7 @@ end
 
 function TestSession:test_screenshot()
   local callback = function(session)
-    session:visit("http://localhost:10080/index.html")
+    session:navigate_to("http://localhost:10080/index.html")
     session:screenshot("tmp/session.png")
     local file_handle, err = io.open("tmp/session.png", "rb")
     local binary = file_handle:read("*a")

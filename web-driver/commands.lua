@@ -13,7 +13,7 @@ local Commands = {
   --
   -- basic driver
   --
-  get = { "post", "session/:session_id/url"  },
+  navigate_to = { "post", "session/:session_id/url"  },
   get_current_url = { "get", "session/:session_id/url" },
   back = { "post", "session/:session_id/back" },
   forward = { "post", "session/:session_id/forward" },

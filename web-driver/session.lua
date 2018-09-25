@@ -13,7 +13,6 @@ local methods = {}
 local metatable = {}
 
 function metatable.__index(session, key)
-  -- driver is a Session instance
   return methods[key]
 end
 
@@ -42,10 +41,10 @@ function methods:set_timeouts(timeouts)
   return response
 end
 
---- Visit specified URL
+--- Navigate the current top-level browsing context to to the specified URL
 -- @function Session:visit
-function methods:visit(url)
-  local response = self.bridge:get(self.session_id, url)
+function methods:navigate_to(url)
+  local response = self.bridge:navigate_to(self.session_id, url)
   return response
 end
 

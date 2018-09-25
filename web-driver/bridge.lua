@@ -63,8 +63,8 @@ function methods:set_timeouts(session_id, timeouts)
   return self:execute("set_timeout", { session_id = session_id }, timeouts)
 end
 
-function methods:get(session_id, url)
-  return self:execute("get", { session_id = session_id }, { url = url })
+function methods:navigate_to(session_id, url)
+  return self:execute("navigate_to", { session_id = session_id }, { url = url })
 end
 
 function methods:get_current_url(session_id)
