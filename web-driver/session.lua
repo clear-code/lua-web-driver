@@ -260,12 +260,12 @@ end
 function methods:screenshot(filename)
   local response = self.bridge:take_screenshot(self.session_id)
   local binary = base64.decode(response.json()["value"])
-  local filehandle, err = io.open(filename, "wb+")
+  local file_handle, err = io.open(filename, "wb+")
   if err then
     error(err)
   end
-  filehandle:write(binary)
-  filehandle:close()
+  file_handle:write(binary)
+  file_handle:close()
 end
 
 --- The constructor of Session class.
