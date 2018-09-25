@@ -162,10 +162,17 @@ function methods:stop()
 end
 
 function methods:start_session(callback)
+  local session = Session.new(self)
   if callback then
-    Session.start(self, nil, callback)
+    local success, return_value = pcall(callback, session)
+    session:destroy()
+    if not success then
+      local err = return_value
+      error(err)
+    end
+    return return_value
   else
-    return Session.new(self)
+    return session
   end
 end
 

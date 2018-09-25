@@ -287,25 +287,4 @@ function Session.new(driver, capabilities)
   return session
 end
 
---- Start new session.
--- <https://www.w3.org/TR/webdriver/#dfn-creating-a-new-session>
--- @function Session.start
--- @param driver
--- @param capabilities
--- @param callback
-function Session.start(driver, capabilities, callback)
-  local session = Session.new(driver, capabilities)
-  if callback then
-    local success, return_value = pcall(callback, session)
-    session:destroy()
-    if not success then
-      local err = return_value
-      error(err)
-    end
-    return return_value
-  else
-    return session
-  end
-end
-
 return Session
