@@ -60,13 +60,13 @@ local function log_output(geckodriver_process)
     local fd = socket.getfd()
     if fd == stdout then
       local data, err, again = geckodriver_process:stdout()
-      if not err then
+      if data then
         log_lines("lua-web-driver: Firefox: stdout: ", data)
       end
     end
     if fd == stderr then
       local data, err, again = geckodriver_process:stderr()
-      if not err then
+      if data then
         log_lines("lua-web-driver: Firefox: stderr: ", data)
       end
     end
