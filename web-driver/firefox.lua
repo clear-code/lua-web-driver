@@ -20,6 +20,7 @@ local DEFAULT_HOST = "127.0.0.1"
 local DEFAULT_PORT = "4444"
 local DEFAULT_ARGS = { "-headless" }
 local DEFAULT_START_TIMEOUT = 5
+local DEFAULT_LOG_LEVEL = nil
 
 local start_timeout_env = process.getenv()["LUA_WEB_DRIVER_START_TIMEOUT"]
 if start_timeout_env then
@@ -27,6 +28,11 @@ if start_timeout_env then
   if start_timeout_env_value then
     DEFAULT_START_TIMEOUT = start_timeout_env_value
   end
+end
+
+local log_level_env = process.getenv()["LUA_WEB_DRIVER_LOG_LEVEL"]
+if log_level_env then
+  DEFAULT_LOG_LEVEL = tostring(log_level_env):lower()
 end
 
 function methods:name()
@@ -79,12 +85,21 @@ local function ensure_running(firefox, geckodriver_process, geckodriver_command)
           "<" .. geckodriver_command .. ">")
 end
 
-function methods:start(callback)
-  local command = "geckodriver"
+local function apply_geckodriver_args(self)
   local args = {
     "--host", self.bridge.host,
     "--port", self.bridge.port
   }
+  if DEFAULT_LOG_LEVEL then
+    table.insert(args, "--log")
+    table.insert(args, DEFAULT_LOG_LEVEL)
+  end
+  return args
+end
+
+function methods:start(callback)
+  local command = "geckodriver"
+  local args = apply_geckodriver_args(self)
   local geckodriver_process, err = process.exec(command, args)
   if err then
     error("lua-web-driver: Firefox: " ..
@@ -134,6 +149,10 @@ local function apply_options(firefox, options)
       }
     }
   }
+  if DEFAULT_LOG_LEVEL then
+    firefox.capabilities.capabilities.alwaysMatch["moz:firefoxOptions"].log =
+      { level = DEFAULT_LOG_LEVEL }
+  end
 
   firefox.start_timeout = options.start_timeout or DEFAULT_START_TIMEOUT
 end
