@@ -41,8 +41,11 @@ function methods:name()
 end
 
 local function log_lines(prefix, lines)
-  -- TODO: Use logger
-  print(prefix .. lines:gsub("\n", "\n" .. prefix))
+  -- TODO: Remove this check when we use logger
+  if DEFAULT_LOG_LEVEL then
+    -- TODO: Use logger
+    print(prefix .. lines:gsub("\n", "\n" .. prefix))
+  end
 end
 
 local function log_output(geckodriver_process)
