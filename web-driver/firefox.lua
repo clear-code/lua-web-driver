@@ -36,10 +36,6 @@ if log_level_env then
   DEFAULT_LOG_LEVEL = tostring(log_level_env):lower()
 end
 
-function methods:name()
-  return "firefox"
-end
-
 local function log_lines(prefix, lines)
   -- TODO: Remove this check when we use logger
   if DEFAULT_LOG_LEVEL then
