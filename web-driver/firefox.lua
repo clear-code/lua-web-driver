@@ -4,7 +4,7 @@
 local process = require("process")
 local socket = require("socket")
 
-local Bridge = require("web-driver/bridge")
+local Client = require("web-driver/client")
 local Session = require("web-driver/session")
 local util = require("web-driver/util")
 
@@ -101,7 +101,7 @@ local function ensure_running(firefox, geckodriver_process, geckodriver_command)
   local n_tries = 100
   local sleep_ns_per_trie = (timeout / n_tries) * (10 ^ 6)
   for i = 1, n_tries do
-    local success, _ = pcall(firefox.bridge.status, firefox.bridge)
+    local success, _ = pcall(function() return firefox.client:status() end)
     if success then
       return true
     end
@@ -123,8 +123,8 @@ end
 
 local function make_geckodriver_args(self)
   local args = {
-    "--host", self.bridge.host,
-    "--port", self.bridge.port
+    "--host", self.client.host,
+    "--port", self.client.port
   }
   if self.log_level then
     table.insert(args, "--log")
@@ -181,7 +181,7 @@ local function apply_options(firefox, options)
 
   local host = options.host or DEFAULT_HOST
   local port = options.port or DEFAULT_PORT
-  firefox.bridge = Bridge.new(host, port)
+  firefox.client = Client.new(host, port)
 
   firefox.log_level = options.log_level or DEFAULT_LOG_LEVEL
 

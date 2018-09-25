@@ -128,11 +128,11 @@ end
 
 function Element.new(session, id)
   local element = {
-    session = session,
-    client = ElementClient.new(session.bridge.host,
-                               session.bridge.port,
+    client = ElementClient.new(session.client.host,
+                               session.client.port,
                                session.id,
                                id),
+    session = session,
     id = id,
   }
   setmetatable(element, metatable)

@@ -273,13 +273,11 @@ end
 -- @param capabilities
 function Session.new(driver, capabilities)
   capabilities = capabilities or driver.capabilities
-  local response = driver.bridge:create_session(capabilities)
+  local response = driver.client:create_session(capabilities)
   local session_id = response.json()["value"]["sessionId"]
   local session = {
-    -- TODO: Remove me
-    bridge = driver.bridge,
-    client = SessionClient.new(driver.bridge.host,
-                               driver.bridge.port,
+    client = SessionClient.new(driver.client.host,
+                               driver.client.port,
                                session_id),
     id = session_id,
   }
