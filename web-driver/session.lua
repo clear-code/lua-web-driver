@@ -217,7 +217,7 @@ end
 function methods:action(async)
   local mouse = Interactions.pointer("mouse", "mouse")
   local keyboard = Interactions.key("keyboard")
-  return ActionBuilder.new(self, mouse, keyboard, async or false)
+  return ActionBuilder.new(self, mouse, keyboard, async)
 end
 
 -- TODO
