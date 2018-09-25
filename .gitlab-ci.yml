@@ -34,7 +34,7 @@ test-centos7:
     - rm -rf web-driver.lua web-driver
     - luarocks install luaunit
   script:
-    - luajit test/run-test.lua
+    - luajit test/run-test.lua -v
 
 pages:
   image: ruby:2.5
