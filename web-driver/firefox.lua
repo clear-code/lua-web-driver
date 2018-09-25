@@ -2,6 +2,7 @@
 --
 -- @classmod Firefox
 local process = require("process")
+local socket = require("socket")
 
 local Bridge = require("web-driver/bridge")
 local Session = require("web-driver/session")
@@ -39,6 +40,39 @@ function methods:name()
   return "firefox"
 end
 
+local function log_lines(prefix, lines)
+  -- TODO: Use logger
+  print(prefix .. lines:gsub("\n", "\n" .. prefix))
+end
+
+local function log_output(geckodriver_process)
+  local stdio, stdout, stderr = geckodriver_process:fds()
+  local read_sockets = {
+    {
+      getfd = function() return stdout; end,
+    },
+    {
+      getfd = function() return stderr; end,
+    },
+  }
+  local readable_sockets, _ = socket.select(read_sockets, {}, 0)
+  for _, socket in ipairs(readable_sockets) do
+    local fd = socket.getfd()
+    if fd == stdout then
+      local data, err, again = geckodriver_process:stdout()
+      if not err then
+        log_lines("lua-web-driver: Firefox: stdout: ", data)
+      end
+    end
+    if fd == stderr then
+      local data, err, again = geckodriver_process:stderr()
+      if not err then
+        log_lines("lua-web-driver: Firefox: stderr: ", data)
+      end
+    end
+  end
+end
+
 local function kill(geckodriver_process)
   local timeout = 5
   local n_tries = 100
@@ -52,11 +86,13 @@ local function kill(geckodriver_process)
       finished = true
       break
     end
+    log_output(geckodriver_process)
     process.nsleep(sleep_ns_per_trie)
   end
   if not finished then
     local SIGKILL = 9
     geckodriver_process:kill(SIGKILL)
+    log_output(geckodriver_process)
     process.waitpid(geckodriver_process:pid())
   end
 end
@@ -76,6 +112,7 @@ local function ensure_running(firefox, geckodriver_process, geckodriver_command)
       error("lua-web-driver: Firefox: " ..
               "Failed to run: <" .. geckodriver_command .. ">")
     end
+    log_output(geckodriver_process)
     process.nsleep(sleep_ns_per_trie)
   end
 
