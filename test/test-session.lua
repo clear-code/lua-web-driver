@@ -77,11 +77,11 @@ function TestSession:test_frame()
     local response = session:switch_to_frame(0)
     luaunit.assert_equals(response.status_code, 200)
     local element = session:find_element("css selector", "p")
-    luaunit.assert_equals(element:get_text(), "1")
+    luaunit.assert_equals(element:text(), "1")
     response = session:switch_to_parent_frame()
     luaunit.assert_equals(response.status_code, 200)
     element = session:find_element("css selector", "p")
-    luaunit.assert_equals(element:get_text(), "parent")
+    luaunit.assert_equals(element:text(), "parent")
     luaunit.assert_equals(session:title(), "This is parent frame")
   end
   self.driver:start_session(callback)
@@ -125,7 +125,7 @@ function TestSession:test_find_element()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
     local element = session:find_element("css selector", "#p1")
-    luaunit.assert_equals(element:get_text(), "Hello 1")
+    luaunit.assert_equals(element:text(), "Hello 1")
   end
   self.driver:start_session(callback)
 end
@@ -136,7 +136,7 @@ function TestSession:test_find_elements()
     local elements = session:find_elements("css selector", "p")
     local actual = {}
     for index, element in ipairs(elements) do
-      actual[index] = element:get_text()
+      actual[index] = element:text()
     end
     luaunit.assert_equals(actual, { "Hello 1", "Hello 2", "Hello 3" })
   end
@@ -310,7 +310,7 @@ function TestSession:test_accept_confirm()
     element:click()
     session:accept_alert()
     element = session:find_element("css selector", "#confirm")
-    luaunit.assert_equals(element:get_text(), "Accept!")
+    luaunit.assert_equals(element:text(), "Accept!")
   end
   self.driver:start_session(callback)
 end
@@ -322,7 +322,7 @@ function TestSession:test_dismiss_confirm()
     element:click()
     session:dismiss_alert()
     element = session:find_element("css selector", "#confirm")
-    luaunit.assert_equals(element:get_text(), "Dismiss!")
+    luaunit.assert_equals(element:text(), "Dismiss!")
   end
   self.driver:start_session(callback)
 end

@@ -58,20 +58,20 @@ function TestElement:test_get_css_value()
   self.driver:start_session(callback)
 end
 
-function TestElement:test_get_text()
+function TestElement:test_ext()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
     local element = session:find_element("css selector", '#p2')
-    luaunit.assert_equals(element:get_text(), "Hello 2")
+    luaunit.assert_equals(element:text(), "Hello 2")
   end
   self.driver:start_session(callback)
 end
 
-function TestElement:test_get_tag_name()
+function TestElement:test_tag_name()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
     local element = session:find_element("css selector", '#p2')
-    luaunit.assert_equals(element:get_tag_name(element_id), "p")
+    luaunit.assert_equals(element:tag_name(element_id), "p")
   end
   self.driver:start_session(callback)
 end
@@ -112,11 +112,11 @@ function TestElement:test_send_keys()
   self.driver:start_session(callback)
 end
 
-function TestElement:test_screenshot()
+function TestElement:test_save_screenshot()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
     local element = session:find_element("css selector", "#p1")
-    local value = element:screenshot("tmp/element.png")
+    local value = element:save_screenshot("tmp/element.png")
     local filehandle, err = io.open("tmp/element.png", "rb")
     local binary = filehandle:read("*a")
     filehandle:close()

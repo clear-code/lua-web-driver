@@ -42,6 +42,14 @@ function methods:endpoint(template, params)
   return self.base_url..path
 end
 
+function methods:status()
+  return self:execute("get", "status")
+end
+
+function methods:create_session(capabilities)
+  return self:execute("post", "session", {}, capabilities)
+end
+
 function Client.new(host, port)
   local client = {
     host = host,
