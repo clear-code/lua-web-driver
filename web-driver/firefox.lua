@@ -90,9 +90,9 @@ local function make_geckodriver_args(self)
     "--host", self.bridge.host,
     "--port", self.bridge.port
   }
-  if DEFAULT_LOG_LEVEL then
+  if self.log_level then
     table.insert(args, "--log")
-    table.insert(args, DEFAULT_LOG_LEVEL)
+    table.insert(args, self.log_level)
   end
   return args
 end
@@ -140,6 +140,8 @@ local function apply_options(firefox, options)
   local port = options.port or DEFAULT_PORT
   firefox.bridge = Bridge.new(host, port)
 
+  firefox.log_level = options.log_level or DEFAULT_LOG_LEVEL
+
   firefox.capabilities = {
     capabilities = {
       alwaysMatch = {
@@ -149,9 +151,9 @@ local function apply_options(firefox, options)
       }
     }
   }
-  if DEFAULT_LOG_LEVEL then
+  if firefox.log_level then
     firefox.capabilities.capabilities.alwaysMatch["moz:firefoxOptions"].log =
-      { level = DEFAULT_LOG_LEVEL }
+      { level = firefox.log_level }
   end
 
   firefox.start_timeout = options.start_timeout or DEFAULT_START_TIMEOUT
