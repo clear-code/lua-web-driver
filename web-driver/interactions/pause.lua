@@ -1,5 +1,4 @@
 local Interaction = require("web-driver/interactions/interaction")
-local util = require("web-driver/util")
 
 local Pause = {}
 

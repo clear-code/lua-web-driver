@@ -3,7 +3,6 @@
 -- @classmod ElementClient
 -- @local
 local Client = require("web-driver/client")
-local util = require("web-driver/util")
 
 local ElementClient = {}
 

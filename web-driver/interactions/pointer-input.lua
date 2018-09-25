@@ -1,4 +1,3 @@
-local util = require("web-driver/util")
 local PointerInput = {}
 local InputDevice = require("web-driver/interactions/input-device")
 local PointerMove = require("web-driver/interactions/pointer-move")

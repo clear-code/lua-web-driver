@@ -6,7 +6,6 @@ local socket = require("socket")
 
 local Client = require("web-driver/client")
 local Session = require("web-driver/session")
-local util = require("web-driver/util")
 
 local Firefox = {}
 

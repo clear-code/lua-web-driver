@@ -1,4 +1,4 @@
-local util = require("web-driver/util")
+local uuid = require("web-driver/uuid")
 local Pause = require("web-driver/interactions/pause")
 local InputDevice = {}
 
@@ -38,7 +38,7 @@ end
 
 function InputDevice.new(name)
   local device = {
-    name = name or util.uuid(),
+    name = name or uuid.generate(),
     actions = {}
   }
   setmetatable(device, metatable)

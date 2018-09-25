@@ -1,4 +1,4 @@
-local util = require("web-driver/util")
+local pp = require("web-driver/pp")
 local KeyActions = {}
 
 -- { element = element, key = key, device = device }
@@ -32,7 +32,7 @@ function KeyActions:send_keys(options)
       self:key_up({ key = key, device = device })
     end
   else
-    error("invalid type: "..type(options.keys)..": "..util.inspect(options.keys))
+    error("invalid type: "..type(options.keys)..": "..pp.format(options.keys))
   end
   return self
 end

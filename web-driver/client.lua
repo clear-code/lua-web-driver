@@ -3,7 +3,6 @@
 -- @classmod Client
 -- @local
 local requests = require("requests")
-local util = require("web-driver/util")
 
 local Client = {}
 
@@ -15,9 +14,6 @@ function metatable.__index(client, key)
 end
 
 function methods:execute(verb, path, params, data)
-  -- p(verb)
-  -- p(path)
-  -- p(self:endpoint(path, params))
   local response
   local url = self:endpoint(path, params)
   if verb == "get" then

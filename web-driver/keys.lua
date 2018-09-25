@@ -1,6 +1,5 @@
 local utf8 = require("lua-utf8")
 local u = utf8.escape
-local util = require("web-driver/util")
 local Keys = {}
 
 local KEYS = {

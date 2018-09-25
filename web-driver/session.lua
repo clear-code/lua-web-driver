@@ -5,7 +5,6 @@ local SessionClient = require("web-driver/session-client")
 local Element = require("web-driver/element")
 local Interactions = require("web-driver/interactions")
 local ActionBuilder = require("web-driver/action-builder")
-local util = require("web-driver/util")
 local base64 = require("base64")
 
 local Session = {}

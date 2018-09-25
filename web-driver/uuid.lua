@@ -1,21 +1,8 @@
---- Utility class for internal use
---
--- @classmod Util
--- @local
-local inspect = require("inspect")
-
-local util = {}
-
-function util.p(root, options)
-  print(inspect.inspect(root, options))
-end
-
-function util.inspect(root, options)
-  return inspect.inspect(root, options)
-end
+-- Is it needed?
+local uuid = {}
 
 -- https://gist.github.com/jrus/3197011
-function util.uuid()
+function uuid.generate()
   local template ="xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
   function callback(c)
     if c == "x" then
@@ -27,4 +14,4 @@ function util.uuid()
   return template:gsub("[xy]", callback)
 end
 
-return util
+return uuid

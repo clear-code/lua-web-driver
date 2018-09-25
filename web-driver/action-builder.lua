@@ -1,4 +1,3 @@
-local util = require("web-driver/util")
 local KeyActions = require("web-driver/interactions/key-actions")
 local PointerActions = require("web-driver/interactions/pointer-actions")
 

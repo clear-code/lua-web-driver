@@ -2,7 +2,6 @@
 --
 -- @classmod Element
 local ElementClient = require("web-driver/element-client")
-local util = require "web-driver/util"
 local base64 = require("base64")
 local Element = {}
 

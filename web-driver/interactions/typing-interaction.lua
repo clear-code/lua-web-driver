@@ -1,4 +1,3 @@
-local util = require("web-driver/util")
 local TypingInteraction = {}
 local Interaction = require("web-driver/interactions/interaction")
 local Keys = require("web-driver/keys")

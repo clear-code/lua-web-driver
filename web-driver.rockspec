@@ -52,9 +52,10 @@ build = {
     ["web-driver.interactions.pointer-press"] = "web-driver/interactions/pointer-press.lua",
     ["web-driver.interactions.typing-interaction"] = "web-driver/interactions/typing-interaction.lua",
     ["web-driver.keys"] = "web-driver/keys.lua",
+    ["web-driver.pp"] = "web-driver/pp.lua",
     ["web-driver.session"] = "web-driver/session.lua",
     ["web-driver.session-client"] = "web-driver/session-client.lua",
-    ["web-driver.util"] = "web-driver/util.lua",
+    ["web-driver.uuid"] = "web-driver/uuid.lua",
   },
   copy_directories = {
     "docs"
