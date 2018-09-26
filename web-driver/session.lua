@@ -250,18 +250,26 @@ function methods:set_alert_text(text)
   return response
 end
 
+--- Take screenshot.
+-- The screenshot's format is PNG format.
+-- @function Session:take_screenshot
+function methods:take_screenshot()
+  local response = self.client:take_screenshot()
+  return base64.decode(response.json()["value"])
+end
+
 --- Take screenshot and save to filename.
--- The screenshot is downloaded as PNG format and save to filename.
+-- The screenshot is saved to filename as PNG format.
 -- @function Session:save_screenshot
 -- @param filename The filename to save screenshot
 function methods:save_screenshot(filename)
-  local response = self.client:take_screenshot()
-  local binary = base64.decode(response.json()["value"])
+  local png = self:take_screenshot()
   local file_handle, err = io.open(filename, "wb+")
   if err then
-    error(err)
+    error("lua-web-driver: Failed to open file to save screenshot: " ..
+            "<" .. filename .. ">: " .. err)
   end
-  file_handle:write(binary)
+  file_handle:write(png)
   file_handle:close()
 end
 

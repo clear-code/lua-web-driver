@@ -327,17 +327,26 @@ function TestSession:test_dismiss_confirm()
   self.driver:start_session(callback)
 end
 
-function TestSession:test_save_screenshot()
+function TestSession:test_take_screenshot()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
-    session:save_screenshot("tmp/session.png")
-    local file_handle, err = io.open("tmp/session.png", "rb")
-    local binary = file_handle:read("*a")
-    file_handle:close()
-    os.remove("tmp/session.png")
-    local header = { binary:byte(0, 8) }
+    local png = session:take_screenshot()
+    local header = { png:byte(0, 8) }
     luaunit.assert_equals(header, helper.PNG_HEADER)
   end
   self.driver:start_session(callback)
 end
 
+function TestSession:test_save_screenshot()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    session:save_screenshot("tmp/session.png")
+    local file_handle, err = io.open("tmp/session.png", "rb")
+    local png = file_handle:read("*a")
+    file_handle:close()
+    os.remove("tmp/session.png")
+    local header = { png:byte(0, 8) }
+    luaunit.assert_equals(header, helper.PNG_HEADER)
+  end
+  self.driver:start_session(callback)
+end
