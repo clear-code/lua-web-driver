@@ -68,6 +68,21 @@ driver:stop()
 例:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+-- コールバックを作成する
+function callback(session)
+-- Session.navigate_toの引数としてURLを指定する
+  session:navigate_to("https://www.google.com/")
+-- 現在のWebサイトをXMLとしてシリアライズする
+  local xml = session:xml()
+  print(xml)
+end
+
+driver:start()
+driver:start_session(callback)
+driver:stop()
 ```
 
 ## スクリーンショットの取得 {#take-screenshot}

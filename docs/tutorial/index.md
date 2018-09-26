@@ -69,6 +69,21 @@ You can use this XML as Lua's string.
 Example:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+-- Make your callback
+function callback(session)
+-- Specify the URL as the argument of Session.navigate_to
+  session:navigate_to("https://www.google.com/")
+-- Serialize a current website as XML.
+  local xml = session:xml()
+  print(xml)
+end
+
+driver:start()
+driver:start_session(callback)
+driver:stop()
 ```
 
 ## Take a screenshot {#take-screenshot}
