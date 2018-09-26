@@ -129,17 +129,53 @@ driver:stop()
 
 次に、このWebサイトは認証が必要なので、ユーザー名とパスワードを入力します。[`Session.find_element`][session-find-element]と[`Element.send_keys`][element-send-keys]を使って、ユーザー名とパスワードを入力できます。[`Session.find_element`] [session-find-element]でユーザー名とパスワードを入力する要素オブジェクトを取得します。この例では、CSSセレクタで要素オブジェクトを取得しますが、XPathを使用して取得することもできます。取得した要素オブジェクトの[`Element.send_keys`][element-send-keys]を呼び出します。[`Element.send_keys`] [element-send-keys]の引数として入力文字列を指定します。
 
-次に、[`Session.find_element`] [session-find-element]と[` Element.click`][element-click]でチェックボックスをチェックします。[`Session.find_element`] [session-find-element]でチェックボックスオブジェクトを取得します。この例では、CSSセレクタでチェックボックスを取得しますが、XPathを使用して取得することもできます。取得したチェックボックスオブジェクトの[Element.click`] [element-click]を呼び出します。
+次に、[`Session.find_element`][session-find-element]と[`Element.click`][element-click]でチェックボックスをチェックします。[`Session.find_element`][session-find-element]でチェックボックスオブジェクトを取得します。この例では、CSSセレクタでチェックボックスを取得しますが、XPathを使用して取得することもできます。取得したチェックボックスオブジェクトの[`Element.click`][element-click]を呼び出します。
 
 次に、[`Session.find_element`] [session-find-element]と[` Element.click`] [element-click]でログインボタンを押します。
 
 次に、[`Session.find_element`] [session-find-element]と[` Element.click`] [element-click]を使ってログインした後のWebサイトのリンクをクリックします。
 
-次に、[`Element.get_text`] [element-get-text]で移動後のWebサイトの特定の要素のテキストを取得します。[`Session.find_element`][session-find-element]を使って、テキストを取得するための要素オブジェクトを取得します。次に、取得した要素オブジェクトの[`Element.get_text`][element-get-text]を呼び出します。取得したテキストの値は、Luaの文字列として使えます。
+次に、[`Element.text`] [element-text]で移動後のWebサイトの特定の要素のテキストを取得します。[`Session.find_element`][session-find-element]を使って、テキストを取得するための要素オブジェクトを取得します。次に、取得した要素オブジェクトの[`Element.text`][element-text]を呼び出します。取得したテキストの値は、Luaの文字列として使えます。
 
 例:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+-- コールバックを作成する
+function callback(session)
+-- Session.navigate_toの引数としてURLを指定する
+  session:navigate_to("http://localhost:10080/move.html")
+
+-- ユーザー名を入力するための要素オブジェクトを取得する
+  local text_form = session:find_element("css selector", 'input[name=username]')
+-- ユーザー名をフォームに入力する
+  text_form:send_keys("username")
+-- パスワードを入力するための要素オブジェクトを取得する
+  text_form = session:find_element("css selector", 'input[name=password]')
+-- パスワードをフォームに入力する
+  text_form:send_keys("password")
+
+-- ボタン操作をする要素オブジェクトを取得する
+  local button = session:find_element("css selector", "#button")
+-- 取得したボタンをクリックする
+  button:click()
+
+-- リンク操作する要素オブジェクトを取得する
+  local link = session:find_element("css selector", "a[name=link]")
+-- リンクをクリックする
+  link:click()
+
+-- テキストを取得する要素オブジェクトを取得する
+  local element = session:find_element("css selector", "p")
+-- 取得した要素オブジェクトのテキストを取得する
+  print(element:text())
+end
+
+driver:start()
+driver:start_session(callback)
+driver:stop()
 ```
 
 ## 特定のフォームのボタン操作 {#button-operation-on-specific-form}

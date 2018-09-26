@@ -136,7 +136,7 @@ you call [`Element.send_keys`][element-send-keys] of acquired element object.
 You specify input string as the argument of [`Element.send_keys`][element-send-keys].
 
 Third, you check a checkbox with [`Session.find_element`][session-find-element] and [`Element.click`][element-click].
-you get checkbox object with [`Session.find_element`][session-find-element]."
+you get checkbox object with [`Session.find_element`][session-find-element].
 In this example get the checkbox with the CSS selector, however, you can also get it using the XPath.
 you call [`Element.click`][element-click] of acquired checkbox object.
 
@@ -144,14 +144,50 @@ Fourth, you push login button with [`Session.find_element`][session-find-element
 
 Fifth, you click link on website in after login with [`Session.find_element`][session-find-element] and [`Element.click`][element-click].
 
-Sixth, you get text of specific element in after moved web site with [`Element.get_text`][element-get-text].
+Sixth, you get text of specific element in after moved web site with [`Element.text`][element-text].
 You get element object for getting text with [`Session.find_element`][session-find-element].
-you call [`Element.get_text`][element-get-text] of acquired element object.
+you call [`Element.text`][element-text] of acquired element object.
 You can use acquired value of the test as Lua's string.
 
 Example:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+-- Make your callback
+local callback = function(session)
+-- Specify the URL as the argument of Session.navigate_to
+  session:navigate_to("http://localhost:10080/move.html")
+
+-- Get element object for inputting username
+  local text_form = session:find_element("css selector", 'input[name=username]')
+-- Input username to form
+  text_form:send_keys("username")
+-- Get element object for inputting password
+  text_form = session:find_element("css selector", 'input[name=password]')
+-- Input password to form
+  text_form:send_keys("password")
+
+-- Get element object for button operating
+  local button = session:find_element("css selector", "#button")
+-- Click the acquired button object
+  button:click()
+
+-- Get element object for link operating
+  local link = session:find_element("css selector", "a[name=link]")
+-- Click the link
+  link:click()
+
+-- Get element object for getting text
+  local element = session:find_element("css selector", "p")
+-- Get text of acquired element
+  print(element:text())
+end
+
+driver:start()
+driver:start_session(callback)
+driver:stop()
 ```
 
 ## Button operation on a specific form {#button-operation-on-specific-form}
