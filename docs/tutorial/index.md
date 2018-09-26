@@ -89,7 +89,8 @@ Example:
 
 ## Move to website {#move-to-website}
 
-You can use [`Session.back`][session-back] and [`Session.forward`][session-forward] to move a website.
+You can use button operation and input steing, click link to move a website.
+In this example take turns at login and link click, get text.
 
 If you want to back to the previous website, you call [`Session.back`][session-back].
 If you want to go to next the website, you call [`Session.forward`][session-forward].
@@ -97,6 +98,23 @@ If you want to go to next the website, you call [`Session.forward`][session-forw
 Example:
 
 ```lua
+```
+
+## Button operation on a specific form {#button-operation-on-specific-form}
+
+You can use [`Session.find_element`][session-find-element] and [`Element.click`][element-click] to button operation on a specific form.
+
+First of all, you visit a website to button operation as below example.
+
+Second, you get element object for button operating with [`Session.find_element`][session-find-element]."
+In this example get element object with the CSS selector, however, you can also get it using the XPath.
+
+Third, you call [`Element.click`][element-click] of acquired element object.
+
+Example:
+
+```lua
+
 ```
 
 ## Button operation on website {#button-operation-on-website}
@@ -202,6 +220,8 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-find-element]:../reference/session.html#find_element
 
 [element-send-keys]:../reference/element.html#send_keys
+
+[element-click]:../reference/element.html#click
 
 [element-get-attribute]:../reference/element.html#get_attribute
 

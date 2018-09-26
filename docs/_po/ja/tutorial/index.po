@@ -160,11 +160,9 @@ msgid "## Move to website {#move-to-website}"
 msgstr "## Webサイトの移動 {#move-to-website}"
 
 msgid ""
-"You can use [`Session.back`][session-back] and [`Session.forward`][session-for"
-"ward] to move a website."
+"You can use button operation and input steing, click link to move a website.\n"
+"In this example take turns at login and link click, get text."
 msgstr ""
-"[`Session.back`][session-back]と[`Session.forward`][session-forward]を使って、Webサイト"
-"を移動できます。"
 
 msgid ""
 "If you want to back to the previous website, you call [`Session.back`][session"
@@ -174,6 +172,38 @@ msgid ""
 msgstr ""
 "前のWebサイトへ戻りたい場合は、[`Session.back`][session-back]を呼び出します。\n"
 "次のWebサイトへ進みたい場合は、[`Session.forward`][session-forward]を呼び出します。"
+
+msgid "## Button operation on a specific form {#button-operation-on-specific-form}"
+msgstr "## 特定のフォームのボタン操作 {#button-operation-on-specific-form}"
+
+msgid ""
+"You can use [`Session.find_element`][session-find-element] and [`Element.click"
+"`][element-click] to button operation on a specific form."
+msgstr ""
+"[`Session.find_element`][session-find-element]と[`Element.click`][element-click"
+"]を使って、特定のフォームのボタンを操作できます。"
+
+msgid "First of all, you visit a website to button operation as below example."
+msgstr "まずはじめに、以下の例のようにボタンを操作するWebサイトへアクセスします。"
+
+msgid ""
+"Second, you get element object for button operating with [`Session.find_elemen"
+"t`][session-find-element].\"\n"
+"In this example get element object with the CSS selector, however, you can als"
+"o get it using the XPath."
+msgstr ""
+"次に、[`Session.find_element`][session-find-element]を使って、ボタン操作をするための要素オブジェクトを取得しま"
+"す。\n"
+"この例では、CSS selectorで取得していますが、XPathを使って取得することもできます。"
+
+msgid "Third, you call [`Element.click`][element-click] of acquired element object."
+msgstr "次に、取得した要素オブジェクトの[`Element.click`][element-click]を呼び出します。"
+
+msgid "```lua"
+msgstr ""
+
+msgid "```"
+msgstr ""
 
 msgid "## Button operation on website {#button-operation-on-website}"
 msgstr "## Webサイト上のボタン操作"
@@ -185,9 +215,6 @@ msgstr ""
 "[`Session.accept_alert`][session-accept-alert]と[`Session.dismiss_alert`][sessi"
 "on-dismiss-alert]を使って、Webサイト上のボタンを操作できます。"
 
-msgid "First of all, you visit a website to button operation as below example."
-msgstr "まずはじめに、以下の例のようにボタンを操作するWebサイトへアクセスします。"
-
 msgid ""
 "Second, If you want to push a \"OK\" button, you call [`Session.accept_alert`][s"
 "ession-accept-alert]."
@@ -197,12 +224,6 @@ msgid ""
 "If you want to push a \"Cancel\" button, you call [`Session.dismiss_alert`][sess"
 "ion-dismiss-alert]."
 msgstr "\"Cancel\"ボタンを押したい場合は、[`Session.dismiss_alert`][session-dismiss-alert]を呼び出します。"
-
-msgid "```lua"
-msgstr ""
-
-msgid "```"
-msgstr ""
 
 msgid ""
 "Also, if you want to operation button on the specific dialog, you can use [`Se"
@@ -341,6 +362,9 @@ msgid "[session-find-element]:../reference/session.html#find_element"
 msgstr ""
 
 msgid "[element-send-keys]:../reference/element.html#send_keys"
+msgstr ""
+
+msgid "[element-click]:../reference/element.html#click"
 msgstr ""
 
 msgid "[element-get-attribute]:../reference/element.html#get_attribute"

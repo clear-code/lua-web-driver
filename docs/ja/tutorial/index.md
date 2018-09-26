@@ -88,7 +88,8 @@ driver:stop()
 
 ## Webサイトの移動 {#move-to-website}
 
-[`Session.back`][session-back]と[`Session.forward`][session-forward]を使って、Webサイトを移動できます。
+You can use button operation and input steing, click link to move a website.
+In this example take turns at login and link click, get text.
 
 前のWebサイトへ戻りたい場合は、[`Session.back`][session-back]を呼び出します。
 次のWebサイトへ進みたい場合は、[`Session.forward`][session-forward]を呼び出します。
@@ -96,6 +97,23 @@ driver:stop()
 例:
 
 ```lua
+```
+
+## 特定のフォームのボタン操作 {#button-operation-on-specific-form}
+
+[`Session.find_element`][session-find-element]と[`Element.click`][element-click]を使って、特定のフォームのボタンを操作できます。
+
+まずはじめに、以下の例のようにボタンを操作するWebサイトへアクセスします。
+
+次に、[`Session.find_element`][session-find-element]を使って、ボタン操作をするための要素オブジェクトを取得します。
+この例では、CSS selectorで取得していますが、XPathを使って取得することもできます。
+
+次に、取得した要素オブジェクトの[`Element.click`][element-click]を呼び出します。
+
+例:
+
+```lua
+
 ```
 
 ## Webサイト上のボタン操作
@@ -196,6 +214,8 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [session-find-element]:../reference/session.html#find_element
 
 [element-send-keys]:../reference/element.html#send_keys
+
+[element-click]:../reference/element.html#click
 
 [element-get-attribute]:../reference/element.html#get_attribute
 
