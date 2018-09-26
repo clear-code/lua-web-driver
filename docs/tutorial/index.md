@@ -93,7 +93,7 @@ The screenshot is taken in PNG format.
 
 First of all, you visit to a website to serialize as below example.
 
-Second, you call [`Session.take_screenshot`][session-take-screenshot].
+second, you call [`Session.take_screenshot`][session-take-screenshot].
 
 Example:
 
@@ -168,7 +168,22 @@ Third, you call [`Element.click`][element-click] of acquired element object.
 Example:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
 
+-- Make your callback
+local callback = function(session)
+-- Specify the URL as the argument of Session.navigate_to
+  session:navigate_to("http://localhost:10080/confirm.html")
+-- Get element object for button operating
+  local element = session:find_element("css selector", "#button")
+-- Click the acquired button object
+  element:click()
+end
+
+driver:start()
+driver:start_session(callback)
+driver:stop()
 ```
 
 ## Button operation on website {#button-operation-on-website}

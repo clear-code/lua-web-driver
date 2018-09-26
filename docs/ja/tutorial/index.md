@@ -156,7 +156,22 @@ driver:stop()
 例:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
 
+-- コールバックを作成する
+local callback = function(session)
+-- Session.navigate_toの引数としてURLを指定する
+  session:navigate_to("http://localhost:10080/confirm.html")
+-- ボタン操作をする要素オブジェクトを取得する
+  local element = session:find_element("css selector", "#button")
+-- 取得したボタンをクリックする
+  element:click()
+end
+
+driver:start()
+driver:start_session(callback)
+driver:stop()
 ```
 
 ## Webサイト上のボタン操作
