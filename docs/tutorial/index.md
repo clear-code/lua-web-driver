@@ -186,31 +186,6 @@ driver:start_session(callback)
 driver:stop()
 ```
 
-## Button operation on website {#button-operation-on-website}
-
-You can use [`Session.accept_alert`][session-accept-alert] and [`Session.dismiss_alert`][session-dismiss-alert] to button operation on website.
-
-First of all, you visit a website to button operation as below example.
-
-Second, If you want to push a "OK" button, you call [`Session.accept_alert`][session-accept-alert].
-
-If you want to push a "Cancel" button, you call [`Session.dismiss_alert`][session-dismiss-alert].
-
-Example:
-
-```lua
-
-```
-
-Also, if you want to operation button on the specific dialog, you can use [`Session.find_element`][session-find-element] to specify dialog as below example.
-[`Session.find_element`][session-find-element] is get specify element with css selector as below.
-
-Example:
-
-```lua
-
-```
-
 ## Input string into specific a form {#input-string-into-form}
 
 You can use [`Element.send_keys`][element-send-keys] to input string into specific a form.

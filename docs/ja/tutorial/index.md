@@ -174,31 +174,6 @@ driver:start_session(callback)
 driver:stop()
 ```
 
-## Webサイト上のボタン操作
-
-[`Session.accept_alert`][session-accept-alert]と[`Session.dismiss_alert`][session-dismiss-alert]を使って、Webサイト上のボタンを操作できます。
-
-まずはじめに、以下の例のようにボタンを操作するWebサイトへアクセスします。
-
-次に、"OK"ボタンを押したい場合は、[`Session.accept_alert`][session-accept-alert]を呼び出します。
-
-"Cancel"ボタンを押したい場合は、[`Session.dismiss_alert`][session-dismiss-alert]を呼び出します。
-
-例:
-
-```lua
-
-```
-
-また、[`Session.find_element`][session-find-element]を使って、特定のダイアログ上のボタンを操作できます。
-[`Session.find_element`][session-find-element]は、以下のようにCSSセレクタを使って、特定の要素を取得できます。
-
-例:
-
-```lua
-
-```
-
 ## 特定のフォームへの文字列入力 {#input-string-into-form}
 
 [`Element.send_keys`][element-send-keys]を使って、特定のフォームに文字列を入力できます。
