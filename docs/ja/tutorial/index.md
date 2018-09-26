@@ -123,13 +123,13 @@ driver:stop()
 
 ```
 
-## 特定のダイアログへの文字列入力 {#input-string-into-dialog}
+## 特定のフォームへの文字列入力 {#input-string-into-form}
 
-[`Element.send_keys`][element-send-keys]を使って、特定のダイアログに文字列を入力できます。
+[`Element.send_keys`][element-send-keys]を使って、特定のフォームに文字列を入力できます。
 
-まずはじめに、ダイアログに文字列を入力するWebサイトへアクセスします。
+まずはじめに、フォームに文字列を入力するWebサイトへアクセスします。
 
-次に、[`Session.find_element`][session-find-element]を使って、文字列を入力するための要素オブジェクトを取得します。
+次に、[`Session.find_element`][session-find-element]を使って、文字列を入力するための要素オブジェクトを取得します。この例では、CSS selectorで取得していますが、XPathを使って取得することもできます。
 
 次に、取得した要素オブジェクトの[`Element.send_keys`][element-send-keys]を呼び出します。[`Element.send_keys`][element-send-keys]の引数には、入力文字列を指定します。
 

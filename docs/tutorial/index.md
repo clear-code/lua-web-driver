@@ -124,13 +124,14 @@ Example:
 
 ```
 
-## Input string into specific a dialog {#input-string-into-dialog}
+## Input string into specific a form {#input-string-into-form}
 
-You can use [`Element.send_keys`][element-send-keys] to input string into specific a dialog.
+You can use [`Element.send_keys`][element-send-keys] to input string into specific a form.
 
-First of all, you visit a website to input string into a dialog.
+First of all, you visit a website to input string into a form.
 
 Second, you get element object for inputting string with [`Session.find_element`][session-find-element]."
+In this example get element object with the CSS selector, however, you can also get it using the XPath.
 
 Third, you call [`Element.send_keys`][element-send-keys] of acquired element object.
 You specify input string as the argument of [`Element.send_keys`][element-send-keys].
