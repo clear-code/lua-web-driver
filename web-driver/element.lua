@@ -2,6 +2,7 @@
 --
 -- @classmod Element
 local ElementClient = require("web-driver/element-client")
+local pp = require("web-driver/pp")
 local base64 = require("base64")
 local Element = {}
 
@@ -36,15 +37,15 @@ end
 
 function methods:find_child_element(strategy, finder)
   local response = self.client:find_child_element(strategy, finder)
-  local id = response.json()["value"]
-  return Element.new(self.session, id)
+  local element_value = response.json()["value"]
+  return Element.new(self.session, element_value)
 end
 
 function methods:find_child_elements(strategy, finder)
   local response = self.client:find_child_elements(strategy, finder)
   local elements = {}
-  for i, id in ipairs(response.json()["value"]) do
-    elements[i] = Element.new(self.session, id)
+  for i, element_value in ipairs(response.json()["value"]) do
+    elements[i] = Element.new(self.session, element_value)
   end
   return elements
 end
@@ -130,10 +131,13 @@ function methods:to_data()
   return { ["element-6066-11e4-a52e-4f735466cecf"] = self.id }
 end
 
-function Element.new(session, id)
-  if type(id) == "table" then
+function Element.new(session, id_or_element_value)
+  if type(id_or_element_value) == "table" then
     -- Why should we check "ELEMENT" here?
-    id = id["ELEMENT"] or id["element-6066-11e4-a52e-4f735466cecf"]
+    id = id_or_element_value["ELEMENT"] or
+      id_or_element_value["element-6066-11e4-a52e-4f735466cecf"]
+  else
+    id = id_or_element_value
   end
   local element = {
     client = ElementClient.new(session.client.host,
