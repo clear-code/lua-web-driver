@@ -86,13 +86,27 @@ driver:stop()
 ```lua
 ```
 
-## Webサイトの移動 {#move-to-website}
+## Webサイトの移動 {#move-on-website}
 
-You can use button operation and input steing, click link to move a website.
-In this example take turns at login and link click, get text.
+以下の機能を使って、Webサイトの移動ができます。
 
-前のWebサイトへ戻りたい場合は、[`Session.back`][session-back]を呼び出します。
-次のWebサイトへ進みたい場合は、[`Session.forward`][session-forward]を呼び出します。
+* ボタン操作
+* チェックボックス操作
+* リンククリック
+
+この例では、ログインして、リンクをクリックしてテキストを取得します。
+
+まず最初に、対象のWebサイトへアクセスします。
+
+次に、このWebサイトは認証が必要なので、ユーザー名とパスワードを入力します。[`Session.find_element`][session-find-element]と[`Element.send_keys`][element-send-keys]を使って、ユーザー名とパスワードを入力できます。[`Session.find_element`] [session-find-element]でユーザー名とパスワードを入力する要素オブジェクトを取得します。この例では、CSSセレクタで要素オブジェクトを取得しますが、XPathを使用して取得することもできます。取得した要素オブジェクトの[`Element.send_keys`][element-send-keys]を呼び出します。[`Element.send_keys`] [element-send-keys]の引数として入力文字列を指定します。
+
+次に、[`Session.find_element`] [session-find-element]と[` Element.click`][element-click]でチェックボックスをチェックします。[`Session.find_element`] [session-find-element]でチェックボックスオブジェクトを取得します。この例では、CSSセレクタでチェックボックスを取得しますが、XPathを使用して取得することもできます。取得したチェックボックスオブジェクトの[Element.click`] [element-click]を呼び出します。
+
+次に、[`Session.find_element`] [session-find-element]と[` Element.click`] [element-click]でログインボタンを押します。
+
+次に、[`Session.find_element`] [session-find-element]と[` Element.click`] [element-click]を使ってログインした後のWebサイトのリンクをクリックします。
+
+次に、[`Element.get_text`] [element-get-text]で移動後のWebサイトの特定の要素のテキストを取得します。[`Session.find_element`][session-find-element]を使って、テキストを取得するための要素オブジェクトを取得します。次に、取得した要素オブジェクトの[`Element.get_text`][element-get-text]を呼び出します。取得したテキストの値は、Luaの文字列として使えます。
 
 例:
 

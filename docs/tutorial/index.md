@@ -87,13 +87,38 @@ Example:
 ```lua
 ```
 
-## Move to website {#move-to-website}
+## Move on website {#move-on-website}
 
-You can use button operation and input steing, click link to move a website.
-In this example take turns at login and link click, get text.
+You can move on a website with below features.
 
-If you want to back to the previous website, you call [`Session.back`][session-back].
-If you want to go to next the website, you call [`Session.forward`][session-forward].
+* Button operation
+* Checkbox operation
+* Click link
+
+In this example take turns at login and link click, get a text.
+
+First of all, you visit a target website.
+
+Second, you input user name and password, because of this the web site needs authentication.
+you can input user name and password with [`Session.find_element`][session-find-element] and [`Element.send_keys`][element-send-keys]."
+you get element object for inputting user name and password with [`Session.find_element`][session-find-element].
+In this example get element object with the CSS selector, however, you can also get it using the XPath.
+you call [`Element.send_keys`][element-send-keys] of acquired element object.
+You specify input string as the argument of [`Element.send_keys`][element-send-keys].
+
+Third, you check a checkbox with [`Session.find_element`][session-find-element] and [`Element.click`][element-click].
+you get checkbox object with [`Session.find_element`][session-find-element]."
+In this example get the checkbox with the CSS selector, however, you can also get it using the XPath.
+you call [`Element.click`][element-click] of acquired checkbox object.
+
+Fourth, you push login button with [`Session.find_element`][session-find-element] and [`Element.click`][element-click].
+
+Fifth, you click link on website in after login with [`Session.find_element`][session-find-element] and [`Element.click`][element-click].
+
+Sixth, you get text of specific element in after moved web site with [`Element.get_text`][element-get-text].
+You get element object for getting text with [`Session.find_element`][session-find-element].
+you call [`Element.get_text`][element-get-text] of acquired element object.
+You can use acquired value of the test as Lua's string.
 
 Example:
 
