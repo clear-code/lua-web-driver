@@ -87,18 +87,32 @@ driver:stop()
 
 ## スクリーンショットの取得 {#take-screenshot}
 
-[`Session.screenshot`][session-screenshot]を使って現在のWebサイトのスクリーンショットを取得できます。
+[`Session.take_screenshot`][session-take-screenshot]を使って現在のWebサイトのスクリーンショットを取得できます。
 スクリーンショットは、PNG形式で取得されます。
 
 まずはじめに、以下の例のようにシリアライズするWebサイトへアクセスします。
 
-次に[`Session.screenshot`][session-screenshot]を呼び出します。
-[`Session.screenshot`][session-screenshot]の引数は1つです。
-[`Session.screenshot`][session-screenshot]の引数はファイル名を指定します。
+次に、[`Session.take_screenshot`][session-take-screenshot]を呼び出します。
 
 例:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+-- コールバックを作成する
+function callback(session)
+-- Session.navigate_toの引数としてURLを指定する
+  session:navigate_to("https://www.google.com/")
+-- PNGフォーマットでスクリーンショットを取得する
+  local png = session:take_screenshot()
+  io.output("sample.png")
+  io.write(png)
+end
+
+driver:start()
+driver:start_session(callback)
+driver:stop()
 ```
 
 ## Webサイトの移動 {#move-on-website}
@@ -230,7 +244,7 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 
 [session-xml]:../reference/session.html#xml
 
-[session-screenshot]:../reference/session.html#screenshot
+[session-take-screenshot]:../reference/session.html#take_screenshot
 
 [session-back]:../reference/session.html#back
 

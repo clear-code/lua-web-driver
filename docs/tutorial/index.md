@@ -88,18 +88,32 @@ driver:stop()
 
 ## Take a screenshot {#take-screenshot}
 
-You can use [`Session.screenshot`][session-screenshot] to take a screenshot of current website.
+You can use [`Session.take_screenshot`][session-take-screenshot] to take a screenshot of current website.
 The screenshot is taken in PNG format.
 
 First of all, you visit to a website to serialize as below example.
 
-Second, you call [`Session.screenshot`][session-screenshot].
-[`Session.screenshot`][session-screenshot] has one argument.
-You specify the file name as the argument of [`Session.screenshot`][session-screenshot].
+Second, you call [`Session.take_screenshot`][session-take-screenshot].
 
 Example:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+-- Make your callback
+function callback(session)
+-- Specify the URL as the argument of Session.navigate_to
+  session:navigate_to("https://www.google.com/")
+-- Take screenshot in PNG format
+  local png = session:take_screenshot()
+  io.output("sample.png")
+  io.write(png)
+end
+
+driver:start()
+driver:start_session(callback)
+driver:stop()
 ```
 
 ## Move on website {#move-on-website}
@@ -247,7 +261,7 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 
 [session-xml]:../reference/session.html#xml
 
-[session-screenshot]:../reference/session.html#screenshot
+[session-take-screenshot]:../reference/session.html#take_screenshot
 
 [session-back]:../reference/session.html#back
 
