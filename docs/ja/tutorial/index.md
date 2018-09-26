@@ -216,6 +216,24 @@ driver:stop()
 例:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+-- コールバックを作成する
+local callback = function(session)
+-- Session.navigate_toの引数としてURLを指定する
+  session:navigate_to("http://localhost:10080/index.html")
+-- 属性を取得する要素オブジェクトを取得する
+  local element = session:find_element("css selector", "input[name=wine]")
+-- 取得した要素オブジェクトの属性を取得する
+  local name = element:get_attribute("name")
+  local type = element:get_attribute("type")
+  print(name, type)
+end
+
+driver:start()
+driver:start_session(callback)
+driver:stop()
 ```
 
 ## 要素のテキストの取得 {#get-attribute-element}

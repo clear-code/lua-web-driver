@@ -232,6 +232,24 @@ You can use acquired value of the attribute as Lua's string.
 Example:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+-- Make your callback
+local callback = function(session)
+-- Specify the URL as the argument of Session.navigate_to
+  session:navigate_to("http://localhost:10080/index.html")
+-- Get element object for getting attribute
+  local element = session:find_element("css selector", "input[name=wine]")
+-- Get attribute of acquired element
+  local name = element:get_attribute("name")
+  local type = element:get_attribute("type")
+  print(name, type)
+end
+
+driver:start()
+driver:start_session(callback)
+driver:stop()
 ```
 
 ## Get text of element {#get-text-element}
