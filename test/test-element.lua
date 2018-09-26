@@ -58,7 +58,7 @@ function TestElement:test_get_css_value()
   self.driver:start_session(callback)
 end
 
-function TestElement:test_ext()
+function TestElement:test_text()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
     local element = session:find_element("css selector", '#p2')
