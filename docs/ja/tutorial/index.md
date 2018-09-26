@@ -266,9 +266,9 @@ driver:start_session(callback)
 driver:stop()
 ```
 
-## Next step {#next-step}
+## 次のステップ {#next-step}
 
-Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
+これで、LuaWebDriverのすべての主な機能を学びました！それぞれの機能をより理解したい場合は、各機能の[リファレンスマニュアル][reference]を見てください。
 
 
 [install]:../install/

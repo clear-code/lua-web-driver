@@ -471,12 +471,14 @@ msgstr ""
 "end"
 
 msgid "## Next step {#next-step}"
-msgstr ""
+msgstr "## 次のステップ {#next-step}"
 
 msgid ""
 "Now, you knew all major LuaWebDriver features! If you want to understand each "
 "feature, see [reference manual][reference] for each feature."
 msgstr ""
+"これで、LuaWebDriverのすべての主な機能を学びました！それぞれの機能をより理解したい場合は、各機能の[リファレンスマニュアル][reference"
+"]を見てください。"
 
 msgid "[install]:../install/"
 msgstr ""
