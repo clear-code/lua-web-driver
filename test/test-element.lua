@@ -28,8 +28,8 @@ function TestElement:test_get_attribute()
     element = session:find_element("css selector", "input[name=wine]")
     local u1 = element:get_attribute("checked")
     local u2 = element:get_attribute("disabled")
-    luaunit.assert_equals(tostring(u1), "userdata: NULL")
-    luaunit.assert_equals(tostring(u2), "userdata: NULL")
+    luaunit.assert_equals(u1, nil)
+    luaunit.assert_equals(u2, nil)
   end
   self.driver:start_session(callback)
 end

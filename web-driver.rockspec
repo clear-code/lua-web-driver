@@ -51,6 +51,7 @@ build = {
     ["web-driver.interactions.pointer-move"] = "web-driver/interactions/pointer-move.lua",
     ["web-driver.interactions.pointer-press"] = "web-driver/interactions/pointer-press.lua",
     ["web-driver.interactions.typing-interaction"] = "web-driver/interactions/typing-interaction.lua",
+    ["web-driver.json"] = "web-driver/json.lua",
     ["web-driver.keys"] = "web-driver/keys.lua",
     ["web-driver.pp"] = "web-driver/pp.lua",
     ["web-driver.session"] = "web-driver/session.lua",

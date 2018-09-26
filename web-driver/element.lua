@@ -2,6 +2,7 @@
 --
 -- @classmod Element
 local ElementClient = require("web-driver/element-client")
+local json = require("web-driver/json")
 local pp = require("web-driver/pp")
 local base64 = require("base64")
 local Element = {}
@@ -57,17 +58,17 @@ end
 
 function methods:get_attribute(name)
   local response = self.client:get_attribute(name)
-  return response.json()["value"]
+  return json.normalize(response.json()["value"])
 end
 
 function methods:get_property(name)
   local response = self.client:get_property(name)
-  return response.json()["value"]
+  return json.normalize(response.json()["value"])
 end
 
 function methods:get_css_value(property_name)
   local response = self.client:get_css_value(property_name)
-  return response.json()["value"]
+  return json.normalize(response.json()["value"])
 end
 
 function methods:text()
