@@ -157,7 +157,7 @@ function TestSession:test_source()
     <p id="p1">Hello 1</p>
     <p id="p2">Hello 2</p>
     <p id="p3">Hello 3</p>
-    <input id="name" name="name" type="text" data-placeholder="Input your name">
+    <input id="name" name="name" data-placeholder="Input your name" type="text">
     <label>
       <input checked="checked" name="cheese" disabled="disabled" type="checkbox">
       Cheese
