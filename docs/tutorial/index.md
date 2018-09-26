@@ -201,6 +201,22 @@ You specify input string as the argument of [`Element.send_keys`][element-send-k
 Example:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+-- Make your callback
+local callback = function(session)
+-- Specify the URL as the argument of Session.navigate_to
+  session:navigate_to("http://localhost:10080/index.html")
+-- Get element object for inputting string
+  local element = session:find_element("css selector", 'input[name=name]')
+-- Input string to form
+  element:send_keys("This is test")
+end
+
+driver:start()
+driver:start_session(callback)
+driver:stop()
 ```
 
 ## Get attribute of element {#get-attribute-element}
