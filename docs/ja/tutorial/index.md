@@ -29,28 +29,28 @@ driver:stop()
 
 ## Webサイトへのアクセス
 
-[`Session.visit`][session-visit]を使って、Webブラウザーで特定のWebサイトへアクセスできます。
+[`Session.navigate_to`][session-navigate-to]を使って、Webブラウザーで特定のWebサイトへアクセスできます。
 
 まず最初に、Webサイトへアクセスするためのコールバック関数を作成します。
-[`Session.visit`][session-visit]の引数としてURLを指定します。
+[`Session.navigate_to`][session-navigate-to]の引数としてURLを指定します。
 
-次に、[`Session.start`][session-start]の引数としてコールバックを指定し、[`Session.start`][session-start]を呼び出します。
+次に、[`Firefox.start_session`][firefox-start-session]の引数としてコールバックを指定し、[`Firefox.start_session`][firefox-start-session]を呼び出します。
 セッションはコールバックを呼び出した後、自動的に破棄されます。
 
 例:
 
 ```lua
-local WebDriver = require("web-driver")
-local driver = WebDriver.create("firefox")
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
 
 -- コールバックを作成する
 function callback(session)
--- Session.visitの引数としてURLを指定する
-  session:visit("https://www.google.com/")
+-- Session.navigate_toの引数としてURLを指定する
+  session:navigate_to("https://www.google.com/")
 end
 
 driver:start()
--- Session.startの引数としてコールバックを指定する
+-- Firefox.start_sessionの引数としてコールバックを指定する
 driver:start_session(callback)
 driver:stop()
 ```
@@ -209,9 +209,9 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 
 [firefoxdriver-stop]:../reference/firefoxdriver.html#stop
 
-[session-start]:../reference/session.html#start
+[firefox-start-session]:../reference/firefox.html#start_session
 
-[session-visit]:../reference/session.html#visit
+[session-navigate-to]:../reference/session.html#navigate_to
 
 [session-xml]:../reference/session.html#xml
 

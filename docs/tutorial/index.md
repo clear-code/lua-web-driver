@@ -29,28 +29,28 @@ driver:stop()
 
 ## Visit to a website {#visit-to-website}
 
-You can use [`Session.visit`][session-visit] to visit a specific website with the web browser.
+You can use [`Session.navigate_to`][session-navigate-to] to visit a specific website with the web browser.
 
 First of all, you make a callback function for visit to a website.
-You specify the URL as the argument of [`Session.visit`][session-visit]
+You specify the URL as the argument of [`Session.navigate_to`][session-navigate-to]
 
-Second, you specify your callback as the argument of [`Session.start`][session-start] and call [`Session.start`][session-start].
+Second, you specify your callback as the argument of [`Firefox.start_session`][firefox-start-session] and call [`Firefox.start_session`][firefox-start-session].
 the session is destroyed auto after calling your callback.
 
 Example:
 
 ```lua
-local WebDriver = require("web-driver")
-local driver = WebDriver.create("firefox")
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
 
 -- Make your callback
 function callback(session)
--- Specify the URL as the argument of Session.visit
-  session:visit("https://www.google.com/")
+-- Specify the URL as the argument of Session.navigate_to
+  session:navigate_to("https://www.google.com/")
 end
 
 driver:start()
--- Specify your callback as the argument of Session.start
+-- Specify your callback as the argument of Firefox.start_session
 driver:start_session(callback)
 driver:stop()
 ```
@@ -226,9 +226,9 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 
 [firefoxdriver-stop]:../reference/firefoxdriver.html#stop
 
-[session-start]:../reference/session.html#start
+[firefox-start-session]:../reference/firefox.html#start_session
 
-[session-visit]:../reference/session.html#visit
+[session-navigate-to]:../reference/session.html#navigate_to
 
 [session-xml]:../reference/session.html#xml
 
