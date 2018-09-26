@@ -238,15 +238,32 @@ driver:stop()
 
 ## 要素のテキストの取得 {#get-attribute-element}
 
-[`Element.get_text`][element-get-text]を使って特定の要素のテキストを取得できます。
+[`Element.text`][element-text]を使って特定の要素のテキストを取得できます。
 
 まずはじめに、[`Session.find_element`][session-find-element]を使って、テキストを取得するための要素オブジェクトを取得します。
 
-次に、取得した要素オブジェクトの[`Element.get_text`][element-get-text]を呼び出します。取得したテキストの値は、Luaの文字列として使えます。
+次に、取得した要素オブジェクトの[`Element.text`][element-text]を呼び出します。取得したテキストの値は、Luaの文字列として使えます。
 
 例:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+-- コールバックを作成する
+local callback = function(session)
+-- Session.navigate_toの引数としてURLを指定する
+  session:navigate_to("http://localhost:10080/confirm.html")
+-- テキストを取得する要素オブジェクトを取得する
+  local element = session:find_element("css selector", '#p2')
+-- 取得した要素オブジェクトのテキストを取得する
+  local text = element:text()
+  print(text)
+end
+
+driver:start()
+driver:start_session(callback)
+driver:stop()
 ```
 
 ## Next step {#next-step}
@@ -286,6 +303,6 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 
 [element-get-attribute]:../reference/element.html#get_attribute
 
-[element-get-text]:../reference/element.html#text
+[element-text]:../reference/element.html#text
 
 [reference]:../reference/

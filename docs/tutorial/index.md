@@ -254,16 +254,33 @@ driver:stop()
 
 ## Get text of element {#get-text-element}
 
-You can use [`Element.get_text`][element-get-text] to get text of sepecific element.
+You can use [`Element.text`][element-text] to get text of sepecific element.
 
 First of all, you get element object for getting text with [`Session.find_element`][session-find-element].
 
-Second, you call [`Element.get_text`][element-get-text] of acquired element object.
+Second, you call [`Element.text`][element-text] of acquired element object.
 You can use acquired value of the test as Lua's string.
 
 Example:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+-- Make your callback
+local callback = function(session)
+-- Specify the URL as the argument of Session.navigate_to
+  session:navigate_to("http://localhost:10080/index.html")
+-- Get element object for getting text
+  local element = session:find_element("css selector", '#p2')
+-- Get text of acquired element
+  local text = element:text()
+  print(text)
+end
+
+driver:start()
+driver:start_session(callback)
+driver:stop()
 ```
 
 ## Next step {#next-step}
@@ -303,6 +320,6 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 
 [element-get-attribute]:../reference/element.html#get_attribute
 
-[element-get-text]:../reference/element.html#text
+[element-text]:../reference/element.html#text
 
 [reference]:../reference/
