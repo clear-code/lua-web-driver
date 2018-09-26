@@ -34,6 +34,16 @@ function TestElement:test_get_attribute()
   self.driver:start_session(callback)
 end
 
+function TestElement:test_get_attribute_shortcut()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local element = session:find_element("css selector", "input[type=text]")
+    luaunit.assert_equals(element["data-placeholder"], "Input your name")
+    luaunit.assert_equals(element.noneixstent, nil)
+  end
+  self.driver:start_session(callback)
+end
+
 function TestElement:test_get_property()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
@@ -48,12 +58,36 @@ function TestElement:test_get_property()
   self.driver:start_session(callback)
 end
 
+function TestElement:test_get_property_shortcut()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local element = session:find_element("css selector", "input[name=cheese]")
+    luaunit.assert_equals(element.checked, true)
+    luaunit.assert_equals(element.disabled, true)
+
+    element = session:find_element("css selector", "input[name=wine]")
+    luaunit.assert_equals(element.checked, false)
+    luaunit.assert_equals(element.disabled, false)
+  end
+  self.driver:start_session(callback)
+end
+
 function TestElement:test_get_css_value()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
     local element = session:find_element("xpath", '//*[@id="p1"]')
     luaunit.assert_equals(element:get_css_value("color"), "rgb(255, 0, 0)")
     luaunit.assert_equals(element:get_css_value("background-color"), "rgba(0, 0, 0, 0)")
+  end
+  self.driver:start_session(callback)
+end
+
+function TestElement:test_get_css_value_shortcut()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local element = session:find_element("xpath", '//*[@id="p1"]')
+    luaunit.assert_equals(element.color, "rgb(255, 0, 0)")
+    luaunit.assert_equals(element["background-color"], "rgba(0, 0, 0, 0)")
   end
   self.driver:start_session(callback)
 end

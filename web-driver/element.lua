@@ -11,7 +11,23 @@ local methods = {}
 local metatable = {}
 
 function metatable.__index(element, key)
-  return methods[key]
+  local value = methods[key]
+  if value then
+    return value
+  end
+  value = methods.get_property(element, key)
+  if not (value == nil) then
+    return value
+  end
+  value = methods.get_attribute(element, key)
+  if not (value == nil) then
+    return value
+  end
+  value = methods.get_css_value(element, key)
+  if not (value == nil or value == "") then
+    return value
+  end
+  return nil
 end
 
 -- TODO: Support more patterns
