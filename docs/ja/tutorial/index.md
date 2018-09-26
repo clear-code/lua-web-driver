@@ -10,7 +10,7 @@ title: チュートリアル
 
 Webブラウザーを起動するには、まず最初にWebDriverを起動します。
 
-以下のように、[`WebDriver.create`][webdriver-create]と[`FirefoxDriver.start`][firefoxdriver-start]を使って、Webブラウザーを起動できます。
+以下のように、[`FirefoxDriver.start`][firefoxdriver-start]を使って、Webブラウザーを起動できます。
 Webブラウザーはデフォルトでヘッドレスモードで起動します。
 
 また、処理が終了したらWebブラウザーを停止する必要があります。
@@ -20,8 +20,8 @@ Webブラウザーはデフォルトでヘッドレスモードで起動しま�
 例:
 
 ```lua
-local WebDriver = require("web-driver")
-local driver = WebDriver.create("firefox")
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
 
 driver:start()
 driver:stop()

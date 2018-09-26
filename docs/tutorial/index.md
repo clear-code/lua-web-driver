@@ -10,7 +10,7 @@ This document describes how to use LuaWebDriver step by step. If you don't insta
 
 You need to start WebDriver at first to start web browser.
 
-You can use [`WebDriver.create`][webdriver-create] and [`FirefoxDriver.start`][firefoxdriver-start] to start web browser as below example.
+You can use [`FirefoxDriver.start`][firefoxdriver-start] to start web browser as below example.
 Web browser starts in headless mode with default.
 
 Also you need to stop web browser when you finish your processing.
@@ -20,8 +20,8 @@ You can use [`FirefoxDriver.stop`][firefoxdriver-stop] to stop web browser.
 Example:
 
 ```lua
-local WebDriver = require("web-driver")
-local driver = WebDriver.create("firefox")
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
 
 driver:start()
 driver:stop()
