@@ -143,6 +143,118 @@ function TestSession:test_find_elements()
   self.driver:start_session(callback)
 end
 
+function TestSession:test_css_select()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local elements = session:css_select("p, label")
+    local actual = {}
+    for index, element in ipairs(elements) do
+      actual[index] = element:text()
+    end
+    luaunit.assert_equals(actual,
+                          {
+                            "Hello 1",
+                            "Hello 2",
+                            "Hello 3",
+                            "Cheese",
+                            "Wine",
+                          })
+  end
+  self.driver:start_session(callback)
+end
+
+function TestSession:test_xpath_search()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local elements = session:xpath_search("//p")
+    local actual = {}
+    for index, element in ipairs(elements) do
+      actual[index] = element:text()
+    end
+    luaunit.assert_equals(actual,
+                          {
+                            "Hello 1",
+                            "Hello 2",
+                            "Hello 3",
+                          })
+  end
+  self.driver:start_session(callback)
+end
+
+function TestSession:test_xpath_search()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local elements = session:xpath_search("//p")
+    local actual = {}
+    for index, element in ipairs(elements) do
+      actual[index] = element:text()
+    end
+    luaunit.assert_equals(actual,
+                          {
+                            "Hello 1",
+                            "Hello 2",
+                            "Hello 3",
+                          })
+  end
+  self.driver:start_session(callback)
+end
+
+function TestSession:test_link_search()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/link.html")
+    local elements = session:link_search("Hello 1")
+    local actual = {}
+    for index, element in ipairs(elements) do
+      actual[index] = element:text()
+    end
+    luaunit.assert_equals(actual,
+                          {
+                            "Hello 1",
+                            "Hello 1",
+                          })
+  end
+  self.driver:start_session(callback)
+end
+
+function TestSession:test_partial_link_search()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/link.html")
+    local elements = session:partial_link_search("Hello")
+    local actual = {}
+    for index, element in ipairs(elements) do
+      actual[index] = element:text()
+    end
+    luaunit.assert_equals(actual,
+                          {
+                            "Hello 1",
+                            "Hello 1",
+                            "Hello 2",
+                            "Hello 2",
+                            "Hello 3",
+                            "Hello 3",
+                          })
+  end
+  self.driver:start_session(callback)
+end
+
+function TestSession:test_tag_search()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local elements = session:tag_search("p")
+    local actual = {}
+    for index, element in ipairs(elements) do
+      actual[index] = element:text()
+    end
+    luaunit.assert_equals(actual,
+                          {
+                            "Hello 1",
+                            "Hello 2",
+                            "Hello 3",
+                          })
+  end
+  self.driver:start_session(callback)
+end
+
 function TestSession:test_source()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")

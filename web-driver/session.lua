@@ -3,6 +3,7 @@
 -- @classmod Session
 local SessionClient = require("web-driver/session-client")
 local Element = require("web-driver/element")
+local Searchable = require("web-driver/searchable")
 local Interactions = require("web-driver/interactions")
 local ActionBuilder = require("web-driver/action-builder")
 local base64 = require("base64")
@@ -13,7 +14,8 @@ local methods = {}
 local metatable = {}
 
 function metatable.__index(session, key)
-  return methods[key]
+  return methods[key] or
+    Searchable[key]
 end
 
 --- Destroy the session.
@@ -145,18 +147,6 @@ function methods:find_elements(strategy, finder)
     elements[i] = Element.new(self, element_value)
   end
   return elements
-end
-
-function methods:css(finder)
-  return self:find_elements("css selector", finder)
-end
-
-function methods:xpath(finder)
-  return self:find_elements("xpath", finder)
-end
-
-function methods:links(finder)
-  return self:find_elements("link text", finder)
 end
 
 function methods:active_element()
