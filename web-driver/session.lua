@@ -3,6 +3,7 @@
 -- @classmod Session
 local SessionClient = require("web-driver/session-client")
 local Element = require("web-driver/element")
+local ElementSet = require("web-driver/element-set")
 local Searchable = require("web-driver/searchable")
 local Interactions = require("web-driver/interactions")
 local ActionBuilder = require("web-driver/action-builder")
@@ -146,7 +147,7 @@ function methods:find_elements(strategy, finder)
   for i, element_value in ipairs(response.json()["value"]) do
     elements[i] = Element.new(self, element_value)
   end
-  return elements
+  return ElementSet.new(elements)
 end
 
 function methods:active_element()

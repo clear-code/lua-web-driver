@@ -3,7 +3,6 @@ local web_driver = require("web-driver")
 
 local base64 = require("base64")
 local helper = require("test/helper")
-local p = helper.p
 
 TestSession = {}
 
@@ -158,24 +157,6 @@ function TestSession:test_css_select()
                             "Hello 3",
                             "Cheese",
                             "Wine",
-                          })
-  end
-  self.driver:start_session(callback)
-end
-
-function TestSession:test_xpath_search()
-  local callback = function(session)
-    session:navigate_to("http://localhost:10080/index.html")
-    local elements = session:xpath_search("//p")
-    local actual = {}
-    for index, element in ipairs(elements) do
-      actual[index] = element:text()
-    end
-    luaunit.assert_equals(actual,
-                          {
-                            "Hello 1",
-                            "Hello 2",
-                            "Hello 3",
                           })
   end
   self.driver:start_session(callback)

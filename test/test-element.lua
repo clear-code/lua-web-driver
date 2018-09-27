@@ -2,7 +2,6 @@ local luaunit = require("luaunit")
 local cjson = require("cjson")
 local web_driver = require("web-driver")
 local helper = require("test/helper")
-local p = helper.p
 
 TestElement = {}
 

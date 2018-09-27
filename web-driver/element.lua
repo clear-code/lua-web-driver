@@ -2,6 +2,8 @@
 --
 -- @classmod Element
 local ElementClient = require("web-driver/element-client")
+local ElementSet = require("web-driver/element-set")
+local Searchable = require("web-driver/searchable")
 local json = require("web-driver/json")
 local pp = require("web-driver/pp")
 local base64 = require("base64")
@@ -11,7 +13,7 @@ local methods = {}
 local metatable = {}
 
 function metatable.__index(element, key)
-  local value = methods[key]
+  local value = methods[key] or Searchable[key]
   if value then
     return value
   end
@@ -52,19 +54,19 @@ function metatable.__tostring(element)
   return s
 end
 
-function methods:find_child_element(strategy, finder)
+function methods:find_element(strategy, finder)
   local response = self.client:find_child_element(strategy, finder)
   local element_value = response.json()["value"]
   return Element.new(self.session, element_value)
 end
 
-function methods:find_child_elements(strategy, finder)
+function methods:find_elements(strategy, finder)
   local response = self.client:find_child_elements(strategy, finder)
   local elements = {}
   for i, element_value in ipairs(response.json()["value"]) do
     elements[i] = Element.new(self.session, element_value)
   end
-  return elements
+  return ElementSet.new(elements)
 end
 
 function methods:is_selected()
