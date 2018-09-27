@@ -1,7 +1,7 @@
 -- -*- lua -*-
 
 local project_name = "lua-web-driver"
-local package_version = "0.0.1"
+local package_version = "0.0.2"
 
 package = "web-driver"
 version = package_version .. "-0"
@@ -54,6 +54,7 @@ build = {
     ["web-driver.json"] = "web-driver/json.lua",
     ["web-driver.keys"] = "web-driver/keys.lua",
     ["web-driver.pp"] = "web-driver/pp.lua",
+    ["web-driver.searchable"] = "web-driver/seachable.lua",
     ["web-driver.session"] = "web-driver/session.lua",
     ["web-driver.session-client"] = "web-driver/session-client.lua",
     ["web-driver.uuid"] = "web-driver/uuid.lua",
