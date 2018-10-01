@@ -10,10 +10,7 @@ driver:start_session(function(session)
   elements[1]:click()
 
   elements = session:css_select('a[name=announcement]')
-  local informations_summary = {}
-  for _, element in ipairs(elements) do
-    table.insert(informations_summary, element:text())
-  end
+  local informations_summary = elements:texts()
   for _, summary in ipairs(informations_summary) do
     print(summary)
   end
