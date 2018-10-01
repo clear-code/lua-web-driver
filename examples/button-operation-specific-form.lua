@@ -7,7 +7,7 @@ local URL =
 driver:start_session(function(session)
   session:navigate_to(URL)
   local elements = session:css_select('#announcement')
-  elements[1]:click()
+  elements:click()
 
   elements = session:css_select('a[name=announcement]')
   local informations_summary = elements:texts()
