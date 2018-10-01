@@ -40,6 +40,14 @@ function methods:text()
                       "")
 end
 
+function methods:texts()
+  local texts = {}
+  for i, element in ipairs(self) do
+    table.insert(texts, element:text())
+  end
+  return texts
+end
+
 function methods:insert(element_or_position, element)
   local inserted_element = nil
   local position = nil

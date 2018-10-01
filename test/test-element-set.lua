@@ -71,3 +71,14 @@ function TestElementSet:test_tag_search()
   self.driver:start_session(callback)
 end
 
+function TestElementSet:test_texts()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local element_set = session:css_select("body")
+    local sub_element_set = element_set:tag_search("p")
+    local expected = { "Hello 1", "Hello 2", "Hello 3" }
+    luaunit.assert_equals(sub_element_set:texts(),
+                          expected)
+  end
+  self.driver:start_session(callback)
+end
