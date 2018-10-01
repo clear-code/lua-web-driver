@@ -9,11 +9,9 @@ TestElement = {}
 function TestElement:setup()
   self.server = helper.start_server()
   self.driver = web_driver.Firefox.new()
-  self.driver:start()
 end
 
 function TestElement:teardown()
-  self.driver:stop()
   self.server:kill()
 end
 

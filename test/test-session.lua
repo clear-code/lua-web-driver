@@ -9,11 +9,9 @@ TestSession = {}
 function TestSession:setup()
   self.server = helper.start_server()
   self.driver = web_driver.Firefox.new()
-  self.driver:start()
 end
 
 function TestSession:teardown()
-  self.driver:stop()
   self.server:kill()
 end
 

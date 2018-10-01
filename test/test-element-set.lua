@@ -8,11 +8,9 @@ TestElementSet = {}
 function TestElementSet:setup()
   self.server = helper.start_server()
   self.driver = web_driver.Firefox.new()
-  self.driver:start()
 end
 
 function TestElementSet:teardown()
-  self.driver:stop()
   self.server:kill()
 end
 

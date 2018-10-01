@@ -38,6 +38,7 @@ build = {
     ["web-driver.element"] = "web-driver/element.lua",
     ["web-driver.element-client"] = "web-driver/element-client.lua",
     ["web-driver.element-set"] = "web-driver/element-set.lua",
+    ["web-driver.geckodriver"] = "web-driver/geckdriver.lua",
     ["web-driver.firefox"] = "web-driver/firefox.lua",
     ["web-driver.interactions"] = "web-driver/interactions.lua",
     ["web-driver.interactions.input-device"] = "web-driver/interactions/input-device.lua",
