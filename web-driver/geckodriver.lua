@@ -103,11 +103,12 @@ function methods:start(callback)
   self.process = geckodriver_process
   self:ensure_running()
   if callback then
-    local _, err = pcall(callback, self)
+    local success, return_value = pcall(callback, self)
     self:stop()
-    if err then
+    if not success then
       error(err)
     end
+    return return_value
   end
 end
 
