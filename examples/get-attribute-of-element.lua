@@ -8,7 +8,7 @@ driver:start_session(function(session)
   session:navigate_to(URL)
   local elements = session:css_select('p')
   for _, element in ipairs(elements) do
-    if element:get_attribute('data-value-type') == "number" then
+    if element["data-value-type"] == "number" then
       print(element:text())
     end
   end
