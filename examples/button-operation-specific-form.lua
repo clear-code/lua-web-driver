@@ -2,14 +2,19 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/confirm.html"
+  "https://clear-code.gitlab.io/lua-web-driver/sample/button.html"
 
-local callback = function(session)
+driver:start_session(function(session)
   session:navigate_to(URL)
-  local element = session:find_element("css selector", "#button")
-  element:click()
-end
+  local elements = session:css_select('#announcement')
+  elements[1]:click()
 
-driver:start()
-driver:start_session(callback)
-driver:stop()
+  elements = session:css_select('a[name=announcement]')
+  local informations_summary = {}
+  for _, element in ipairs(elements) do
+    table.insert(informations_summary, element:text())
+  end
+  for _, summary in ipairs(informations_summary) do
+    print(summary)
+  end
+end)
