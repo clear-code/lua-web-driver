@@ -7,16 +7,16 @@ local URL =
 driver:start_session(function(session)
   session:navigate_to(URL)
 
-  local text_form = session:find_element("css selector", 'input[name=username]')
+  local text_form = session:css_select('input[name=username]')
   text_form:send_keys("username")
-  local password_form = session:find_element("css selector", 'input[name=password]')
+  local password_form = session:css_select('input[name=password]')
   password_form:send_keys("password")
 
-  local button = session:find_element("css selector", "#button")
+  local button = session:css_select("#button")
   button:click()
 
-  local link = session:find_element("css selector", "a[name=1]")
+  local link = session:link_search ("1")
   link:click()
-  local element = session:find_element("css selector", "p")
-  print(element:text())
+  local elements = session:css_select("p")
+  print(elements:text())
 end)
