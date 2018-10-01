@@ -7,6 +7,6 @@ local URL =
 driver:start_session(function(session)
   session:navigate_to(URL)
   local elements = session:css_select('input[name=name]')
-  elements[1]:send_keys("This is test")
+  elements:send_keys("This is test")
   print(elements[1].value)
 end)
