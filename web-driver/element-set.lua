@@ -33,19 +33,14 @@ function methods:find_elements(strategy, selector)
 end
 
 function methods:text()
-  return table.concat(map(self,
-                          function(element)
-                            return element:text() or ""
-                          end),
-                      "")
+  return table.concat(self:texts(), "")
 end
 
 function methods:texts()
-  local texts = {}
-  for i, element in ipairs(self) do
-    table.insert(texts, element:text())
-  end
-  return texts
+  return map(self,
+             function(element)
+               return element:text() or ""
+             end)
 end
 
 function methods:insert(element_or_position, element)
