@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script type="text/javascript">
-      window.onload = function() {
-        // let button = document.getElementById("button");
-        window.click = function click() {
-          let username = document.getElementsByName("username")
-          let password = document.getElementsByName("password")
-          if (username && password) {
-            window.location.href =
-              "https://clear-code.gitlab.io/lua-web-driver/sample/link.html";
-          }
-        };
-      }
-    </script>
     <title>This is test html move</title>
   <body>
-    User name:<input type="text" name="username"></br>
-    Password:<input type="password" name="password"></br>
-    <button id="button" onClick="window.click()">login</button>
+    <form action="link.html">
+      User name:<input type="text" name="username"></br>
+      Password:<input type="password" name="password"></br>
+      <input type="submit" value="ログイン"><input type="reset" value="リセット">
+    </form>
   </body>
 </html>
