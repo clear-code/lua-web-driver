@@ -93,3 +93,12 @@ function TestElementSet:test_click()
   end
   self.driver:start_session(callback)
 end
+
+function TestElementSet:test_send_keys()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local element_set = session:css_select('input[name=name]')
+    element_set:send_keys("This is test")
+    luaunit.assert_equals(element[1].value, "This is test")
+  end
+end

@@ -108,6 +108,12 @@ function methods:click()
   end
 end
 
+function methods:send_keys()
+  for _, element in ipairs(self) do
+    element:send_keys()
+  end
+end
+
 function ElementSet.new(elements)
   setmetatable(elements, metatable)
   return elements
