@@ -1,16 +1,11 @@
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
-local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/index.html"
+local URL = "https://clear-code.gitlab.io/lua-web-driver/sample/"
 
-local callback = function(session)
+driver:start_session(function(session)
   session:navigate_to(URL)
-  local element = session:find_element("css selector", '#p2')
-  local text = element:text()
+  local element_set = session:css_select('#p2')
+  local text = element_set:text()
   print(text)
-end
-
-driver:start()
-driver:start_session(callback)
-driver:stop()
+end)
