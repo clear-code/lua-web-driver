@@ -82,3 +82,14 @@ function TestElementSet:test_texts()
   end
   self.driver:start_session(callback)
 end
+
+function TestElementSet:test_click()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local element_set = session:css_select('input[name=wine]')
+    luaunit.assert_equals(element_set[1].checked, false)
+    element_set:click()
+    luaunit.assert_equals(element_set[1].checked, true)
+  end
+  self.driver:start_session(callback)
+end

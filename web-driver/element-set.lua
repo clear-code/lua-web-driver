@@ -102,6 +102,12 @@ function methods:merge(element_set)
   return ElementSet.new(raw_element_set)
 end
 
+function methods:click()
+  for _, element in ipairs(self) do
+    element:click()
+  end
+end
+
 function ElementSet.new(elements)
   setmetatable(elements, metatable)
   return elements
