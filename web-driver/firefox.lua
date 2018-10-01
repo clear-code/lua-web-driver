@@ -39,12 +39,22 @@ end
 function methods:start_session(callback)
   local geckodriver = Geckodriver.new(self)
   geckodriver:start()
-  local session = Session.new(self)
-  local success, return_value = pcall(callback, session)
-  session:destroy()
+  local success
+  local session
+  local return_value
+  local err
+  success, session = pcall(Session.new, self)
+  if success then
+    success, return_value = pcall(callback, session)
+    if not success then
+      err = return_value
+    end
+    pcall(function() session:destroy() end)
+  else
+    err = session
+  end
   geckodriver:stop()
   if not success then
-    local err = return_value
     error(err)
   end
   return return_value
