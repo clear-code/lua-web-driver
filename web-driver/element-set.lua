@@ -108,9 +108,9 @@ function methods:click()
   end
 end
 
-function methods:send_keys()
+function methods:send_keys(keys)
   for _, element in ipairs(self) do
-    element:send_keys()
+    element:send_keys(keys)
   end
 end
 
