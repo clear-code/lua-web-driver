@@ -1,8 +1,8 @@
 title: LuaWebDriver
 markdown: kramdown
 highlighter: rouge
-version: 1.0.0
-release_date: 2018-xx-xx
+version: 0.0.3
+release_date: 2018-10-02
 copyright_year: 2018
 exclude:
   - "Rakefile"
