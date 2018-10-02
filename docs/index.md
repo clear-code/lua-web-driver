@@ -39,7 +39,7 @@ LuaWebDriver is released under [the MIT license][mit-license].
 
 See [LICENSE][license] file for details such as copyright holders.
 
-[webdriver]:http://xmlsoft.org/
+[webdriver]:https://www.w3.org/TR/webdriver1/
 
 [news]:news/
 
