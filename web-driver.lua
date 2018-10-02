@@ -7,7 +7,7 @@
 -- @license MIT
 local web_driver = {}
 
-web_driver.VERSION = "0.0.2"
+web_driver.VERSION = "0.0.3"
 web_driver.Firefox = require("web-driver/firefox")
 
 return web_driver
