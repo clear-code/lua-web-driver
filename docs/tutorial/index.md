@@ -6,27 +6,6 @@ title: Tutorial
 
 This document describes how to use LuaWebDriver step by step. If you don't install LuaWebDriver yet, [install][install] LuaWebDriver before you read this document.
 
-## Start and stop web browser {#start-stop-web-browser}
-
-You need to start WebDriver at first to start web browser.
-
-You can use [`FirefoxDriver.start`][firefoxdriver-start] to start web browser as below example.
-Web browser starts in headless mode with default.
-
-Also you need to stop web browser when you finish your processing.
-
-You can use [`FirefoxDriver.stop`][firefoxdriver-stop] to stop web browser.
-
-Example:
-
-```lua
-local web_driver = require("web-driver")
-local driver = web_driver.Firefox.new()
-
-driver:start()
-driver:stop()
-```
-
 ## Visit to a website {#visit-to-website}
 
 You can use [`Session.navigate_to`][session-navigate-to] to visit a specific website with the web browser.
@@ -43,16 +22,12 @@ Example:
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- Make your callback
-function callback(session)
--- Specify the URL as the argument of Session.navigate_to
-  session:navigate_to("https://www.google.com/")
-end
+local URL = "https://clear-code.gitlab.io/lua-web-driver/sample/"
 
-driver:start()
--- Specify your callback as the argument of Firefox.start_session
-driver:start_session(callback)
-driver:stop()
+-- Make your callback and start session
+driver:start_session(function(session)
+  session:navigate_to(URL)
+end)
 ```
 
 ## Serialize to website {#serialize-to-website}
@@ -72,28 +47,26 @@ Example:
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- Make your callback
-function callback(session)
--- Specify the URL as the argument of Session.navigate_to
-  session:navigate_to("https://www.google.com/")
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+-- Make your callback and start session
+driver:start_session(function(session)
+  session:navigate_to(URL)
 -- Serialize a current website as XML.
   local xml = session:xml()
   print(xml)
-end
-
-driver:start()
-driver:start_session(callback)
-driver:stop()
+end)
 ```
 
-## Take a screenshot {#take-screenshot}
+## Save a screenshot {#save-screenshot}
 
-You can use [`Session.take_screenshot`][session-take-screenshot] to take a screenshot of current website.
-The screenshot is taken in PNG format.
+You can use [`Session.save_screenshot`][session-save-screenshot] to save a screenshot of current website.
+The screenshot is saved in PNG format.
 
-First of all, you visit to a website to serialize as below example.
+First of all, you visit to a website to save a screenshot as below example.
 
-second, you call [`Session.take_screenshot`][session-take-screenshot].
+second, you call [`Session.save_screenshot`][session-save-screenshot].
 
 Example:
 
@@ -101,19 +74,14 @@ Example:
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- Make your callback
-function callback(session)
--- Specify the URL as the argument of Session.navigate_to
-  session:navigate_to("https://www.google.com/")
--- Take screenshot in PNG format
-  local png = session:take_screenshot()
-  io.output("sample.png")
-  io.write(png)
-end
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
 
-driver:start()
-driver:start_session(callback)
-driver:stop()
+driver:start_session(function(session)
+  session:navigate_to(URL)
+-- Save screenshot in PNG format
+  session:save_screenshot("sample.png")
+end)
 ```
 
 ## Move on website {#move-on-website}
@@ -129,25 +97,22 @@ In this example take turns at login and link click, get a text.
 First of all, you visit a target website.
 
 Second, you input user name and password, because of this the web site needs authentication.
-you can input user name and password with [`Session.find_element`][session-find-element] and [`Element.send_keys`][element-send-keys]."
-you get element object for inputting user name and password with [`Session.find_element`][session-find-element].
-In this example get element object with the CSS selector, however, you can also get it using the XPath.
-you call [`Element.send_keys`][element-send-keys] of acquired element object.
-You specify input string as the argument of [`Element.send_keys`][element-send-keys].
+you can input user name and password with [`Session.css_select`][session-css-select] and [`ElementSet.send_keys`][elementset-send-keys]."
 
-Third, you check a checkbox with [`Session.find_element`][session-find-element] and [`Element.click`][element-click].
-you get checkbox object with [`Session.find_element`][session-find-element].
-In this example get the checkbox with the CSS selector, however, you can also get it using the XPath.
-you call [`Element.click`][element-click] of acquired checkbox object.
+you get element object for inputting user name and password with [`Session.css_select`][session-css-select].
+In this example get element object with the CSS selector, however, you can also get it using the XPath with [`Session:xpath_search`][session-xpath-search].
 
-Fourth, you push login button with [`Session.find_element`][session-find-element] and [`Element.click`][element-click].
+you call [`ElementSet.send_keys`][elementset-send-keys] of acquired elementset object.
+You specify input string as the argument of [`ElementSet.send_keys`][elementset-send-keys].
 
-Fifth, you click link on website in after login with [`Session.find_element`][session-find-element] and [`Element.click`][element-click].
+Third, you push login button with [`Session.css_select`][session-css-select] and [`ElementSet.click`][elementset-click].
 
-Sixth, you get text of specific element in after moved web site with [`Element.text`][element-text].
-You get element object for getting text with [`Session.find_element`][session-find-element].
-you call [`Element.text`][element-text] of acquired element object.
-You can use acquired value of the test as Lua's string.
+Fourth, you click link on website in after login with [`Session.link_search`][session-link-search] and [`ElementSet.click`][elementset-click].
+
+Fifth, you get text of specific element in after moved web site with [`ElementSet.text`][elementset-text].
+You get element object for getting text with [`Session.css_select`][session-css-select].
+you call [`ElementSet.text`][elementset-text] of acquired elementset object.
+You can use acquired value of the text as Lua's string.
 
 Example:
 
@@ -155,51 +120,49 @@ Example:
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- Make your callback
-local callback = function(session)
--- Specify the URL as the argument of Session.navigate_to
-  session:navigate_to("http://localhost:10080/move.html")
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/move.html"
 
--- Get element object for inputting username
-  local text_form = session:find_element("css selector", 'input[name=username]')
+-- Make your callback and start session
+driver:start_session(function(session)
+  session:navigate_to(URL)
+
+-- Get forms in a website
+  local form = session:css_select('form')
+-- Get form for inputting username
+  local text_form = form:css_select('input[name=username]')
 -- Input username to form
   text_form:send_keys("username")
--- Get element object for inputting password
-  text_form = session:find_element("css selector", 'input[name=password]')
+-- Get form for inputting password
+  local password_form = form:css_select('input[name=password]')
 -- Input password to form
-  text_form:send_keys("password")
+  password_form:send_keys("password")
 
--- Get element object for button operating
-  local button = session:find_element("css selector", "#button")
--- Click the acquired button object
+-- Get button for submitting username and password
+  local button = form:css_select("input[type=submit]")
+-- Submit username and password
   button:click()
 
 -- Get element object for link operating
-  local link = session:find_element("css selector", "a[name=link]")
+  local link = session:link_search ("1")
 -- Click the link
   link:click()
-
--- Get element object for getting text
-  local element = session:find_element("css selector", "p")
+  local elements = session:css_select("p")
 -- Get text of acquired element
-  print(element:text())
-end
-
-driver:start()
-driver:start_session(callback)
-driver:stop()
+  print(elements:text())
+end)
 ```
 
 ## Button operation on a specific form {#button-operation-on-specific-form}
 
-You can use [`Session.find_element`][session-find-element] and [`Element.click`][element-click] to button operation on a specific form.
+You can use [`Session.css_select`][session-css-select] and [`ElementSet.click`][elementset-click] to button operation on a specific form.
 
 First of all, you visit a website to button operation as below example.
 
-Second, you get element object for button operating with [`Session.find_element`][session-find-element]."
+Second, you get element object for button operating with [`Session.css_select`][session-css-select]."
 In this example get element object with the CSS selector, however, you can also get it using the XPath.
 
-Third, you call [`Element.click`][element-click] of acquired element object.
+Third, you call [`ElementSet.click`][elementset-click] of acquired element object.
 
 Example:
 
@@ -207,32 +170,37 @@ Example:
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- Make your callback
-local callback = function(session)
--- Specify the URL as the argument of Session.navigate_to
-  session:navigate_to("http://localhost:10080/confirm.html")
--- Get element object for button operating
-  local element = session:find_element("css selector", "#button")
--- Click the acquired button object
-  element:click()
-end
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/button.html"
 
-driver:start()
-driver:start_session(callback)
-driver:stop()
+-- Make your callback and start session
+driver:start_session(function(session)
+  session:navigate_to(URL)
+-- Get elementset object for button operating
+  local elements = session:css_select('#announcement')
+-- Click the acquired button object
+  elements:click()
+
+--Get text of specific element in after moved web site
+  elements = session:css_select('a[name=announcement]')
+  local informations_summary = elements:texts()
+  for _, summary in ipairs(informations_summary) do
+    print(summary)
+  end
+end)
 ```
 
 ## Input string into specific a form {#input-string-into-form}
 
-You can use [`Element.send_keys`][element-send-keys] to input string into specific a form.
+You can use [`ElementSet.send_keys`][elementset-send-keys] to input string into specific a form.
 
 First of all, you visit a website to input string into a form.
 
-Second, you get element object for inputting string with [`Session.find_element`][session-find-element]."
+Second, you get element object for inputting string with [`Session.css_select`][session-css-select]."
 In this example get element object with the CSS selector, however, you can also get it using the XPath.
 
-Third, you call [`Element.send_keys`][element-send-keys] of acquired element object.
-You specify input string as the argument of [`Element.send_keys`][element-send-keys].
+Third, you call [`ElementSet.send_keys`][elementset-send-keys] of acquired element object.
+You specify input string as the argument of [`ElementSet.send_keys`][elementset-send-keys].
 
 Example:
 
@@ -240,26 +208,25 @@ Example:
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- Make your callback
-local callback = function(session)
--- Specify the URL as the argument of Session.navigate_to
-  session:navigate_to("http://localhost:10080/index.html")
--- Get element object for inputting string
-  local element = session:find_element("css selector", 'input[name=name]')
--- Input string to form
-  element:send_keys("This is test")
-end
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/index.html"
 
-driver:start()
-driver:start_session(callback)
-driver:stop()
+-- Make your callback and start session
+driver:start_session(function(session)
+  session:navigate_to(URL)
+-- Get elementset object for inputting string
+  local elements = session:css_select('input[name=name]')
+-- Input string to form
+  elements:send_keys("This is test")
+  print(elements[1].value)
+end)
 ```
 
 ## Get attribute of element {#get-attribute-element}
 
 You can use [`Element.get_attribute`][element-get-attribute] to get attribute of specific element.
 
-First of all, you get element object for getting attribute with [`Session.find_element`][session-find-element].
+First of all, you get element object for getting attribute with [`Session.css_select`][session-css-select].
 
 Second, you call [`Element.get_attribute`][element-get-attribute] of acquired element object.
 You specify attribute name as the argument of [`Element.get_attribute`][element-get-attribute].
@@ -271,30 +238,30 @@ Example:
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- Make your callback
-local callback = function(session)
--- Specify the URL as the argument of Session.navigate_to
-  session:navigate_to("http://localhost:10080/index.html")
--- Get element object for getting attribute
-  local element = session:find_element("css selector", "input[name=wine]")
--- Get attribute of acquired element
-  local name = element:get_attribute("name")
-  local type = element:get_attribute("type")
-  print(name, type)
-end
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/get-attribute.html"
 
-driver:start()
-driver:start_session(callback)
-driver:stop()
+-- Make your callback and start session
+driver:start_session(function(session)
+  session:navigate_to(URL)
+-- Get elementset object for getting attribute
+  local elements = session:css_select('p')
+  for _, element in ipairs(elements) do
+-- Get attribute of acquired element
+    if element["data-value-type"] == "number" then
+      print(element:text())
+    end
+  end
+end)
 ```
 
 ## Get text of element {#get-text-element}
 
-You can use [`Element.text`][element-text] to get text of sepecific element.
+You can use [`ElementSet.text`][elementset-text] to get text of sepecific element.
 
-First of all, you get element object for getting text with [`Session.find_element`][session-find-element].
+First of all, you get element object for getting text with [`Session.css_select`][session-css-select].
 
-Second, you call [`Element.text`][element-text] of acquired element object.
+Second, you call [`ElementSet.text`][elementset-text] of acquired element object.
 You can use acquired value of the test as Lua's string.
 
 Example:
@@ -303,20 +270,17 @@ Example:
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- Make your callback
-local callback = function(session)
--- Specify the URL as the argument of Session.navigate_to
-  session:navigate_to("http://localhost:10080/index.html")
--- Get element object for getting text
-  local element = session:find_element("css selector", '#p2')
--- Get text of acquired element
-  local text = element:text()
-  print(text)
-end
+local URL = "https://clear-code.gitlab.io/lua-web-driver/sample/"
 
-driver:start()
-driver:start_session(callback)
-driver:stop()
+-- Make your callback and start session
+driver:start_session(function(session)
+  session:navigate_to(URL)
+-- Get elementset object for getting text
+  local element_set = session:css_select('#p2')
+-- Get text of acquired element
+  local text = element_set:text()
+  print(text)
+end)
 ```
 
 ## Next step {#next-step}
@@ -338,7 +302,7 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 
 [session-xml]:../reference/session.html#xml
 
-[session-take-screenshot]:../reference/session.html#take_screenshot
+[session-save-screenshot]:../reference/session.html#save_screenshot
 
 [session-back]:../reference/session.html#back
 
@@ -348,11 +312,17 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 
 [session-dismiss-alert]:../reference/session.html#dismiss_alert
 
-[session-find-element]:../reference/session.html#find_element
+[session-css-select]:../reference/session.html#css_select
 
-[element-send-keys]:../reference/element.html#send_keys
+[session-xpath-search]:../reference/session.html#xpath_search
 
-[element-click]:../reference/element.html#click
+[session-link-search]:../reference/session.html#link_search
+
+[elementset-send-keys]:../reference/elementset.html#send_keys
+
+[elementset-click]:../reference/elementset.html#click
+
+[elementset-text]:../reference/elementset.html#text
 
 [element-get-attribute]:../reference/element.html#get_attribute
 

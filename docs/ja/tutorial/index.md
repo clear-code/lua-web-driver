@@ -6,27 +6,6 @@ title: チュートリアル
 
 このドキュメントは、LuaWebDriverの使い方を段階的に説明しています。まだ、LuaWebDriverを[インストール][install]していない場合は、このドキュメントを読む前にLuaWebDriverを[インストール][install]してください。
 
-## Webブラウザーの起動と停止 {#start-stop-web-browser}
-
-Webブラウザーを起動するには、まず最初にWebDriverを起動します。
-
-以下のように、[`FirefoxDriver.start`][firefoxdriver-start]を使って、Webブラウザーを起動できます。
-Webブラウザーはデフォルトでヘッドレスモードで起動します。
-
-また、処理が終了したらWebブラウザーを停止する必要があります。
-
-[`FirefoxDriver.stop`][firefoxdriver-stop]を使って、Webブラウザーを停止できます。
-
-例:
-
-```lua
-local web_driver = require("web-driver")
-local driver = web_driver.Firefox.new()
-
-driver:start()
-driver:stop()
-```
-
 ## Webサイトへのアクセス
 
 [`Session.navigate_to`][session-navigate-to]を使って、Webブラウザーで特定のWebサイトへアクセスできます。
@@ -43,16 +22,12 @@ driver:stop()
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- コールバックを作成する
-function callback(session)
--- Session.navigate_toの引数としてURLを指定する
-  session:navigate_to("https://www.google.com/")
-end
+local URL = "https://clear-code.gitlab.io/lua-web-driver/sample/"
 
-driver:start()
--- Firefox.start_sessionの引数としてコールバックを指定する
-driver:start_session(callback)
-driver:stop()
+-- コールバックの作成とセッションの開始
+driver:start_session(function(session)
+  session:navigate_to(URL)
+end)
 ```
 
 ## Wbeサイトのシリアライズ {#serialize-to-website}
@@ -71,28 +46,26 @@ driver:stop()
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- コールバックを作成する
-function callback(session)
--- Session.navigate_toの引数としてURLを指定する
-  session:navigate_to("https://www.google.com/")
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+-- コールバックの作成とセッションの開始
+driver:start_session(function(session)
+  session:navigate_to(URL)
 -- 現在のWebサイトをXMLとしてシリアライズする
   local xml = session:xml()
   print(xml)
-end
-
-driver:start()
-driver:start_session(callback)
-driver:stop()
+end)
 ```
 
-## スクリーンショットの取得 {#take-screenshot}
+## スクリーンショットの取得 {#save-screenshot}
 
-[`Session.take_screenshot`][session-take-screenshot]を使って現在のWebサイトのスクリーンショットを取得できます。
+[`Session.save_screenshot`][session-save-screenshot]を使って現在のWebサイトのスクリーンショットを取得できます。
 スクリーンショットは、PNG形式で取得されます。
 
-まずはじめに、以下の例のようにシリアライズするWebサイトへアクセスします。
+まずはじめに、以下の例のようにスクリーンショットを取得するWebサイトへアクセスします。
 
-次に、[`Session.take_screenshot`][session-take-screenshot]を呼び出します。
+次に、[`Session.save_screenshot`][session-save-screenshot]を呼び出します。
 
 例:
 
@@ -100,19 +73,14 @@ driver:stop()
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- コールバックを作成する
-function callback(session)
--- Session.navigate_toの引数としてURLを指定する
-  session:navigate_to("https://www.google.com/")
--- PNGフォーマットでスクリーンショットを取得する
-  local png = session:take_screenshot()
-  io.output("sample.png")
-  io.write(png)
-end
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
 
-driver:start()
-driver:start_session(callback)
-driver:stop()
+driver:start_session(function(session)
+  session:navigate_to(URL)
+-- PNG形式でスクリーンショットを保存します
+  session:save_screenshot("sample.png")
+end)
 ```
 
 ## Webサイトの移動 {#move-on-website}
@@ -127,15 +95,23 @@ driver:stop()
 
 まず最初に、対象のWebサイトへアクセスします。
 
-次に、このWebサイトは認証が必要なので、ユーザー名とパスワードを入力します。[`Session.find_element`][session-find-element]と[`Element.send_keys`][element-send-keys]を使って、ユーザー名とパスワードを入力できます。[`Session.find_element`] [session-find-element]でユーザー名とパスワードを入力する要素オブジェクトを取得します。この例では、CSSセレクタで要素オブジェクトを取得しますが、XPathを使用して取得することもできます。取得した要素オブジェクトの[`Element.send_keys`][element-send-keys]を呼び出します。[`Element.send_keys`] [element-send-keys]の引数として入力文字列を指定します。
+次にこのWebサイトは認証が必要なので、ユーザー名とパスワードを入力します。
+[`Session.css_select`][session-css-select]と[`ElementSet.send_keys`][elementset-send-keys]を使ってユーザー名とパスワードを入力できます。
 
-次に、[`Session.find_element`][session-find-element]と[`Element.click`][element-click]でチェックボックスをチェックします。[`Session.find_element`][session-find-element]でチェックボックスオブジェクトを取得します。この例では、CSSセレクタでチェックボックスを取得しますが、XPathを使用して取得することもできます。取得したチェックボックスオブジェクトの[`Element.click`][element-click]を呼び出します。
 
-次に、[`Session.find_element`] [session-find-element]と[` Element.click`] [element-click]でログインボタンを押します。
+ユーザー名とパスワードを入力するための要素を[`Session.css_select`][session-css-select]を使って取得します。
+この例では、CSSセレクターを使って要素を取得していますが、[`Session:xpath_search`][session-xpath-search]でXpathを使った取得もできます。
 
-次に、[`Session.find_element`] [session-find-element]と[` Element.click`] [element-click]を使ってログインした後のWebサイトのリンクをクリックします。
+次に、取得した要素オブジェクトの[`ElementSet.send_keys`][elementset-send-keys]を呼び出します。[`ElementSet.send_keys`][elementset-send-keys]の引数には、入力文字列を指定します。
 
-次に、[`Element.text`] [element-text]で移動後のWebサイトの特定の要素のテキストを取得します。[`Session.find_element`][session-find-element]を使って、テキストを取得するための要素オブジェクトを取得します。次に、取得した要素オブジェクトの[`Element.text`][element-text]を呼び出します。取得したテキストの値は、Luaの文字列として使えます。
+次に、[`Session.css_select`] [session-css-select]と[`ElementSet.click`][elementset-click]でログインボタンを押します。
+
+次に、[`Session.link_search`] [session-link-search]と[`ElementSet.click`][elementset-click]を使ってログインした後のWebサイトのリンクをクリックします。
+
+次に、[`ElementSet.text`][elementset-text]で移動後のWebサイトの特定の要素のテキストを取得します。
+[`Session.css_select`][session-css-select]を使って、テキストを取得する要素を取得します。
+取得した要素の[`ElementSet.text`][elementset-text]を呼び出します。
+取得したテキストの値はLuaの文字列として使えます。
 
 例:
 
@@ -143,51 +119,49 @@ driver:stop()
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- コールバックを作成する
-function callback(session)
--- Session.navigate_toの引数としてURLを指定する
-  session:navigate_to("http://localhost:10080/move.html")
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/move.html"
 
--- ユーザー名を入力するための要素オブジェクトを取得する
-  local text_form = session:find_element("css selector", 'input[name=username]')
--- ユーザー名をフォームに入力する
+-- コールバックの作成とセッションの開始
+driver:start_session(function(session)
+  session:navigate_to(URL)
+
+-- Webサイト内のフォームを取得
+  local form = session:css_select('form')
+-- ユーザー名を入力するためのフォームを取得
+  local text_form = form:css_select('input[name=username]')
+-- フォームにユーザー名を入力
   text_form:send_keys("username")
--- パスワードを入力するための要素オブジェクトを取得する
-  text_form = session:find_element("css selector", 'input[name=password]')
--- パスワードをフォームに入力する
-  text_form:send_keys("password")
+-- パスワードを入力するためのフォームを取得
+  local password_form = form:css_select('input[name=password]')
+-- フォームにパスワードを入力
+  password_form:send_keys("password")
 
--- ボタン操作をする要素オブジェクトを取得する
-  local button = session:find_element("css selector", "#button")
--- 取得したボタンをクリックする
+-- ユーザー名とパスワードを送信するためのボタンを取得
+  local button = form:css_select("input[type=submit]")
+-- ユーザー名とパスワードを送信
   button:click()
 
--- リンク操作する要素オブジェクトを取得する
-  local link = session:find_element("css selector", "a[name=link]")
--- リンクをクリックする
+-- リンク操作をするための要素オブジェクトを取得
+  local link = session:link_search ("1")
+-- リンクをクリック
   link:click()
-
--- テキストを取得する要素オブジェクトを取得する
-  local element = session:find_element("css selector", "p")
--- 取得した要素オブジェクトのテキストを取得する
-  print(element:text())
-end
-
-driver:start()
-driver:start_session(callback)
-driver:stop()
+  local elements = session:css_select("p")
+-- 取得した要素のテキストを取得
+  print(elements:text())
+end)
 ```
 
 ## 特定のフォームのボタン操作 {#button-operation-on-specific-form}
 
-[`Session.find_element`][session-find-element]と[`Element.click`][element-click]を使って、特定のフォームのボタンを操作できます。
+[`Session.css_select`][session-css-select]と[`ElementSet.click`][elementset-click]を使って、特定のフォームのボタンを操作できます。
 
 まずはじめに、以下の例のようにボタンを操作するWebサイトへアクセスします。
 
-次に、[`Session.find_element`][session-find-element]を使って、ボタン操作をするための要素オブジェクトを取得します。
-この例では、CSS selectorで取得していますが、XPathを使って取得することもできます。
+次に、[`Session.css_select`][session-css-select]を使って、ボタン操作をするための要素オブジェクトを取得します。
+この例では、CSSセレクターで取得していますが、XPathを使って取得することもできます。
 
-次に、取得した要素オブジェクトの[`Element.click`][element-click]を呼び出します。
+次に、取得した要素オブジェクトの[`ElementSet.click`][elementset-click]を呼び出します。
 
 例:
 
@@ -195,30 +169,35 @@ driver:stop()
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- コールバックを作成する
-local callback = function(session)
--- Session.navigate_toの引数としてURLを指定する
-  session:navigate_to("http://localhost:10080/confirm.html")
--- ボタン操作をする要素オブジェクトを取得する
-  local element = session:find_element("css selector", "#button")
--- 取得したボタンをクリックする
-  element:click()
-end
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/button.html"
 
-driver:start()
-driver:start_session(callback)
-driver:stop()
+-- コールバックの作成ｔおセッションの開始
+driver:start_session(function(session)
+  session:navigate_to(URL)
+-- ボタン操作をするための要素を取得
+  local elements = session:css_select('#announcement')
+-- 取得したボタンをクリック
+  elements:click()
+
+-- 移動後のWebサイトの要素のテキストを取得
+  elements = session:css_select('a[name=announcement]')
+  local informations_summary = elements:texts()
+  for _, summary in ipairs(informations_summary) do
+    print(summary)
+  end
+end)
 ```
 
 ## 特定のフォームへの文字列入力 {#input-string-into-form}
 
-[`Element.send_keys`][element-send-keys]を使って、特定のフォームに文字列を入力できます。
+[`ElementSet.send_keys`][elementset-send-keys]を使って、特定のフォームに文字列を入力できます。
 
 まずはじめに、フォームに文字列を入力するWebサイトへアクセスします。
 
-次に、[`Session.find_element`][session-find-element]を使って、文字列を入力するための要素オブジェクトを取得します。この例では、CSS selectorで取得していますが、XPathを使って取得することもできます。
+次に、[`Session.css_select`][session-css-select]を使って、文字列を入力するための要素オブジェクトを取得します。この例では、CSSセレクターで取得していますが、XPathを使って取得することもできます。
 
-次に、取得した要素オブジェクトの[`Element.send_keys`][element-send-keys]を呼び出します。[`Element.send_keys`][element-send-keys]の引数には、入力文字列を指定します。
+次に、取得した要素オブジェクトの[`ElementSet.send_keys`][elementset-send-keys]を呼び出します。[`ElementSet.send_keys`][elementset-send-keys]の引数には、入力文字列を指定します。
 
 例:
 
@@ -226,26 +205,25 @@ driver:stop()
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- コールバックを作成する
-local callback = function(session)
--- Session.navigate_toの引数としてURLを指定する
-  session:navigate_to("http://localhost:10080/index.html")
--- 文字列を入力する要素オブジェクトを取得する
-  local element = session:find_element("css selector", 'input[name=name]')
--- フォームに文字列を入力する
-  element:send_keys("This is test")
-end
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/index.html"
 
-driver:start()
-driver:start_session(callback)
-driver:stop()
+-- コールバックの作成とセッションの開始
+driver:start_session(function(session)
+  session:navigate_to(URL)
+-- 文字列を入力するための要素を取得
+  local elements = session:css_select('input[name=name]')
+-- フォームに文字列を入力
+  elements:send_keys("This is test")
+  print(elements[1].value)
+end)
 ```
 
 ## 要素の属性の取得 {#get-attribute-element}
 
 [`Element.get_attribute`][element-get-attribute]を使って特定の要素の属性を取得できます。
 
-まずはじめに、[`Session.find_element`][session-find-element]を使って、属性を取得するための要素オブジェクトを取得します。
+まずはじめに、[`Session.css_select`][session-css-select]を使って、属性を取得するための要素オブジェクトを取得します。
 
 次に、取得した要素オブジェクトの[`Element.get_attribute`][element-get-attribute]を呼び出します。[`Element.get_attribute`][element-get-attribute]の引数には、属性名を指定します。取得した属性値は、Luaの文字列として使えます。
 
@@ -255,30 +233,30 @@ driver:stop()
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- コールバックを作成する
-local callback = function(session)
--- Session.navigate_toの引数としてURLを指定する
-  session:navigate_to("http://localhost:10080/index.html")
--- 属性を取得する要素オブジェクトを取得する
-  local element = session:find_element("css selector", "input[name=wine]")
--- 取得した要素オブジェクトの属性を取得する
-  local name = element:get_attribute("name")
-  local type = element:get_attribute("type")
-  print(name, type)
-end
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/get-attribute.html"
 
-driver:start()
-driver:start_session(callback)
-driver:stop()
+-- コールバックの作成とセッションの開始
+driver:start_session(function(session)
+  session:navigate_to(URL)
+-- 属性取得するための要素を取得
+  local elements = session:css_select('p')
+  for _, element in ipairs(elements) do
+-- 取得した要素の属性を取得
+    if element["data-value-type"] == "number" then
+      print(element:text())
+    end
+  end
+end)
 ```
 
 ## 要素のテキストの取得 {#get-attribute-element}
 
-[`Element.text`][element-text]を使って特定の要素のテキストを取得できます。
+[`ElementSet.text`][elementset-text]を使って特定の要素のテキストを取得できます。
 
-まずはじめに、[`Session.find_element`][session-find-element]を使って、テキストを取得するための要素オブジェクトを取得します。
+まずはじめに、[`Session.css_select`][session-css-select]を使って、テキストを取得するための要素オブジェクトを取得します。
 
-次に、取得した要素オブジェクトの[`Element.text`][element-text]を呼び出します。取得したテキストの値は、Luaの文字列として使えます。
+次に、取得した要素オブジェクトの[`ElementSet.text`][elementset-text]を呼び出します。取得したテキストの値は、Luaの文字列として使えます。
 
 例:
 
@@ -286,20 +264,17 @@ driver:stop()
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
--- コールバックを作成する
-local callback = function(session)
--- Session.navigate_toの引数としてURLを指定する
-  session:navigate_to("http://localhost:10080/confirm.html")
--- テキストを取得する要素オブジェクトを取得する
-  local element = session:find_element("css selector", '#p2')
--- 取得した要素オブジェクトのテキストを取得する
-  local text = element:text()
-  print(text)
-end
+local URL = "https://clear-code.gitlab.io/lua-web-driver/sample/"
 
-driver:start()
-driver:start_session(callback)
-driver:stop()
+-- コールバックの作成とセッションの開始
+driver:start_session(function(session)
+  session:navigate_to(URL)
+-- テキストを取得するための要素を取得
+  local element_set = session:css_select('#p2')
+-- 取得した要素のテキストを取得
+  local text = element_set:text()
+  print(text)
+end)
 ```
 
 ## 次のステップ {#next-step}
@@ -321,7 +296,7 @@ driver:stop()
 
 [session-xml]:../reference/session.html#xml
 
-[session-take-screenshot]:../reference/session.html#take_screenshot
+[session-save-screenshot]:../reference/session.html#save_screenshot
 
 [session-back]:../reference/session.html#back
 
@@ -331,11 +306,17 @@ driver:stop()
 
 [session-dismiss-alert]:../reference/session.html#dismiss_alert
 
-[session-find-element]:../reference/session.html#find_element
+[session-css-select]:../reference/session.html#css_select
 
-[element-send-keys]:../reference/element.html#send_keys
+[session-xpath-search]:../reference/session.html#xpath_search
 
-[element-click]:../reference/element.html#click
+[session-link-search]:../reference/session.html#link_search
+
+[elementset-send-keys]:../reference/elementset.html#send_keys
+
+[elementset-click]:../reference/elementset.html#click
+
+[elementset-text]:../reference/elementset.html#text
 
 [element-get-attribute]:../reference/element.html#get_attribute
 
