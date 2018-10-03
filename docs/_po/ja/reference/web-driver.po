@@ -1,0 +1,71 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid ""
+"---\n"
+"title: web-driver\n"
+"---"
+msgstr ""
+
+msgid "# `web-driver` module"
+msgstr "# `web-driver` モジュール"
+
+msgid "## Summary"
+msgstr "## 概要"
+
+msgid "It's the main module."
+msgstr "メインモジュールです。"
+
+msgid "## Module variables"
+msgstr "## モジュール変数"
+
+msgid "### `VERSION` {#version}"
+msgstr ""
+
+msgid ""
+"It has the version of LuaWebDriver as Lua's string.\n"
+"You can output LuaWebDriver's version to stdout as below."
+msgstr "Luaの文字列としてLuaWebDriverのバージョンを持っています。以下のように標準出力にLuaWebDriverのバージョンを出力できます。"
+
+msgid "Example:"
+msgstr "例:"
+
+msgid ""
+"```lua\n"
+"local web_driver = require(\"web-driver\")\n"
+"print(web_driver.VERSION)\n"
+"```"
+msgstr ""
+
+msgid "### `Firefox` {#firefox}"
+msgstr ""
+
+msgid ""
+"It has the WebDriver for Firefox object.\n"
+"You can create [`web-driver.Firefox`][firefox] object via this variable as bel"
+"ow."
+msgstr ""
+"Firefox用の WebDriverオブジェクトを持っています。以下のように、この変数経由で[`web_driver.Firefox`][firefox]"
+"オブジェクトを作成できます。"
+
+msgid ""
+"```lua\n"
+"local web_driver = require(\"web-driver\")\n"
+"local driver = web_driver.Firefox.new()\n"
+"```"
+msgstr ""
+
+msgid "## See also"
+msgstr "## 参照"
+
+msgid "  * [web-driver.Firefox][firefox]"
+msgstr ""
+
+msgid "[firefox]:firefox.html"
+msgstr ""
