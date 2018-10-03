@@ -9,16 +9,11 @@ sudo: required
 matrix:
   include:
     - os: osx
-      env:
-        GECKODRIVER_VERSION: 0.21.0
       addons:
         firefox: latest-esr
       install:
         - brew update > /dev/null
         - brew bundle
-        - curl -L -O https://github.com/mozilla/geckodriver/releases/download/v${GECKODRIVER_VERSION}/geckodriver-v${GECKODRIVER_VERSION}-macos.tar.gz
-        - tar xf geckodriver-v${GECKODRIVER_VERSION}-macos.tar.gz -C /usr/local/bin
-        - chmod +x /usr/local/bin/geckodriver
         - sudo -H luarocks install luarocks-fetch-gitrec
         - LUAROCKS="sudo -H luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit)"
         - VERSION=$(grep VERSION web-driver.lua | sed -e 's/.*"\(.*\)"/\1/g')
