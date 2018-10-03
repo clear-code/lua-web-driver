@@ -37,5 +37,4 @@ defaults:
       language: en
       country: US
 
-luarocks_version: "2.4.3"
 geckodriver_version: "0.21.0"
