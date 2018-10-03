@@ -4,10 +4,13 @@ highlighter: rouge
 version: 0.0.2
 release_date: 2018-10-02
 copyright_year: 2018
+geckodriver_version: 0.22.0
+
 exclude:
   - "Rakefile"
   - "Gemfile"
   - "Gemfile.lock"
+
 description:
   en: This is a browser automation library using WebDriver API
   ja: WebDriverAPIを使ったブラウザ自動操作ライブラリー
@@ -36,5 +39,3 @@ defaults:
       layout: "base"
       language: en
       country: US
-
-geckodriver_version: "0.21.0"
