@@ -21,8 +21,6 @@ test-centos7:
         luajit
         luajit-devel
         luarocks
-        m4
-        make
         openssl-devel
         ruby
     - curl -L -O https://github.com/mozilla/geckodriver/releases/download/v${GECKODRIVER_VERSION}/geckodriver-v${GECKODRIVER_VERSION}-linux64.tar.gz
