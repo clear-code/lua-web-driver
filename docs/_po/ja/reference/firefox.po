@@ -1,0 +1,127 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid ""
+"---\n"
+"title: web-driver.Firefox\n"
+"---"
+msgstr ""
+
+msgid "# `web-driver.Firefox` class"
+msgstr "# `web-driver.Firefox` クラス"
+
+msgid "## Summary"
+msgstr "## 概要"
+
+msgid "It's a class for the WebDriver for Firefox."
+msgstr "Firefox用のWebDriverクラスです。"
+
+msgid "You can start a session with the Firefox via geckodriver."
+msgstr "geckodriver経由でFirefoxとのセッションを開始できます。"
+
+msgid "## Class methods"
+msgstr "## クラスメソッド"
+
+msgid "### `web-driver.Firefox.new(options) -> web-driver.Firefox` {#new}"
+msgstr ""
+
+msgid "`options`: Startup option of the Firefox."
+msgstr "`options`: Firefoxの起動オプション"
+
+msgid "It create new [`web-driver.Firefox`][firefox] object."
+msgstr "新しい[`web-driver.Firefox`][firefox]を作成します。"
+
+msgid "You can specify startup options as below."
+msgstr "以下のように起動オプションを指定できます。"
+
+msgid ""
+"* `options.host`: Specify host. Default is 127.0.0.1.\n"
+"* `options.port`: Specify port. Default is 4444.\n"
+"* `options.args`: Specify options of the Firefox with a table. Defautl is { -h"
+"eadless }."
+msgstr ""
+"* `options.host`: ホストを指定します。デフォルトは、127.0.0.1です。\n"
+"* `options.port`: ポートを指定します。デフォルトは、4444です。\n"
+"* `options.args`: Firefoxのオプションをテーブルで指定します。デフォルトは、`{ -headless }`です。"
+
+msgid "Example:"
+msgstr "例:"
+
+msgid ""
+"```lua\n"
+"local web_driver = require(\"web-driver\")"
+msgstr ""
+
+msgid ""
+"local options = {}\n"
+"options.host = \"192.168.0.1\"\n"
+"options.port = \"1111\"\n"
+"local driver = web_driver.Firefox.new(options)\n"
+"```"
+msgstr ""
+
+msgid "Possible options to set in `options.args` as see a below."
+msgstr "`options.args`に設定可能なオプションは、以下を参照してください。"
+
+msgid ""
+"[Command Line Options](https://developer.mozilla.org/en-US/docs/Mozilla/Comman"
+"d_Line_Options)"
+msgstr ""
+"[コマンドラインオプション](https://developer.mozilla.org/en-US/docs/Mozilla/Command_Line_O"
+"ptions)"
+
+msgid ""
+"### `web-driver.Firefox.session_start(callback) -> return value of callback` {"
+"#session-start}"
+msgstr ""
+
+msgid "`callback`: Your callback function."
+msgstr "`callback`: コールバック関数。"
+
+msgid ""
+"It starts a session with the Firefox and calls the given callback function.\n"
+"It returns the return value of the given callback function."
+msgstr "Firefoxとのセッションを開始し、与えられたコールバック関数を呼び出します。与えられたコールバック関数の戻り値を返します。"
+
+msgid ""
+"You can write the processing that you want to execute with the Firefox in the "
+"callback function."
+msgstr "コールバック関数には、Firefoxで実行したい処理を記述できます。"
+
+msgid "Here is an example to start a session and navigate to a website:"
+msgstr "ここでは、セッションを開始し、Webサイトへ移動する例を示します: "
+
+msgid ""
+"```lua\n"
+"local web_driver = require(\"web-driver\")\n"
+"local driver = web_driver.Firefox.new()"
+msgstr ""
+
+msgid ""
+"local URL =\n"
+"  \"https://clear-code.gitlab.io/lua-web-driver/sample/\""
+msgstr ""
+
+msgid ""
+"-- Start session with the Firefox\n"
+"driver:start_session(function(session)\n"
+"--Navigate to a website\n"
+"  session:navigate_to(URL)\n"
+"end)\n"
+"```"
+msgstr ""
+"-- Firefoxとのセッションを開始\n"
+"driver:start_session(function(session)\n"
+"-- Webサイトへ移動\n"
+"  session:navigate_to(URL)\n"
+"end)\n"
+"```"
+
+msgid "[firefox]:firefox.html"
+msgstr ""
