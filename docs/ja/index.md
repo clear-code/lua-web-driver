@@ -39,7 +39,7 @@ LuaWebDriverは[MITライセンス][mit-license]です。
 
 著作権保持者など詳細は[LICENSE][license]ファイルを見てください。
 
-[webdriver]:http://xmlsoft.org/
+[webdriver]:https://www.w3.org/TR/webdriver1/
 
 [news]:news/
 

@@ -84,7 +84,7 @@ msgstr "LuaWebDriverは[MITライセンス][mit-license]です。"
 msgid "See [LICENSE][license] file for details such as copyright holders."
 msgstr "著作権保持者など詳細は[LICENSE][license]ファイルを見てください。"
 
-msgid "[webdriver]:http://xmlsoft.org/"
+msgid "[webdriver]:https://www.w3.org/TR/webdriver1/"
 msgstr ""
 
 msgid "[news]:news/"
