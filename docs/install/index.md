@@ -13,7 +13,7 @@ This document how to install LuaWebDriver on the following platforms:
 ## CentOS {#centos}
 
 ```console
-% yum install -y gcc gcc-c++ firefox lua-devel luajit-devel luarocks openssl-devel
+% yum install -y gcc gcc-c++ firefox lua-devel luajit-devel luarocks make openssl-devel
 % curl -L -O https://github.com/mozilla/geckodriver/releases/download/v{{ site.geckodriver_version }}/geckodriver-v{{ site.geckodriver_version }}-linux64.tar.gz
 % tar xf geckodriver-v{{ site.geckodriver_version }}-linux64.tar.gz -C /usr/local/bin
 % chmod +x /usr/local/bin/geckodriver
