@@ -15,6 +15,28 @@ function TestSession:teardown()
   self.server:kill()
 end
 
+function TestSession:test_timeouts()
+  self.driver:start_session(function(session)
+    luaunit.assert_equals(session:timeouts(),
+                          {
+                            script = 30000,
+                            pageLoad = 300000,
+                            implicit = 0,
+                          })
+    session:set_timeouts({
+                            script = 40000,
+                            pageLoad = 400000,
+                            implicit = 10,
+                          })
+    luaunit.assert_equals(session:timeouts(),
+                          {
+                            script = 40000,
+                            pageLoad = 400000,
+                            implicit = 10,
+                          })
+  end)
+end
+
 function TestSession:test_navigate_to()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
