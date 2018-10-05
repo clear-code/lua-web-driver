@@ -257,7 +257,7 @@ function methods:save_screenshot(filename)
   local png = self:take_screenshot()
   local file_handle, err = io.open(filename, "wb+")
   if err then
-    error("lua-web-driver: Failed to open file to save screenshot: " ..
+    error("web-driver: Failed to open file to save screenshot: " ..
             "<" .. filename .. ">: " .. err)
   end
   file_handle:write(png)
