@@ -40,8 +40,7 @@ end
 -- @function Session:set_timeouts
 -- @param timeouts
 function methods:set_timeouts(timeouts)
-  local response = self.client:set_timeouts(timeouts)
-  return response
+  self.client:set_timeouts(timeouts)
 end
 
 --- Navigate the current top-level browsing context to to the specified URL
