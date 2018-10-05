@@ -1,13 +1,16 @@
 --- The class to handle WebDriver's session
 -- <https://www.w3.org/TR/webdriver1/>
 -- @classmod Session
+
+local base64 = require("base64")
+
 local SessionClient = require("web-driver/session-client")
 local Element = require("web-driver/element")
 local ElementSet = require("web-driver/element-set")
 local Searchable = require("web-driver/searchable")
 local Interactions = require("web-driver/interactions")
 local ActionBuilder = require("web-driver/action-builder")
-local base64 = require("base64")
+local pp = require("web-driver/pp")
 
 local Session = {}
 
@@ -255,8 +258,12 @@ function methods:save_screenshot(filename)
   local png = self:take_screenshot()
   local file_handle, err = io.open(filename, "wb+")
   if err then
-    error("web-driver: Failed to open file to save screenshot: " ..
-            "<" .. filename .. ">: " .. err)
+    local message =
+      "web-driver: Session: Failed to open file to save screenshot: " ..
+      "<" .. filename .. ">: " .. err
+    self.logger:error(message)
+    self.logger:traceback("error")
+    error(message)
   end
   file_handle:write(png)
   file_handle:close()
@@ -274,7 +281,9 @@ function Session.new(driver, capabilities)
   local session = {
     client = SessionClient.new(driver.client.host,
                                driver.client.port,
+                               driver.logger,
                                session_id),
+    logger = driver.logger,
     id = session_id,
   }
   setmetatable(session, metatable)

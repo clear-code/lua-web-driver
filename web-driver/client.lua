@@ -4,6 +4,8 @@
 -- @local
 local requests = require("requests")
 
+local pp = require("web-driver/pp")
+
 local Client = {}
 
 local methods = {}
@@ -23,13 +25,28 @@ function methods:execute(verb, path, params, data)
   elseif verb == "delete" then
     response = requests.delete(self:endpoint(path, params))
   else
-    error("Unknown verb: "..verb)
+    error("web-driver: client: Unknown verb: <" .. verb .. ">")
   end
   if response.status_code == 200 then
+    if self.logger:need_log("trace") then
+      self.logger:trace("web-driver: client: " ..
+                          "<" .. verb .. ">: " ..
+                          "<" .. path .. ">: " ..
+                          "<" .. pp.format(params) .. ">: " ..
+                          pp.format(response))
+    end
     return response
   else
     local value = response.json()["value"]
-    error(value["error"]..": "..value["message"])
+    local message = "web-driver: client: " ..
+      "<" .. verb .. ">: " ..
+      "<" .. path .. ">: " ..
+      "<" .. pp.format(params) .. ">: " ..
+      value["error"] .. ": " ..
+      value["message"]
+    self.logger:error(message)
+    self.logger:traceback("error")
+    error(message)
   end
 end
 
@@ -46,11 +63,12 @@ function methods:create_session(capabilities)
   return self:execute("post", "session", {}, capabilities)
 end
 
-function Client.new(host, port)
+function Client.new(host, port, logger)
   local client = {
     host = host,
     port = port,
-    base_url = "http://"..host..":"..port.."/"
+    base_url = "http://"..host..":"..port.."/",
+    logger = logger,
   }
   setmetatable(client, metatable)
   return client

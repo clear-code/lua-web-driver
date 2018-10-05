@@ -50,6 +50,8 @@ function methods:start_session(callback)
   end
   geckodriver:stop()
   if not success then
+    self.logger:error("web-driver: Firefox:start_session: " .. err)
+    self.logger:traceback("error")
     error(err)
   end
   return return_value
@@ -84,11 +86,11 @@ end
 local function apply_options(firefox, options)
   options = options or {}
 
+  firefox.logger = Logger.new(options.logger)
+
   local host = options.host or DEFAULT_HOST
   local port = options.port or DEFAULT_PORT
-  firefox.client = Client.new(host, port)
-
-  firefox.logger = Logger.new(options.logger)
+  firefox.client = Client.new(host, port, firefox.logger)
 
   firefox.capabilities = {
     capabilities = {

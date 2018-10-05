@@ -18,8 +18,8 @@ local function log_level_from_geckodriver(geckodriver_log_level)
     logger_log_level = "WARNING"
   end
   return Logger.LEVELS[logger_log_level] or
-    error("web-driver: geckodriver: unknown log level: " ..
-            geckodriver_log_level)
+    error("web-driver: geckodriver: Unknown log level: " ..
+            "<" .. geckodriver_log_level .. ">")
 end
 
 function methods:log_lines(prefix, lines)
@@ -119,25 +119,37 @@ function methods:ensure_running()
     end
     local status, err = process.waitpid(self.process:pid(), process.WNOHANG)
     if status then
-      error("web-driver: geckodriver: " ..
-              "Failed to run: <" .. self.command .. ">")
+      local message =
+        "web-driver: geckodriver: " ..
+        "Failed to run: <" .. self.command .. ">"
+      self.firefox.logger:error(message)
+      self.firefox.logger:traceback("error")
+      error(message)
     end
     self:log_output()
     process.nsleep(sleep_ns_per_trie)
   end
 
   self:kill()
-  error("web-driver: geckodriver: " ..
-          "Failed to run in " .. timeout .. " seconds: " ..
-          "<" .. self.command .. ">")
+  local message =
+    "web-driver: geckodriver: " ..
+    "Failed to run in " .. timeout .. " seconds: " ..
+    "<" .. self.command .. ">"
+  self.firefox.logger:error(message)
+  self.firefox.logger:traceback("error")
+  error(message)
 end
 
 function methods:start(callback)
   local geckodriver_process, err = process.exec(self.command, self.args)
   if err then
-    error("web-driver: geckodriver: " ..
-            "Failed to execute: <" .. self.command .. ">: " ..
-            err)
+    local message =
+      "web-driver: geckodriver: " ..
+      "Failed to execute: <" .. self.command .. ">: " ..
+      err
+    self.firefox.logger:error(message)
+    self.firefox.logger:traceback("error")
+    error(message)
   end
   self.process = geckodriver_process
   self:ensure_running()
@@ -145,6 +157,8 @@ function methods:start(callback)
     local success, return_value = pcall(callback, self)
     self:stop()
     if not success then
+      self.firefox.logger:error("web-driver: geckodriver:start: " .. err)
+      self.firefox.logger:traceback("error")
       error(err)
     end
     return return_value

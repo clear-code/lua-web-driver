@@ -36,8 +36,47 @@ function methods:level()
   return self.backend.level()
 end
 
+local function resolve_level(level)
+  if type(level) == "string" then
+    local level_number = Logger.LEVELS[level:upper()]
+    if not level_number then
+      error("web-driver: Logger: Invalid level: <" .. level .. ">")
+    end
+    return level_number
+  else
+    return level
+  end
+end
+
+function methods:need_log(level)
+  level = resolve_level(level)
+  return level <= self:level()
+end
+
 function methods:log(level, ...)
   self.backend.log(level, ...)
+end
+
+function methods:traceback(level)
+  level = resolve_level(level)
+  if not self:need_log(level) then
+    return
+  end
+  self:log(level, "web-driver: Traceback:")
+  local offset = 2
+  local deep_level = offset
+  while true do
+    local info = debug.getinfo(deep_level, "Sl")
+    if not info then
+      break
+    end
+    self:log(level,
+             string.format("web-driver: %d: %s:%d",
+                           deep_level - offset + 1,
+                           info.short_src,
+                           info.currentline))
+    deep_level = deep_level + 1
+  end
 end
 
 function methods:emergency(...)

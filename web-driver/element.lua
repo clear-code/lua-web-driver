@@ -138,8 +138,12 @@ function methods:save_screenshot(filename)
   local png = self:take_screenshot()
   local file_handle, err = io.open(filename, "wb+")
   if err then
-    error("web-driver: Failed to open file to save screenshot: " ..
-            "<" .. filename .. ">: " .. err)
+    local message =
+      "web-driver: Element: Failed to open file to save screenshot: " ..
+      "<" .. filename .. ">: " .. err
+    self.client.logger:error(message)
+    self.client.logger:traceback("error")
+    error(message)
   end
   file_handle:write(png)
   file_handle:close()
@@ -161,6 +165,7 @@ function Element.new(session, id_or_element_value)
   local element = {
     client = ElementClient.new(session.client.host,
                                session.client.port,
+                               session.driver,
                                session.id,
                                id),
     session = session,

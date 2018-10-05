@@ -216,9 +216,9 @@ function methods:take_screenshot()
                       { session_id = self.id })
 end
 
-function SessionClient.new(host, port, id)
+function SessionClient.new(host, port, logger, id)
   local session_client = {
-    parent = Client.new(host, port),
+    parent = Client.new(host, port, logger),
     id = id,
   }
   setmetatable(session_client, metatable)
