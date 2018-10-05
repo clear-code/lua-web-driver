@@ -165,7 +165,7 @@ function Element.new(session, id_or_element_value)
   local element = {
     client = ElementClient.new(session.client.host,
                                session.client.port,
-                               session.driver,
+                               session.logger,
                                session.id,
                                id),
     session = session,
