@@ -124,3 +124,14 @@ function TestElementSet:test_merge()
                           expected)
  end
 end
+
+function TestElementSet:test_remove()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local p = session:css_select('p')
+    p:remove(2)
+    local expected = { "Hello 1", "Hello 3" }
+    luaunit.assert_equals(p:texts(),
+                          expected)
+ end
+end
