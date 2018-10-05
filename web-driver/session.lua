@@ -47,8 +47,7 @@ end
 --- Navigate the current top-level browsing context to to the specified URL
 -- @function Session:visit
 function methods:navigate_to(url)
-  local response = self.client:navigate_to(url)
-  return response
+  self.client:navigate_to(url)
 end
 
 --- Retrieve current URL
