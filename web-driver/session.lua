@@ -45,7 +45,7 @@ function methods:set_timeouts(timeouts)
 end
 
 --- Navigate the current top-level browsing context to to the specified URL
--- @function Session:visit
+-- @function Session:navigate_to
 function methods:navigate_to(url)
   self.client:navigate_to(url)
 end
