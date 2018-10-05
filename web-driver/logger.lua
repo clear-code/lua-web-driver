@@ -114,9 +114,9 @@ end
 
 function Logger.new(real_logger)
   if real_logger == nil and create_default_logger then
-    local stdout_writer = require("log/writer/stdout")
+    local stderr_writer = require("log/writer/stderr")
     real_logger = log.new(default_level,
-                          stdout_writer.new())
+                          stderr_writer.new())
   end
   local logger = {
     logger = real_logger,
