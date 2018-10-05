@@ -18,7 +18,7 @@ It means that you can use methods in the modules.
 
 ### `find_element(strategy, finder) -> web-driver.Element` {#find-element}
 
-This method is find web element by some retrival methods.
+This method is find web element by some retrieval methods.
 
 `strategy`: Specify how to search the element. You can set the argument as below.
 
@@ -52,7 +52,7 @@ end)
 
 ### `find_elements(strategy, finder) -> web-driver.ElementSet` {#find-elements}
 
-This method is find web elements by some retrival methods.
+This method is find web elements by some retrieval methods.
 
 `strategy`: Specify how to search elements. You can set the argument as below.
 
