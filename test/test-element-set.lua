@@ -102,3 +102,25 @@ function TestElementSet:test_send_keys()
     luaunit.assert_equals(element[1].value, "This is test")
   end
 end
+
+function TestElementSet:test_insert()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local p = session:css_select('p')
+    local checkbox = session:find_element("css selector", 'input[name=cheese]')
+    p:insert(1, checkbox)
+    luaunit.assert_equals(p[1].name, "cheese")
+  end
+end
+
+function TestElementSet:test_merge()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local p = session:css_select('p')
+    local label = session:css_select('label')
+    merged_element = p:merge(label)
+    local expected = { "Hello 1", "Hello 2", "Hello 3", "Cheese", "Wine" }
+    luaunit.assert_equals(merged_element:texts(),
+                          expected)
+ end
+end

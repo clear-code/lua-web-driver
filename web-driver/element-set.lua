@@ -54,7 +54,7 @@ function methods:insert(element_or_position, element)
     inserted_element = element
   end
   for i, self_element in ipairs(self) do
-    if self_element == inserted_element then
+    if self_element.id == inserted_element.id then
       return
     end
   end
@@ -82,7 +82,7 @@ end
 
 local function is_included(element_set, search_element)
   for _, element in ipairs(element_set) do
-    if element == search_element then
+    if element.id == search_element.id then
       return true
     end
   end
