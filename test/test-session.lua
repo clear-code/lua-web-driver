@@ -431,11 +431,11 @@ end
 function TestSession:test_save_screenshot()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
-    session:save_screenshot("tmp/session.png")
-    local file_handle, err = io.open("tmp/session.png", "rb")
+    session:save_screenshot("session.png")
+    local file_handle, err = io.open("session.png", "rb")
     local png = file_handle:read("*a")
     file_handle:close()
-    os.remove("tmp/session.png")
+    os.remove("session.png")
     local header = { png:byte(0, 8) }
     luaunit.assert_equals(header, helper.PNG_HEADER)
   end
