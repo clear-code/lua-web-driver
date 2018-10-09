@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  GECKODRIVER_VERSION: "0.22.0"
+  GECKODRIVER_VERSION: "0.23.0"
   LUA_WEB_DRIVER_START_TIMEOUT: 10
   LUA_WEB_DRIVER_LOG_LEVEL: "trace"
 
