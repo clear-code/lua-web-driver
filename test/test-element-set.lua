@@ -113,12 +113,39 @@ function TestElementSet:test_insert()
   end
 end
 
+function TestElementSet:test_insert_same_object()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local p = session:css_select('p')
+    local checkbox1 = session:find_element("css selector", 'input[name=cheese]')
+    p:insert(1, checkbox1)
+    local checkbox2 = session:find_element("css selector", 'input[name=cheese]')
+    p:insert(1, checkbox2)
+    luaunit.assert_equals(p[1].name, "cheese")
+    luaunit.assert_nil(p[2])
+  end
+end
+
 function TestElementSet:test_merge()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
     local p = session:css_select('p')
     local label = session:css_select('label')
     merged_element = p:merge(label)
+    local expected = { "Hello 1", "Hello 2", "Hello 3", "Cheese", "Wine" }
+    luaunit.assert_equals(merged_element:texts(),
+                          expected)
+ end
+end
+
+function TestElementSet:test_merge_same_object()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local p = session:css_select('p')
+    local label1 = session:css_select('label')
+    local label2 = session:css_select('label')
+    local merged_element = p:merge(label1)
+    merged_element = merged_element:merge(label2)
     local expected = { "Hello 1", "Hello 2", "Hello 3", "Cheese", "Wine" }
     luaunit.assert_equals(merged_element:texts(),
                           expected)
