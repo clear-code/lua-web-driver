@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>This is test html cookie</title>
+    <script type="text/javascript">
+      const time = (new Date(Date.now() + 1000000)).toUTCString
+      document.cookie = `data1=123; expires=${time}`;
+      document.cookie = `data2=456; expires=${time}`;
+    </script>
+  </head>
+  <body>
+    <p>Cookie!</p>
+  </body>
+</html>
