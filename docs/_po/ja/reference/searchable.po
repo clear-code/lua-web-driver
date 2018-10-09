@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 
 msgid "# `web-driver.Searchable` module"
-msgstr ""
+msgstr "# `web-driver.Searchable` モジュール"
 
 msgid "## Summary"
 msgstr "## 概要"

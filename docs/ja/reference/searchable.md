@@ -2,7 +2,7 @@
 title: web-driver.Searchable
 ---
 
-# `web-driver.Searchable` module
+# `web-driver.Searchable` モジュール
 
 ## 概要
 
