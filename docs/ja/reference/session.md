@@ -80,7 +80,7 @@ driver:start_session(function(session)
   --https://clear-code.gitlab.io/lua-web-driver/sample/
   session:forward()
   print(session:url())
-  --https://clear-code.gitlab.io/lua-web-driver/sample/button.html 
+  --https://clear-code.gitlab.io/lua-web-driver/sample/button.html
 end)
 ```
 
@@ -275,7 +275,6 @@ driver:start_session(function(session)
   -- height	0
   -- x	0
 end)
-
 ```
 
 ### `fullscreen_window() -> void` {#fullscreen-window}
