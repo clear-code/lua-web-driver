@@ -64,20 +64,6 @@ msgstr ""
 "  * [`web-driver.ActionBuilder`][action-builder]: 複雑なユーザーインタラクションの設定と実行方法をユーザー"
 "に提供するためのクラスです。"
 
-msgid ""
-"  * [`web-driver.Client`][client]: The class for sending WebDriver requests. T"
-"his calss is the base object for [`web-driver.ElementClient`][element-client] "
-"and [`web-driver.SessionClient`][session-client]"
-msgstr ""
-"  * [`web-driver.Client`][client]: WebDriverの要求を送信するクラスです。このクラスは、[`web-driver."
-"ElementClient`][element-client]と[`web-driver.SessionClient`][session-client]のベ"
-"ースオブジェクトです。"
-
-msgid ""
-"  * [`web-driver.ElementClient`][element-client]: The class for sending elemen"
-"t related WebDriver requests."
-msgstr "  * [`web-driver.ElementClient`][element-client]: 要素関連の要求を送信するためのクラスです。　"
-
 msgid "  * [`web-driver.ElementSet`][elementset]: The class for multiple elements."
 msgstr "  * [`web-driver.ElementSet`][elementset]: 複数の要素を扱うクラスです。"
 
@@ -86,11 +72,6 @@ msgstr "  * [`web-driver.Element`][element]: 要素を取り扱うためのク�
 
 msgid "  * [`web-driver.Firefox`][firefox]: The class for WebDriver for Firefox."
 msgstr "  * [`web-driver.Firefox`][firefox]: Firefox用のWebDriverクラスです。"
-
-msgid ""
-"  * [`web-driver.SessionClient`][session-client]: The class for sending sessio"
-"n related WebDriver requests."
-msgstr "  * [`web-driver.SessionClient`][session-client]: セッション関連の要求を送信するためのクラスです。"
 
 msgid ""
 "  * [`web-driver.Session`][session]: The class for handling WebDriver's sessio"
@@ -120,15 +101,6 @@ msgid "[searchable]:searchable.html"
 msgstr ""
 
 msgid "[action-builder]:action-builder.html"
-msgstr ""
-
-msgid "[client]:client.html"
-msgstr ""
-
-msgid "[element-client]:element-client.html"
-msgstr ""
-
-msgid "[session-client]:session-client.html"
 msgstr ""
 
 msgid "[elementset]:elementset.html"
