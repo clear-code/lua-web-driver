@@ -131,7 +131,7 @@ function TestElementSet:test_merge()
     session:navigate_to("http://localhost:10080/index.html")
     local p = session:css_select('p')
     local label = session:css_select('label')
-    merged_element = p:merge(label)
+    local merged_element = p:merge(label)
     local expected = { "Hello 1", "Hello 2", "Hello 3", "Cheese", "Wine" }
     luaunit.assert_equals(merged_element:texts(),
                           expected)
