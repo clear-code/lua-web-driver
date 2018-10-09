@@ -55,6 +55,7 @@ build = {
     ["web-driver.interactions.typing-interaction"] = "web-driver/interactions/typing-interaction.lua",
     ["web-driver.json"] = "web-driver/json.lua",
     ["web-driver.logger"] = "web-driver/logger.lua",
+    ["web-driver.log-formatter"] = "web-driver/log-formatter.lua",
     ["web-driver.keys"] = "web-driver/keys.lua",
     ["web-driver.pp"] = "web-driver/pp.lua",
     ["web-driver.searchable"] = "web-driver/searchable.lua",

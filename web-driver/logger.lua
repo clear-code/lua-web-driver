@@ -1,6 +1,7 @@
 local process = require("process")
 local log = require("log")
 
+local LogFormatter = require("web-driver/log-formatter")
 local pp = require("web-driver/pp")
 
 local Logger = {}
@@ -153,9 +154,13 @@ end
 
 function Logger.new(real_logger)
   if real_logger == nil and create_default_logger then
-    local stderr_writer = require("log/writer/stderr")
+    local StdErrWriter = require("log/writer/stderr")
+    local formatter = nil
+    local log_formatter = LogFormatter.new()
     real_logger = log.new(default_level,
-                          stderr_writer.new())
+                          StdErrWriter.new(),
+                          formatter,
+                          log_formatter)
   end
   local logger = {
     logger = real_logger,
