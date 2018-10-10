@@ -146,14 +146,14 @@ function TestSession:test_window_fullscreen()
   self.driver:start_session(callback)
 end
 
-local function make_keylist(table)
+local function make_keys(table)
   local index = 1
-  local keylist = {}
+  local keys = {}
   for k,_ in pairs(table) do
-    keylist[index] = k
+    keys[index] = k
     index = index + 1
   end
-  return keylist
+  return keys
 end
 
 function TestSession:test_window_maximize_window()
@@ -163,8 +163,8 @@ function TestSession:test_window_maximize_window()
     session:set_window_rect(rect)
 
     local window_size = session:maximize_window()
-    local expected = make_keylist(rect)
-    local actual = make_keylist(window_size)
+    local expected = make_keys(rect)
+    local actual = make_keys(window_size)
     luaunit.assert_equals(actual, expected)
   end
   self.driver:start_session(callback)
