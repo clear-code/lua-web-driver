@@ -152,8 +152,8 @@ function TestSession:test_window_maximize_window()
     local rect = { height = 500, width = 500, x = 0, y = 0 }
     session:set_window_rect(rect)
 
-    local response = session:maximize_window()
-    luaunit.assert_equals(response.status_code, 200)
+    local window_size = session:maximize_window()
+    luaunit.assert_is_table(window_size)
   end
   self.driver:start_session(callback)
 end
@@ -390,7 +390,7 @@ function onRejected(err) {
 output("test async script")
   .then(onResolved, onRejected);
 ]]
-    local response = session:execute_async_script(script)
+    local response = session:execute_script_async(script)
     luaunit.assert_equals(response, "resolved")
   end
   self.driver:start_session(callback)

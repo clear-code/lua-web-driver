@@ -101,7 +101,7 @@ end
 
 function methods:maximize_window()
   local response = self.client:maximize_window()
-  return response
+  return response.json()["value"]
 end
 
 function methods:minimize_window()
