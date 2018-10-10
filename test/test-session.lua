@@ -147,11 +147,9 @@ function TestSession:test_window_fullscreen()
 end
 
 local function make_keys(table)
-  local index = 1
   local keys = {}
   for k,_ in pairs(table) do
-    keys[index] = k
-    index = index + 1
+    table.insert(keys,k)
   end
   return keys
 end
