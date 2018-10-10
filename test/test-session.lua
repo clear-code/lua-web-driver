@@ -157,8 +157,6 @@ end
 function TestSession:test_window_maximize_window()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
-    local rect = { height = 500, width = 500, x = 0, y = 0 }
-    session:set_window_rect(rect)
 
     local window_size = session:maximize_window()
     local expected = { height, width, x, y }
