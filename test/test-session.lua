@@ -89,6 +89,20 @@ function TestSession:test_window_handles()
   self.driver:start_session(callback)
 end
 
+function TestSession:test_switch_to_window()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/window.html")
+    local handles = session:window_handles()
+    luaunit.assert_equals(#handles, 3)
+    luaunit.assert_equals(handles[1],
+                          session:window_handle())
+    session:switch_to_window(handles[2])
+    luaunit.assert_equals(handles[2],
+                          session:window_handle())
+  end
+  self.driver:start_session(callback)
+end
+
 function TestSession:test_frame()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/frame.html")
