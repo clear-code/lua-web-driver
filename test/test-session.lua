@@ -146,9 +146,9 @@ function TestSession:test_window_fullscreen()
   self.driver:start_session(callback)
 end
 
-local function make_keys(table)
+local function make_keys(key_value_list)
   local keys = {}
-  for k,_ in pairs(table) do
+  for k,_ in pairs(key_value_list) do
     table.insert(keys,k)
   end
   return keys
