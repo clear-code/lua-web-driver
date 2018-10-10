@@ -365,6 +365,37 @@ function TestSession:test_execute_script_with_error()
   self.driver:start_session(callback)
 end
 
+function TestSession:test_execute_async_script()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local script = [[
+function output(string) {
+  return new Promise(function(resolve, reject) {
+    if(string != null) {
+      resolve(string);
+      return;
+    }
+    reject("error")
+  })
+}
+
+function onResolved(string) {
+  return("resolved")
+}
+
+function onRejected(err) {
+  return("rejected")
+}
+
+output("test async script")
+  .then(onResolved, onRejected);
+]]
+    local response = session:execute_async_script(script)
+    luaunit.assert_equals(response, "resolved")
+  end
+  self.driver:start_session(callback)
+end
+
 function TestSession:test_get_cookie()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/cookie.html")
