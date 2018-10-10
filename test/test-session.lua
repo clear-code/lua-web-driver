@@ -161,7 +161,7 @@ function TestSession:test_window_maximize_window()
     session:set_window_rect(rect)
 
     local window_size = session:maximize_window()
-    local expected = make_keys(rect)
+    local expected = { height, width, x, y }
     local actual = make_keys(window_size)
     luaunit.assert_equals(actual, expected)
   end
