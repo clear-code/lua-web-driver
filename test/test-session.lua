@@ -418,6 +418,17 @@ function TestSession:test_alert_text()
   self.driver:start_session(callback)
 end
 
+function TestSession:test_set_alert_text()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/alert_text.html")
+    luaunit.assert_equals(session:alert_text(), "alert text")
+    session:set_alert_text("test")
+    session:accept_alert()
+    luaunit.assert_equals(session:alert_text(), "test")
+  end
+  self.driver:start_session(callback)
+end
+
 function TestSession:test_accept_alert()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/alert.html")
