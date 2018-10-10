@@ -166,7 +166,6 @@ function TestSession:test_window_minimize_window()
     session:set_window_rect(rect)
 
     local actual = session:minimize_window()
-    luaunit.assert_is_table(actual)
     luaunit.assert_equals(actual, expected)
   end
   self.driver:start_session(callback)
