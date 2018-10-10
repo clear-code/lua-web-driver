@@ -146,6 +146,16 @@ function TestSession:test_window_fullscreen()
   self.driver:start_session(callback)
 end
 
+local function make_keylist(table)
+  local index = 1
+  local keylist = {}
+  for k,_ in pairs(table) do
+    keylist[index] = k
+    index = index + 1
+  end
+  return keylist
+end
+
 function TestSession:test_window_maximize_window()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
@@ -153,7 +163,9 @@ function TestSession:test_window_maximize_window()
     session:set_window_rect(rect)
 
     local window_size = session:maximize_window()
-    luaunit.assert_is_table(window_size)
+    local expected = make_keylist(rect)
+    local actual = make_keylist(window_size)
+    luaunit.assert_equals(actual, expected)
   end
   self.driver:start_session(callback)
 end
