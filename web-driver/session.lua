@@ -106,7 +106,7 @@ end
 
 function methods:minimize_window()
   local response = self.client:minimize_window()
-  return response
+  return response.json()["value"]
 end
 
 function methods:fullscreen_window()

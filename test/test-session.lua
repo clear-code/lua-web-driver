@@ -158,6 +158,20 @@ function TestSession:test_window_maximize_window()
   self.driver:start_session(callback)
 end
 
+function TestSession:test_window_minimize_window()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local rect = { height = 500, width = 500, x = 0, y = 0 }
+    local expected = { height = 0, width = 0, x = 0, y = 0 }
+    session:set_window_rect(rect)
+
+    local actual = session:minimize_window()
+    luaunit.assert_is_table(actual)
+    luaunit.assert_equals(actual, expected)
+  end
+  self.driver:start_session(callback)
+end
+
 function TestSession:test_active_element()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
