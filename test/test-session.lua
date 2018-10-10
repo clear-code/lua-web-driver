@@ -132,6 +132,19 @@ function TestSession:test_window_fullscreen()
   self.driver:start_session(callback)
 end
 
+function TestSession:test_window_maximize_window()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local rect = { height = 500, width = 500, x = 0, y = 0 }
+    local expected = { height = 500, width = 500, x = 0, y = 0 }
+    session:set_window_rect(rect)
+
+    local response = session:maximize_window()
+    luaunit.assert_equals(response.status_code, 200)
+  end
+  self.driver:start_session(callback)
+end
+
 function TestSession:test_active_element()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
