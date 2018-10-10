@@ -146,7 +146,7 @@ function TestSession:test_window_fullscreen()
   self.driver:start_session(callback)
 end
 
-local function make_keys(key_value_list)
+local function extract_keys(key_value_list)
   local keys = {}
   for k,_ in pairs(key_value_list) do
     table.insert(keys,k)
@@ -160,7 +160,7 @@ function TestSession:test_window_maximize_window()
 
     local window_geometry = session:maximize_window()
     local expected = { height, width, x, y }
-    local actual = make_keys(window_geometry)
+    local actual = extract_keys(window_geometry)
     luaunit.assert_equals(actual, expected)
   end
   self.driver:start_session(callback)
