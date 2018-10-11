@@ -3,7 +3,7 @@ local thread = require("cqueues.thread")
 local socket = require("cqueues.socket")
 
 local JobPusher = require("web-driver/job-pusher")
-local JobProtocol = require("web-driver/job-protocol")
+local IPCProtocol = require("web-driver/ipc-protocol")
 local pp = require("web-driver/pp")
 
 local Pool = {}
@@ -25,12 +25,11 @@ function methods:start()
       local cqueues = require("cqueues")
       local socket = require("cqueues.socket")
       local JobPusher = require("web-driver/job-pusher")
-      local JobProtocol = require("web-driver/job-protocol")
+      local IPCProtocol = require("web-driver/ipc-protocol")
       local job_pusher = JobPusher.new(queue_host, queue_port)
-      local job_protocol = JobProtocol.new()
       while true do
         local producer = socket.connect(producer_host, producer_port)
-        local task = job_protocol:read(producer)
+        local task = IPCProtocol.read(producer)
         if task == nil then
           break
         end
@@ -71,34 +70,33 @@ local function create_queue(pool)
     local producers = socket.listen(options)
     local consumers = socket.listen(options)
 
-    local JobProtocol = require("web-driver/job-protocol")
-    local job_protocol = JobProtocol.new()
+    local IPCProtocol = require("web-driver/ipc-protocol")
     local _type, producers_host, producers_port = producers:localname()
     pipe:write(producers_host, "\n")
     pipe:write(producers_port, "\n")
     local _type, consumers_host, consumers_port = consumers:localname()
     pipe:write(consumers_host, "\n")
     pipe:write(consumers_port, "\n")
-    job_protocol:write(pipe, nil)
+    IPCProtocol.write(pipe, nil)
 
     local loop = cqueues.new()
     loop:wrap(function()
       for producer in producers:clients() do
-        local task = job_protocol:read(producer)
+        local task = IPCProtocol.read(producer)
         if task == nil then
           producers:close()
           break
         end
         loop:wrap(function()
           local consumer = consumers:accept()
-          job_protocol:write(consumer, task)
+          IPCProtocol.write(consumer, task)
         end)
       end
     end)
     loop:loop()
     for i = 1, n_consumers do
       local consumer = consumers:accept()
-      job_protocol:write(consumer, nil)
+      IPCProtocol.write(consumer, nil)
     end
     consumers:close()
   end
@@ -108,8 +106,7 @@ local function create_queue(pool)
   pool.queue_port = tonumber(pipe:read("*l"))
   pool.producer_host = pipe:read("*l")
   pool.producer_port = tonumber(pipe:read("*l"))
-  local job_protocol = JobProtocol.new()
-  job_protocol:read(pipe)
+  IPCProtocol.read(pipe)
   pool.job_pusher = JobPusher.new(pool.queue_host, pool.queue_port)
 end
 
