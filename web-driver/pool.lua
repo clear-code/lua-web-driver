@@ -31,7 +31,7 @@ function methods:join()
     self.loop:wrap(function()
       local logger = socket.connect(self.log_receiver_host,
                                     self.log_receiver_port)
-      IPCProtocol.write(logger, nil)
+      logger:close()
     end)
   end)
   local success, why, error_context = self.loop:loop()
