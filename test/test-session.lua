@@ -159,8 +159,9 @@ function TestSession:test_window_maximize_window()
     session:navigate_to("http://localhost:10080/index.html")
 
     local window_geometry = session:maximize_window()
-    local expected = { "y", "width", "height", "x" }
+    local expected = { "height", "width", "x", "y" }
     local actual = extract_keys(window_geometry)
+    table.sort(actual)
     luaunit.assert_equals(actual, expected)
   end
   self.driver:start_session(callback)
