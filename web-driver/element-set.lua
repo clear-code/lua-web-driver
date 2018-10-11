@@ -43,6 +43,13 @@ function methods:texts()
              end)
 end
 
+function methods:get_attribute(name)
+  return map(self,
+             function(element)
+               return element:get_attribute(name)
+             end)
+end
+
 function methods:insert(element_or_position, element)
   local inserted_element = nil
   local position = nil
