@@ -63,52 +63,58 @@ local function create_queue(pool)
   local queue = function(pipe,
                          log_receiver_host, log_receiver_port,
                          n_consumers)
-    local cqueues = require("cqueues")
-    local socket = require("cqueues.socket")
+    local pp = require("web-driver/pp")
+    local success, why = pcall(function()
+      local cqueues = require("cqueues")
+      local socket = require("cqueues.socket")
 
-    local loop = cqueues.new()
-    local RemoteLogger = require("web-driver/remote-logger")
-    local logger = RemoteLogger.new(loop,
-                                    log_receiver_host,
-                                    log_receiver_port)
+      local loop = cqueues.new()
+      local RemoteLogger = require("web-driver/remote-logger")
+      local logger = RemoteLogger.new(loop,
+                                      log_receiver_host,
+                                      log_receiver_port)
 
-    -- TODO: Add UNIX domain socket support as option.
-    local options = {
-      host = "127.0.0.1",
-      port = 0,
-    }
-    local producers = socket.listen(options)
-    local consumers = socket.listen(options)
+      -- TODO: Add UNIX domain socket support as option.
+      local options = {
+        host = "127.0.0.1",
+        port = 0,
+      }
+      local producers = socket.listen(options)
+      local consumers = socket.listen(options)
 
-    local IPCProtocol = require("web-driver/ipc-protocol")
-    local _type, producers_host, producers_port = producers:localname()
-    pipe:write(producers_host, "\n")
-    pipe:write(producers_port, "\n")
-    local _type, consumers_host, consumers_port = consumers:localname()
-    pipe:write(consumers_host, "\n")
-    pipe:write(consumers_port, "\n")
-    IPCProtocol.write(pipe, nil)
+      local IPCProtocol = require("web-driver/ipc-protocol")
+      local _type, producers_host, producers_port = producers:localname()
+      pipe:write(producers_host, "\n")
+      pipe:write(producers_port, "\n")
+      local _type, consumers_host, consumers_port = consumers:localname()
+      pipe:write(consumers_host, "\n")
+      pipe:write(consumers_port, "\n")
+      IPCProtocol.write(pipe, nil)
 
-    loop:wrap(function()
-      for producer in producers:clients() do
-        local task = IPCProtocol.read(producer)
-        if task == nil then
-          producers:close()
-          break
+      loop:wrap(function()
+        for producer in producers:clients() do
+          local task = IPCProtocol.read(producer)
+          if task == nil then
+            producers:close()
+            break
+          end
+          loop:wrap(function()
+            local consumer = consumers:accept()
+            IPCProtocol.write(consumer, task)
+          end)
         end
-        loop:wrap(function()
-          local consumer = consumers:accept()
-          IPCProtocol.write(consumer, task)
-        end)
+      end)
+      loop:loop()
+      for i = 1, n_consumers do
+        local consumer = consumers:accept()
+        IPCProtocol.write(consumer, nil)
       end
+      consumers:close()
     end)
-    logger:error(producers_host)
-    loop:loop()
-    for i = 1, n_consumers do
-      local consumer = consumers:accept()
-      IPCProtocol.write(consumer, nil)
+    if not success then
+      local prefix = "lua-web-driver: pool: queue: "
+      print(prefix .. "Error: " .. why)
     end
-    consumers:close()
   end
   local pipe
   pool.queue, pipe = thread.start(queue,
@@ -130,34 +136,56 @@ local function run_consumers(pool)
                               queue_host, queue_port,
                               producer_host, producer_port,
                               runner)
-      pipe:close()
+      local pp = require("web-driver/pp")
+      local log_prefix = "lua-web-driver: pool: consumer: " .. i .. ": "
 
-      local cqueues = require("cqueues")
-      local socket = require("cqueues.socket")
+      local success, why = pcall(function()
+        pipe:close()
 
-      local RemoteLogger = require("web-driver/remote-logger")
-      local JobPusher = require("web-driver/job-pusher")
-      local IPCProtocol = require("web-driver/ipc-protocol")
+        local cqueues = require("cqueues")
+        local socket = require("cqueues.socket")
 
-      local loop = cqueues.new()
-      local logger = RemoteLogger.new(loop,
-                                      log_receiver_host,
-                                      log_receiver_port)
-      local job_pusher = JobPusher.new(queue_host, queue_port)
-      while true do
-        local producer = socket.connect(producer_host, producer_port)
-        local task = IPCProtocol.read(producer)
-        if task == nil then
-          break
+        local RemoteLogger = require("web-driver/remote-logger")
+        local JobPusher = require("web-driver/job-pusher")
+        local IPCProtocol = require("web-driver/ipc-protocol")
+
+        local loop = cqueues.new()
+        local logger = RemoteLogger.new(loop,
+                                        log_receiver_host,
+                                        log_receiver_port)
+        local job_pusher = JobPusher.new(queue_host, queue_port)
+        while true do
+          local producer = socket.connect(producer_host, producer_port)
+          local task = IPCProtocol.read(producer)
+          if task == nil then
+            break
+          end
+          local context = {
+            id = i,
+            loop = loop,
+            logger = logger,
+            job_pusher = job_pusher,
+            task = task,
+          }
+          logger:debug(string.format("%s: Running task: <%s>",
+                                     log_prefix,
+                                     pp.format(task)))
+          local runner_success, runner_why = pcall(runner, context)
+          if not runner_success then
+            logger:error(string.format("%srunner: Error: %s: <%s>",
+                                       log_prefix,
+                                       runner_why,
+                                       pp.format(task)))
+            logger:notice(string.format("%s: Push back task: <%s>",
+                                        log_prefix,
+                                        pp.format(task)))
+            job_pusher:push(task)
+          end
+          loop:loop()
         end
-        runner({
-          id = i,
-          loop = loop,
-          logger = logger,
-          job_pusher = job_pusher,
-          task = task,
-        })
-        loop:loop()
+      end)
+      if not success then
+        print(log_prefix .. "Error: " .. why)
       end
     end
     local pipe

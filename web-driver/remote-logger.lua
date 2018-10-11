@@ -17,6 +17,8 @@ function methods:log(level, message)
     local log_receiver = socket.connect(self.host, self.port)
     IPCProtocol.log(log_receiver, level, message)
   end)
+  self.loop:step()
+  self.loop:step()
 end
 
 function methods:traceback(level)
