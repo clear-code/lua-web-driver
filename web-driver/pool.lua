@@ -15,36 +15,6 @@ function metatable.__index(session, key)
   return methods[key]
 end
 
-function methods:start()
-  for i = 1, self.size do
-    local consumer = function(pipe,
-                              i,
-                              queue_host, queue_port,
-                              producer_host, producer_port,
-                              runner)
-      local cqueues = require("cqueues")
-      local socket = require("cqueues.socket")
-      local JobPusher = require("web-driver/job-pusher")
-      local IPCProtocol = require("web-driver/ipc-protocol")
-      local job_pusher = JobPusher.new(queue_host, queue_port)
-      while true do
-        local producer = socket.connect(producer_host, producer_port)
-        local task = IPCProtocol.read(producer)
-        if task == nil then
-          break
-        end
-        runner(i, job_pusher, task)
-      end
-    end
-    self.consumers[i], self.sockets[i] =
-      thread.start(consumer,
-                   i,
-                   self.queue_host, self.queue_port,
-                   self.producer_host, self.producer_port,
-                   self.runner)
-  end
-end
-
 function methods:push(task)
   self.job_pusher:push(task)
 end
@@ -110,6 +80,36 @@ local function create_queue(pool)
   pool.job_pusher = JobPusher.new(pool.queue_host, pool.queue_port)
 end
 
+local function start(pool)
+  for i = 1, pool.size do
+    local consumer = function(pipe,
+                              i,
+                              queue_host, queue_port,
+                              producer_host, producer_port,
+                              runner)
+      local cqueues = require("cqueues")
+      local socket = require("cqueues.socket")
+      local JobPusher = require("web-driver/job-pusher")
+      local IPCProtocol = require("web-driver/ipc-protocol")
+      local job_pusher = JobPusher.new(queue_host, queue_port)
+      while true do
+        local producer = socket.connect(producer_host, producer_port)
+        local task = IPCProtocol.read(producer)
+        if task == nil then
+          break
+        end
+        runner(i, job_pusher, task)
+      end
+    end
+    pool.consumers[i], pool.sockets[i] =
+      thread.start(consumer,
+                   i,
+                   pool.queue_host, pool.queue_port,
+                   pool.producer_host, pool.producer_port,
+                   pool.runner)
+  end
+end
+
 function Pool.new(runner, options)
   options = options or {}
   local pool = {
@@ -119,8 +119,9 @@ function Pool.new(runner, options)
     sockets = {},
     logger = options.logger,
   }
-  create_queue(pool)
   setmetatable(pool, metatable)
+  create_queue(pool)
+  start(pool)
   return pool
 end
 
