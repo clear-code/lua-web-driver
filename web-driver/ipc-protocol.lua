@@ -19,4 +19,17 @@ function IPCProtocol.read(socket)
   return data
 end
 
+function IPCProtocol.log(socket, level, message)
+  IPCProtocol.write(socket, level .. "\n" .. message)
+end
+
+function IPCProtocol.receive_log(socket)
+  local level = socket:read("*l")
+  if not level then
+    return nil, nil
+  end
+  local message = IPCProtocol.read(socket)
+  return level, message
+end
+
 return IPCProtocol

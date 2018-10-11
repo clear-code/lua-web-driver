@@ -139,7 +139,10 @@ local function detect_backend(real_logger)
       return {
         level = function() return real_logger.lvl() end,
         log = function(level, ...)
-          real_logger[lua_log_writer_name(level)](...)
+          if type(level) == "number" then
+            level = lua_log_writer_name(level)
+          end
+          real_logger[level](...)
         end,
       }
     else

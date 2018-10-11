@@ -61,6 +61,7 @@ build = {
     ["web-driver.keys"] = "web-driver/keys.lua",
     ["web-driver.pool"] = "web-driver/pool.lua",
     ["web-driver.pp"] = "web-driver/pp.lua",
+    ["web-driver.remote-logger"] = "web-driver/remote-logger.lua",
     ["web-driver.searchable"] = "web-driver/searchable.lua",
     ["web-driver.session"] = "web-driver/session.lua",
     ["web-driver.session-client"] = "web-driver/session-client.lua",
