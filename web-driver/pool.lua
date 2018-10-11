@@ -2,7 +2,8 @@ local cqueues = require("cqueues")
 local thread = require("cqueues.thread")
 local socket = require("cqueues.socket")
 
-local JobQueue = require("web-driver/job-queue")
+local JobPusher = require("web-driver/job-pusher")
+local JobProtocol = require("web-driver/job-protocol")
 local pp = require("web-driver/pp")
 
 local Pool = {}
@@ -15,54 +16,51 @@ function metatable.__index(session, key)
 end
 
 function methods:start()
-  self.job_queue = JobQueue.new(socket.connect(self.tasks_host,
-                                               self.tasks_port))
   for i = 1, self.size do
     local consumer = function(pipe,
                               i,
-                              tasks_host, tasks_port,
+                              queue_host, queue_port,
                               producer_host, producer_port,
                               runner)
       local cqueues = require("cqueues")
       local socket = require("cqueues.socket")
-      local JobQueue = require("web-driver/job-queue")
-      local job_queue = JobQueue.new(socket.connect(tasks_host, tasks_port))
+      local JobPusher = require("web-driver/job-pusher")
+      local JobProtocol = require("web-driver/job-protocol")
+      local job_pusher = JobPusher.new(queue_host, queue_port)
+      local job_protocol = JobProtocol.new()
       while true do
         local producer = socket.connect(producer_host, producer_port)
-        local task = producer:read("*l")
-        if task == "" then
+        local task = job_protocol:read(producer)
+        if task == nil then
           break
         end
-        runner(i, job_queue, task)
+        runner(i, job_pusher, task)
       end
-      job_queue:close()
     end
     self.consumers[i], self.sockets[i] =
       thread.start(consumer,
                    i,
-                   self.tasks_host, self.tasks_port,
-                   self.consumers_host, self.consumers_port,
+                   self.queue_host, self.queue_port,
+                   self.producer_host, self.producer_port,
                    self.runner)
   end
 end
 
 function methods:push(task)
-  self.job_queue:push(task)
+  self.job_pusher:push(task)
 end
 
-function methods:stop()
-  self:push()
-  self.producer:join()
+function methods:join()
+  self.queue:join()
   for i = 1, #self.consumers do
     if self.consumers[i] then
       self.consumers[i]:join()
     end
   end
-  self.job_queue:close()
 end
 
-local function create_producer(pool)
-  local producer = function(pipe, n_consumers)
+local function create_queue(pool)
+  local queue = function(pipe, n_consumers)
     local cqueues = require("cqueues")
     local socket = require("cqueues.socket")
     -- TODO: Add UNIX domain socket support as option.
@@ -70,49 +68,49 @@ local function create_producer(pool)
       host = "127.0.0.1",
       port = 0,
     }
-    local tasks = socket.listen(options)
+    local producers = socket.listen(options)
     local consumers = socket.listen(options)
-    local _type, tasks_host, tasks_port = tasks:localname()
-    pipe:write(tasks_host, "\n")
-    pipe:write(tasks_port, "\n")
+
+    local JobProtocol = require("web-driver/job-protocol")
+    local job_protocol = JobProtocol.new()
+    local _type, producers_host, producers_port = producers:localname()
+    pipe:write(producers_host, "\n")
+    pipe:write(producers_port, "\n")
     local _type, consumers_host, consumers_port = consumers:localname()
     pipe:write(consumers_host, "\n")
     pipe:write(consumers_port, "\n")
-    pipe:flush()
+    job_protocol:write(pipe, nil)
 
     local loop = cqueues.new()
     loop:wrap(function()
-      while true do
-        -- TODO: accept and read
-        local task = tasks:read("*l")
-        if task == "" then
-          tasks:close()
+      for producer in producers:clients() do
+        local task = job_protocol:read(producer)
+        if task == nil then
+          producers:close()
           break
         end
         loop:wrap(function()
           local consumer = consumers:accept()
-          consumer:write(task)
-          consumer:write("\n")
-          consumer:flush()
-          consumer:close()
+          job_protocol:write(consumer, task)
         end)
       end
     end)
     loop:loop()
     for i = 1, n_consumers do
       local consumer = consumers:accept()
-      consumer:write("\n")
-      consumer:flush()
-      consumer:close()
+      job_protocol:write(consumer, nil)
     end
     consumers:close()
   end
   local pipe
-  pool.producer, pipe = thread.start(producer, pool.size)
-  pool.tasks_host = pipe:read("*l")
-  pool.tasks_port = tonumber(pipe:read("*l"))
+  pool.queue, pipe = thread.start(queue, pool.size)
+  pool.queue_host = pipe:read("*l")
+  pool.queue_port = tonumber(pipe:read("*l"))
   pool.producer_host = pipe:read("*l")
   pool.producer_port = tonumber(pipe:read("*l"))
+  local job_protocol = JobProtocol.new()
+  job_protocol:read(pipe)
+  pool.job_pusher = JobPusher.new(pool.queue_host, pool.queue_port)
 end
 
 function Pool.new(runner, options)
@@ -124,7 +122,7 @@ function Pool.new(runner, options)
     sockets = {},
     logger = options.logger,
   }
-  create_producer(pool)
+  create_queue(pool)
   setmetatable(pool, metatable)
   return pool
 end
