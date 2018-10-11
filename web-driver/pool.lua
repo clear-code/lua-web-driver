@@ -70,7 +70,9 @@ end
 local function create_queue(pool)
   local queue = function(pipe,
                          log_receiver_host, log_receiver_port, log_level,
-                         n_consumers)
+                         n_consumers,
+                         unique,
+                         max_n_failures)
     local pp = require("web-driver/pp")
     local success, why = pcall(function()
       local cqueues = require("cqueues")
@@ -100,6 +102,7 @@ local function create_queue(pool)
       pipe:write(consumers_port, "\n")
       IPCProtocol.write(pipe, nil)
 
+      local failure_counts = {}
       loop:wrap(function()
         for producer in producers:clients() do
           local task = IPCProtocol.read(producer)
@@ -107,10 +110,47 @@ local function create_queue(pool)
             producers:close()
             break
           end
-          loop:wrap(function()
-            local consumer = consumers:accept()
-            IPCProtocol.write(consumer, task)
-          end)
+          local need_consume = true
+          if failure_counts[task] then
+            if unique_task then
+              need_consume = false
+            end
+          else
+            failure_counts[task] = 0
+          end
+          local log_prefix = "web-driver: pool: queue: task"
+          if need_consume then
+            local function consume_task(task)
+              local consumer = consumers:accept()
+              if IPCProtocol.write(consumer, task) then
+                failure_counts[task] = 0
+              else
+                failure_counts[task] = failure_counts[task] + 1
+                local n_failures = failure_counts[task]
+                logger:debug(string.format("%s: Error: <%d>: <%s>",
+                                           log_prefix,
+                                           n_failures,
+                                           pp.format(task)))
+                if n_failures < max_n_failures then
+                  logger:debug(string.format("%s: Resubmit: <%d>: <%s>",
+                                             log_prefix,
+                                             n_failures,
+                                             pp.format(task)))
+                  loop:wrap(function() consume_task(task) end)
+                else
+                  logger:error(string.format("%s: Drop: <%d>: <%s>",
+                                             log_prefix,
+                                             n_failures,
+                                             pp.format(task)))
+                end
+              end
+            end
+            loop:wrap(function() consume_task(task) end)
+          else
+            logger:debug(string.format("%s: Duplicated: <%s>",
+                                       log_prefix,
+                                       pp.forrmat(task)))
+          end
         end
       end)
       loop:loop()
@@ -129,7 +169,9 @@ local function create_queue(pool)
   pool.queue, pipe = thread.start(queue,
                                   pool.log_receiver_host, pool.log_receiver_port,
                                   pool.logger:level(),
-                                  pool.size)
+                                  pool.size,
+                                  pool.unique_task,
+                                  pool.max_n_failures)
   pool.queue_host = pipe:read("*l")
   pool.queue_port = tonumber(pipe:read("*l"))
   pool.producer_host = pipe:read("*l")
@@ -147,7 +189,7 @@ local function run_consumers(pool)
                               producer_host, producer_port,
                               runner)
       local pp = require("web-driver/pp")
-      local log_prefix = "web-driver: pool: consumer: " .. i .. ": "
+      local log_prefix = "web-driver: pool: consumer: " .. i
 
       local success, why = pcall(function()
         pipe:close()
@@ -167,32 +209,34 @@ local function run_consumers(pool)
         local job_pusher = JobPusher.new(queue_host, queue_port)
         while true do
           local producer = socket.connect(producer_host, producer_port)
-          local task = IPCProtocol.read(producer)
-          if task == nil then
+          local need_break = IPCProtocol.read(producer, function(task)
+            if task == nil then
+              return true, true
+            else
+              local context = {
+                id = i,
+                loop = loop,
+                logger = logger,
+                job_pusher = job_pusher,
+                task = task,
+              }
+              logger:debug(string.format("%s: Running task: <%s>",
+                                         log_prefix,
+                                         pp.format(task)))
+              local runner_success, runner_why = pcall(runner, context)
+              if not runner_success then
+                logger:error(string.format("%s: runner: Error: %s: <%s>",
+                                           log_prefix,
+                                           runner_why,
+                                           pp.format(task)))
+              end
+              loop:loop()
+              return runner_success, false
+            end
+          end)
+          if need_break then
             break
           end
-          local context = {
-            id = i,
-            loop = loop,
-            logger = logger,
-            job_pusher = job_pusher,
-            task = task,
-          }
-          logger:debug(string.format("%s: Running task: <%s>",
-                                     log_prefix,
-                                     pp.format(task)))
-          local runner_success, runner_why = pcall(runner, context)
-          if not runner_success then
-            logger:error(string.format("%srunner: Error: %s: <%s>",
-                                       log_prefix,
-                                       runner_why,
-                                       pp.format(task)))
-            logger:notice(string.format("%s: Push back task: <%s>",
-                                        log_prefix,
-                                        pp.format(task)))
-            job_pusher:push(task)
-          end
-          loop:loop()
         end
       end)
       if not success then
@@ -220,7 +264,16 @@ function Pool.new(loop, runner, options)
     size = options.size or 8,
     consumers = {},
     logger = Logger.new(options.logger),
+    unique_task = true,
+    finish_on_empty = true,
+    max_n_failures = options.max_n_failures or 3,
   }
+  if options.unique_task == false then
+    pool.unique_task = false
+  end
+  if options.finish_on_empty == false then
+    pool.finish_on_empty = false
+  end
   setmetatable(pool, metatable)
   create_log_receiver(pool)
   create_queue(pool)

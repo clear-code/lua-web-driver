@@ -30,15 +30,20 @@ local function crawler(context)
     local anchors = session:css_select("a")
     local anchor
     for _, anchor in pairs(anchors) do
+      local href = anchor.href
       logger:notice(string.format("%s: Link: %s: %s",
                                   url,
-                                  anchor.href,
+                                  href,
                                   anchor:text()))
+      context.job_pusher:push(href)
     end
-    context.job_pusher:push(nil)
   end)
 end
-local pool = web_driver.Pool.new(loop, crawler, {logger = logger})
+local pool = web_driver.Pool.new(loop,
+                                 crawler,
+                                 {logger = logger,
+                                  unique_task = true,
+                                  finish_on_empty = true})
 logger.debug("Start crawling: " .. url)
 pool:push(url)
 pool:join()

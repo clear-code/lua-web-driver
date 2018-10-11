@@ -6,17 +6,27 @@ function IPCProtocol.write(socket, task)
     socket:flush()
   end
   socket:shutdown("w")
-  socket:read("*a") -- Wait "GOT"
+  local status = socket:read("*a")
   socket:close()
+  return status == "SUCCESS"
 end
 
-function IPCProtocol.read(socket)
+function IPCProtocol.read(socket, callback)
   local data = socket:read("*a")
-  socket:write("GOT")
+  local return_value = data
+  local success = true
+  if callback then
+    success, return_value = callback(data)
+  end
+  if success then
+    socket:write("SUCCESS")
+  else
+    socket:write("ERROR")
+  end
   socket:flush()
   socket:shutdown("w")
   socket:close()
-  return data
+  return return_value
 end
 
 function IPCProtocol.log(socket, level, message)
