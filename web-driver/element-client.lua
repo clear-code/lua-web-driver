@@ -140,9 +140,9 @@ function methods:take_screenshot()
                       })
 end
 
-function ElementClient.new(host, port, logger, session_id, id)
+function ElementClient.new(parent, session_id, id)
   local element_client = {
-    parent = Client.new(host, port, logger),
+    parent = parent,
     session_id = session_id,
     id = id,
   }

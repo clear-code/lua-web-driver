@@ -118,15 +118,15 @@ function methods:ensure_running()
       return true
     end
     local status, err = process.waitpid(self.process:pid(), process.WNOHANG)
-    if status then
+    if err then
       local message =
         "web-driver: geckodriver: " ..
-        "Failed to run: <" .. self.command .. ">"
+        "Failed to run: <" .. self.command .. ">: " .. err
       self.firefox.logger:error(message)
       self.firefox.logger:traceback("error")
       error(message)
     end
-    self:log_output()
+    self:log_outputs()
     process.nsleep(sleep_ns_per_trie)
   end
 

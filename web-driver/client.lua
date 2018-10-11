@@ -19,13 +19,16 @@ function methods:execute(verb, path, params, data)
   local response
   local url = self:endpoint(path, params)
   if verb == "get" then
-    response = requests.get(self:endpoint(path, params))
+    response = requests.get(url)
   elseif verb == "post" then
-    response = requests.post(self:endpoint(path, params), { data = (data or {})})
+    response = requests.post(url, { data = (data or {})})
   elseif verb == "delete" then
-    response = requests.delete(self:endpoint(path, params))
+    response = requests.delete(url)
   else
     error("web-driver: client: Unknown verb: <" .. verb .. ">")
+  end
+  if self.post_request_hook then
+    self.post_request_hook(verb, url, data, response)
   end
   if response.status_code == 200 then
     if self.logger:need_log("trace") then
@@ -63,12 +66,14 @@ function methods:create_session(capabilities)
   return self:execute("post", "session", {}, capabilities)
 end
 
-function Client.new(host, port, logger)
+function Client.new(host, port, logger, options)
+  options = options or {}
   local client = {
     host = host,
     port = port,
     base_url = "http://"..host..":"..port.."/",
     logger = logger,
+    post_request_hook = options.post_request_hook,
   }
   setmetatable(client, metatable)
   return client

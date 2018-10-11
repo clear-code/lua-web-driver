@@ -274,15 +274,13 @@ end
 -- @function Session.new
 -- @param driver
 -- @param capabilities
-function Session.new(driver, capabilities)
-  capabilities = capabilities or driver.capabilities
+function Session.new(driver, options)
+  options = options or {}
+  capabilities = options.capabilities or driver.capabilities
   local response = driver.client:create_session(capabilities)
   local session_id = response.json()["value"]["sessionId"]
   local session = {
-    client = SessionClient.new(driver.client.host,
-                               driver.client.port,
-                               driver.logger,
-                               session_id),
+    client = SessionClient.new(driver.client, session_id),
     logger = driver.logger,
     id = session_id,
   }

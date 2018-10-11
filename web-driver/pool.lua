@@ -69,7 +69,7 @@ end
 
 local function create_queue(pool)
   local queue = function(pipe,
-                         log_receiver_host, log_receiver_port,
+                         log_receiver_host, log_receiver_port, log_level,
                          n_consumers)
     local pp = require("web-driver/pp")
     local success, why = pcall(function()
@@ -80,7 +80,8 @@ local function create_queue(pool)
       local RemoteLogger = require("web-driver/remote-logger")
       local logger = RemoteLogger.new(loop,
                                       log_receiver_host,
-                                      log_receiver_port)
+                                      log_receiver_port,
+                                      log_level)
 
       -- TODO: Add UNIX domain socket support as option.
       local options = {
@@ -127,6 +128,7 @@ local function create_queue(pool)
   local pipe
   pool.queue, pipe = thread.start(queue,
                                   pool.log_receiver_host, pool.log_receiver_port,
+                                  pool.logger:level(),
                                   pool.size)
   pool.queue_host = pipe:read("*l")
   pool.queue_port = tonumber(pipe:read("*l"))
@@ -140,7 +142,7 @@ local function run_consumers(pool)
   for i = 1, pool.size do
     local consumer = function(pipe,
                               i,
-                              log_receiver_host, log_receiver_port,
+                              log_receiver_host, log_receiver_port, log_level,
                               queue_host, queue_port,
                               producer_host, producer_port,
                               runner)
@@ -160,7 +162,8 @@ local function run_consumers(pool)
         local loop = cqueues.new()
         local logger = RemoteLogger.new(loop,
                                         log_receiver_host,
-                                        log_receiver_port)
+                                        log_receiver_port,
+                                        log_level)
         local job_pusher = JobPusher.new(queue_host, queue_port)
         while true do
           local producer = socket.connect(producer_host, producer_port)
@@ -201,6 +204,7 @@ local function run_consumers(pool)
       thread.start(consumer,
                    i,
                    pool.log_receiver_host, pool.log_receiver_port,
+                   pool.logger:level(),
                    pool.queue_host, pool.queue_port,
                    pool.producer_host, pool.producer_port,
                    pool.runner)

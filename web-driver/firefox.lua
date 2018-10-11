@@ -32,8 +32,8 @@ if start_timeout_env then
 end
 
 function methods:start_session(callback)
-  local geckodriver = Geckodriver.new(self)
-  geckodriver:start()
+  self.geckodriver = Geckodriver.new(self)
+  self.geckodriver:start()
   local success
   local session
   local return_value
@@ -48,7 +48,7 @@ function methods:start_session(callback)
   else
     err = session
   end
-  geckodriver:stop()
+  self.geckodriver:stop()
   if not success then
     self.logger:error("web-driver: Firefox:start_session: " .. err)
     self.logger:traceback("error")
@@ -90,7 +90,15 @@ local function apply_options(firefox, options)
 
   local host = options.host or DEFAULT_HOST
   local port = options.port or DEFAULT_PORT
-  firefox.client = Client.new(host, port, firefox.logger)
+  local post_request_hook = function()
+    if firefox.geckodriver then
+      firefox.geckodriver:log_outputs()
+    end
+  end
+  firefox.client = Client.new(host,
+                              port,
+                              firefox.logger,
+                              {post_request_hook = post_request_hook})
 
   firefox.capabilities = {
     capabilities = {

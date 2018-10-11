@@ -75,11 +75,12 @@ function methods:trace(...)
   self:log("trace", ...)
 end
 
-function RemoteLogger.new(loop, host, port)
+function RemoteLogger.new(loop, host, port, level)
   local remote_logger = {
     loop = loop,
     host = host,
     port = port,
+    level = level,
   }
   setmetatable(remote_logger, metatable)
   return remote_logger

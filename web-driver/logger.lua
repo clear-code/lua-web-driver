@@ -136,7 +136,7 @@ local function detect_backend(real_logger)
   if real_logger then
     if RemoteLogger.is_a(real_logger) then
       return {
-        level = function() return Logger.LEVELS.TRACE end,
+        level = function() return real_logger.level end,
         log = function(level, ...)
           if type(level) == "number" then
             level = lua_log_writer_name(level)
