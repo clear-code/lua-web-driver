@@ -34,7 +34,15 @@ function methods:join()
       IPCProtocol.write(logger, nil)
     end)
   end)
-  self.loop:loop()
+  local success, why, error_context = self.loop:loop()
+  if not success then
+    self.logger:error(string.format("%s: %s: %s: %s",
+                                    "web-driver: pool",
+                                    "Failed to run loop",
+                                    why,
+                                    pp.format(error_context)))
+    self.logger.traceback("error")
+  end
 end
 
 local function create_log_receiver(pool)
@@ -112,7 +120,7 @@ local function create_queue(pool)
       consumers:close()
     end)
     if not success then
-      local prefix = "lua-web-driver: pool: queue: "
+      local prefix = "web-driver: pool: queue: "
       print(prefix .. "Error: " .. why)
     end
   end
@@ -137,7 +145,7 @@ local function run_consumers(pool)
                               producer_host, producer_port,
                               runner)
       local pp = require("web-driver/pp")
-      local log_prefix = "lua-web-driver: pool: consumer: " .. i .. ": "
+      local log_prefix = "web-driver: pool: consumer: " .. i .. ": "
 
       local success, why = pcall(function()
         pipe:close()
@@ -207,7 +215,7 @@ function Pool.new(loop, runner, options)
     runner = runner,
     size = options.size or 8,
     consumers = {},
-    logger = options.logger or Logger.new(nil),
+    logger = Logger.new(options.logger),
   }
   setmetatable(pool, metatable)
   create_log_receiver(pool)

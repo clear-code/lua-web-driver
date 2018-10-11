@@ -1,6 +1,7 @@
 local process = require("process")
 local log = require("log")
 
+local RemoteLogger = require("web-driver/remote-logger")
 local LogFormatter = require("web-driver/log-formatter")
 local pp = require("web-driver/pp")
 
@@ -133,7 +134,17 @@ end
 
 local function detect_backend(real_logger)
   if real_logger then
-    if real_logger.lvl then
+    if RemoteLogger.is_a(real_logger) then
+      return {
+        level = function() return Logger.LEVELS.TRACE end,
+        log = function(level, ...)
+          if type(level) == "number" then
+            level = lua_log_writer_name(level)
+          end
+          real_logger:log(level, ...)
+        end,
+      }
+    elseif real_logger.lvl then
       -- lua-log
       -- level is compatible.
       return {

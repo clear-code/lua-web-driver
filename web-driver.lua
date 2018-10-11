@@ -9,5 +9,6 @@ local web_driver = {}
 
 web_driver.VERSION = "0.0.3"
 web_driver.Firefox = require("web-driver/firefox")
+web_driver.Pool = require("web-driver/pool")
 
 return web_driver

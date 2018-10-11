@@ -85,4 +85,8 @@ function RemoteLogger.new(loop, host, port)
   return remote_logger
 end
 
+function RemoteLogger.is_a(logger)
+  return getmetatable(logger) == metatable
+end
+
 return RemoteLogger
