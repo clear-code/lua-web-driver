@@ -59,7 +59,7 @@ local function create_log_receiver(pool)
     for client in pool.log_receiver:clients() do
       local level, message = IPCProtocol.receive_log(client)
       if not level then
-        log_receiver:close()
+        pool.log_receiver:close()
         break
       end
       pool.logger:log(level, message)
