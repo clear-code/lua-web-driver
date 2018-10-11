@@ -1,4 +1,3 @@
-local cqueues = require("cqueues")
 local socket = require("cqueues.socket")
 
 local IPCProtocol = require("web-driver/ipc-protocol")

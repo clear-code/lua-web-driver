@@ -18,6 +18,7 @@ description = {
   -- labels = {"webdriver"},
 }
 dependencies = {
+  "cqueues",
   "inspect",
   "lbase64",
   "lua-log",
