@@ -49,18 +49,18 @@ function methods:accept_consumer(job)
     self.failure_counts[job] = self.failure_counts[job] + 1
     local n_failures = self.failure_counts[job]
     self.logger:debug(string.format("%s: Error: <%d>: <%s>",
-                               JobPusher.log_prefix,
-                               n_failures,
-                               pp.format(job)))
+                                    JobQueue.log_prefix,
+                                    n_failures,
+                                    pp.format(job)))
     if n_failures < self.max_n_failures then
       self.logger:debug(string.format("%s: Resubmit: <%d>: <%s>",
-                                      JobPusher.log_prefix,
+                                      JobQueue.log_prefix,
                                       n_failures,
                                       pp.format(job)))
       self.loop:wrap(function() self:accept_consumer(job) end)
     else
       self.logger:error(string.format("%s: Drop: <%d>: <%s>",
-                                      JobPusher.log_prefix,
+                                      JobQueue.log_prefix,
                                       n_failures,
                                       pp.format(job)))
     end
