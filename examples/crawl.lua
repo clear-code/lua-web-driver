@@ -1,4 +1,3 @@
-local cqueues = require("cqueues")
 local web_driver = require("web-driver")
 local log = require("log")
 
@@ -10,7 +9,6 @@ end
 local url = arg[1]
 local log_level = arg[2] or "notice"
 
-local loop = cqueues.new()
 local logger = log.new(log_level)
 local function crawler(context)
   local web_driver = require("web-driver")
@@ -35,13 +33,11 @@ local function crawler(context)
                                   url,
                                   href,
                                   anchor:text()))
-      context.job_pusher:push(href)
+      -- context.job_pusher:push(href)
     end
   end)
 end
-local pool = web_driver.Pool.new(loop,
-                                 crawler,
-                                 {logger = logger})
+local pool = web_driver.Pool.new(crawler, {logger = logger})
 logger.debug("Start crawling: " .. url)
 pool:push(url)
 pool:join()

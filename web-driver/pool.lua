@@ -156,16 +156,16 @@ local function run_consumers(pool)
                    pool.logger:level(),
                    pool.queue_host, pool.queue_port,
                    pool.producer_host, pool.producer_port,
-                   pool.runner)
+                   pool.consumer)
     pipe:close()
   end
 end
 
-function Pool.new(loop, runner, options)
+function Pool.new(consumer, options)
   options = options or {}
   local pool = {
-    loop = loop,
-    runner = runner,
+    loop = cqueues.new(),
+    consumer = consumer,
     size = options.size or 8,
     consumers = {},
     logger = Logger.new(options.logger),
