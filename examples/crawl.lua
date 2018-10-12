@@ -20,7 +20,7 @@ local function crawler(context)
     logger = logger,
   }
   local driver = web_driver.Firefox.new(options)
-  local url = context.task
+  local url = context.job
   logger:debug("Opening...: " .. url)
   driver:start_session(function(session)
     session:navigate_to(url)
@@ -41,9 +41,7 @@ local function crawler(context)
 end
 local pool = web_driver.Pool.new(loop,
                                  crawler,
-                                 {logger = logger,
-                                  unique_task = true,
-                                  finish_on_empty = true})
+                                 {logger = logger})
 logger.debug("Start crawling: " .. url)
 pool:push(url)
 pool:join()

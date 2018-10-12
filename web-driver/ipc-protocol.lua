@@ -13,10 +13,9 @@ end
 
 function IPCProtocol.read(socket, callback)
   local data = socket:read("*a")
-  local return_value = data
   local success = true
   if callback then
-    success, return_value = callback(data)
+    success = callback(data)
   end
   if success then
     socket:write("SUCCESS")
@@ -26,7 +25,7 @@ function IPCProtocol.read(socket, callback)
   socket:flush()
   socket:shutdown("w")
   socket:close()
-  return return_value
+  return data
 end
 
 function IPCProtocol.log(socket, level, message)

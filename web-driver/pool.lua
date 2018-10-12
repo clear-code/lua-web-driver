@@ -96,7 +96,7 @@ local function create_queue(pool)
                                   pool.log_receiver_host, pool.log_receiver_port,
                                   pool.logger:level(),
                                   pool.size,
-                                  pool.unique_task,
+                                  pool.unique_job,
                                   pool.max_n_failures)
   pool.queue_host = pipe:read("*l")
   pool.queue_port = tonumber(pipe:read("*l"))
@@ -121,64 +121,31 @@ end
 local function run_consumers(pool)
   for i = 1, pool.size do
     local consumer = function(pipe,
-                              i,
+                              id,
                               log_receiver_host, log_receiver_port, log_level,
                               queue_host, queue_port,
                               producer_host, producer_port,
-                              runner)
+                              consumer)
+      local JobConsumer = require("web-driver/job-consumer")
       local pp = require("web-driver/pp")
-      local log_prefix = "web-driver: pool: consumer: " .. i
-
       local success, why = pcall(function()
-        pipe:close()
-
-        local cqueues = require("cqueues")
-        local socket = require("cqueues.socket")
-
-        local RemoteLogger = require("web-driver/remote-logger")
-        local JobPusher = require("web-driver/job-pusher")
-        local IPCProtocol = require("web-driver/ipc-protocol")
-
-        local loop = cqueues.new()
-        local logger = RemoteLogger.new(loop,
-                                        log_receiver_host,
-                                        log_receiver_port,
-                                        log_level)
-        local job_pusher = JobPusher.new(queue_host, queue_port)
-        while true do
-          local producer = socket.connect(producer_host, producer_port)
-          local need_break = IPCProtocol.read(producer, function(task)
-            if task == nil then
-              return true, true
-            else
-              local context = {
-                id = i,
-                loop = loop,
-                logger = logger,
-                job_pusher = job_pusher,
-                task = task,
-              }
-              logger:debug(string.format("%s: Running task: <%s>",
-                                         log_prefix,
-                                         pp.format(task)))
-              local runner_success, runner_why = pcall(runner, context)
-              if not runner_success then
-                logger:error(string.format("%s: runner: Error: %s: <%s>",
-                                           log_prefix,
-                                           runner_why,
-                                           pp.format(task)))
-              end
-              loop:loop()
-              return runner_success, false
-            end
-          end)
-          if need_break then
-            break
-          end
-        end
+        local job_consumer = JobConsumer.new(pipe,
+                                             id,
+                                             log_receiver_host,
+                                             log_receiver_port,
+                                             log_level,
+                                             queue_host,
+                                             queue_port,
+                                             producer_host,
+                                             producer_port,
+                                             consumer)
+        job_consumer:run()
       end)
       if not success then
-        print(log_prefix .. "Error: " .. why)
+        io.stderr:write(string.format("%s: %d: Error: %s\n",
+                                      JobConsumer.log_prefix,
+                                      id,
+                                      why))
       end
     end
     local pipe
@@ -202,12 +169,12 @@ function Pool.new(loop, runner, options)
     size = options.size or 8,
     consumers = {},
     logger = Logger.new(options.logger),
-    unique_task = true,
+    unique_job = true,
     finish_on_empty = true,
     max_n_failures = options.max_n_failures or 3,
   }
-  if options.unique_task == false then
-    pool.unique_task = false
+  if options.unique_job == false then
+    pool.unique_job = false
   end
   if options.finish_on_empty == false then
     pool.finish_on_empty = false
