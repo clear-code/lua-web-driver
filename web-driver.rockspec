@@ -56,6 +56,7 @@ build = {
     ["web-driver.interactions.typing-interaction"] = "web-driver/interactions/typing-interaction.lua",
     ["web-driver.ipc-protocol"] = "web-driver/ipc-protocol.lua",
     ["web-driver.job-pusher"] = "web-driver/job-pusher.lua",
+    ["web-driver.job-queue"] = "web-driver/job-queue.lua",
     ["web-driver.json"] = "web-driver/json.lua",
     ["web-driver.logger"] = "web-driver/logger.lua",
     ["web-driver.log-formatter"] = "web-driver/log-formatter.lua",

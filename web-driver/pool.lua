@@ -73,96 +73,22 @@ local function create_queue(pool)
                          n_consumers,
                          unique,
                          max_n_failures)
+    local JobQueue = require("web-driver/job-queue")
     local pp = require("web-driver/pp")
     local success, why = pcall(function()
-      local cqueues = require("cqueues")
-      local socket = require("cqueues.socket")
-
-      local loop = cqueues.new()
-      local RemoteLogger = require("web-driver/remote-logger")
-      local logger = RemoteLogger.new(loop,
-                                      log_receiver_host,
-                                      log_receiver_port,
-                                      log_level)
-
-      -- TODO: Add UNIX domain socket support as option.
-      local options = {
-        host = "127.0.0.1",
-        port = 0,
-      }
-      local producers = socket.listen(options)
-      local consumers = socket.listen(options)
-
-      local IPCProtocol = require("web-driver/ipc-protocol")
-      local _type, producers_host, producers_port = producers:localname()
-      pipe:write(producers_host, "\n")
-      pipe:write(producers_port, "\n")
-      local _type, consumers_host, consumers_port = consumers:localname()
-      pipe:write(consumers_host, "\n")
-      pipe:write(consumers_port, "\n")
-      IPCProtocol.write(pipe, nil)
-
-      local failure_counts = {}
-      loop:wrap(function()
-        for producer in producers:clients() do
-          local task = IPCProtocol.read(producer)
-          if task == nil then
-            producers:close()
-            break
-          end
-          local need_consume = true
-          if failure_counts[task] then
-            if unique_task then
-              need_consume = false
-            end
-          else
-            failure_counts[task] = 0
-          end
-          local log_prefix = "web-driver: pool: queue: task"
-          if need_consume then
-            local function consume_task(task)
-              local consumer = consumers:accept()
-              if IPCProtocol.write(consumer, task) then
-                failure_counts[task] = 0
-              else
-                failure_counts[task] = failure_counts[task] + 1
-                local n_failures = failure_counts[task]
-                logger:debug(string.format("%s: Error: <%d>: <%s>",
-                                           log_prefix,
-                                           n_failures,
-                                           pp.format(task)))
-                if n_failures < max_n_failures then
-                  logger:debug(string.format("%s: Resubmit: <%d>: <%s>",
-                                             log_prefix,
-                                             n_failures,
-                                             pp.format(task)))
-                  loop:wrap(function() consume_task(task) end)
-                else
-                  logger:error(string.format("%s: Drop: <%d>: <%s>",
-                                             log_prefix,
-                                             n_failures,
-                                             pp.format(task)))
-                end
-              end
-            end
-            loop:wrap(function() consume_task(task) end)
-          else
-            logger:debug(string.format("%s: Duplicated: <%s>",
-                                       log_prefix,
-                                       pp.forrmat(task)))
-          end
-        end
-      end)
-      loop:loop()
-      for i = 1, n_consumers do
-        local consumer = consumers:accept()
-        IPCProtocol.write(consumer, nil)
-      end
-      consumers:close()
+      local job_queue = JobQueue.new(pipe,
+                                     log_receiver_host,
+                                     log_receiver_port,
+                                     log_level,
+                                     n_consumers,
+                                     unique,
+                                     max_n_failures)
+      job_queue:run()
     end)
     if not success then
-      local prefix = "web-driver: pool: queue: "
-      print(prefix .. "Error: " .. why)
+      io.stderr:write(string.format("%s: Error: %s\n",
+                                    JobQueue.log_prefix,
+                                    why))
     end
   end
   local pipe
