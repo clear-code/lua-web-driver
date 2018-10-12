@@ -11,7 +11,8 @@ local Logger = {}
 local methods = {}
 local metatable = {}
 
-local create_default_logger = not process.getenv()["LUA_WEB_DRIVER_LOG_LEVEL"]
+local create_default_logger =
+  (process.getenv()["LUA_WEB_DRIVER_LOG_LEVEL"] ~= nil)
 
 function metatable.__index(geckodriver, key)
   return methods[key]
@@ -132,7 +133,7 @@ local function detect_backend(real_logger)
     end
   end
   return {
-    level = function() return default_level end,
+    level = function() return LogLevel.DEFAULT end,
     log = function(level, ...) end,
   }
 end
@@ -142,7 +143,7 @@ function Logger.new(real_logger)
     local StdErrWriter = require("log/writer/stderr")
     local formatter = nil
     local log_formatter = LogFormatter.new()
-    real_logger = log.new(default_level,
+    real_logger = log.new(lua_log_writer_name(LogLevel.DEFAULT),
                           StdErrWriter.new(),
                           formatter,
                           log_formatter)

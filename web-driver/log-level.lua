@@ -27,7 +27,7 @@ end
 LogLevel.DEFAULT = LogLevel.NOTICE
 local level_env = process.getenv()["LUA_WEB_DRIVER_LOG_LEVEL"]
 if level_env then
-  LogLevel.DEFAULT = LogLevel.resolve[level_env]
+  LogLevel.DEFAULT = LogLevel.resolve(level_env)
 end
 
 return LogLevel
