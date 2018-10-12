@@ -1,6 +1,7 @@
 local process = require("process")
 local log = require("log")
 
+local LogLevel = require("web-driver/log-level")
 local RemoteLogger = require("web-driver/remote-logger")
 local LogFormatter = require("web-driver/log-formatter")
 local pp = require("web-driver/pp")
@@ -10,25 +11,7 @@ local Logger = {}
 local methods = {}
 local metatable = {}
 
-Logger.LEVELS = {
-  EMERGENCY = 1,
-  ALERT     = 2,
-  FATAL     = 3,
-  ERROR     = 4,
-  WARNING   = 5,
-  NOTICE    = 6,
-  INFO      = 7,
-  DEBUG     = 8,
-  TRACE     = 9,
-}
-
-local default_level = Logger.LEVELS.NOTICE
-local create_default_logger = false
-local level_env = process.getenv()["LUA_WEB_DRIVER_LOG_LEVEL"]
-if level_env then
-  default_level = Logger.LEVELS[level_env:upper()] or default_level
-  create_default_logger = true
-end
+local create_default_logger = not process.getenv()["LUA_WEB_DRIVER_LOG_LEVEL"]
 
 function metatable.__index(geckodriver, key)
   return methods[key]
@@ -38,20 +21,8 @@ function methods:level()
   return self.backend.level()
 end
 
-local function resolve_level(level)
-  if type(level) == "string" then
-    local level_number = Logger.LEVELS[level:upper()]
-    if not level_number then
-      error("web-driver: Logger: Invalid level: <" .. level .. ">")
-    end
-    return level_number
-  else
-    return level
-  end
-end
-
 function methods:need_log(level)
-  level = resolve_level(level)
+  level = LogLevel.resolve(level)
   return level <= self:level()
 end
 
@@ -60,7 +31,7 @@ function methods:log(level, ...)
 end
 
 function methods:traceback(level)
-  level = resolve_level(level)
+  level = LogLevel.resolve(level)
   if not self:need_log(level) then
     return
   end
@@ -82,51 +53,51 @@ function methods:traceback(level)
 end
 
 function methods:emergency(...)
-  self:log(Logger.LEVELS.EMERGENCY, ...)
+  self:log(LogLevel.EMERGENCY, ...)
 end
 
 function methods:alert(...)
-  self:log(Logger.LEVELS.ALERT, ...)
+  self:log(LogLevel.ALERT, ...)
 end
 
 function methods:fatal(...)
-  self:log(Logger.LEVELS.FATAL, ...)
+  self:log(LogLevel.FATAL, ...)
 end
 
 function methods:error(...)
-  self:log(Logger.LEVELS.ERROR, ...)
+  self:log(LogLevel.ERROR, ...)
 end
 
 function methods:warning(...)
-  self:log(Logger.LEVELS.WARNING, ...)
+  self:log(LogLevel.WARNING, ...)
 end
 
 function methods:notice(...)
-  self:log(Logger.LEVELS.NOTICE, ...)
+  self:log(LogLevel.NOTICE, ...)
 end
 
 function methods:info(...)
-  self:log(Logger.LEVELS.INFO, ...)
+  self:log(LogLevel.INFO, ...)
 end
 
 function methods:debug(...)
-  self:log(Logger.LEVELS.DEBUG, ...)
+  self:log(LogLevel.DEBUG, ...)
 end
 
 function methods:trace(...)
-  self:log(Logger.LEVELS.TRACE, ...)
+  self:log(LogLevel.TRACE, ...)
 end
 
 local LUA_LOG_WRITER_NAMES = {
-  [Logger.LEVELS.EMERGENCY] = "emerg",
-  [Logger.LEVELS.ALERT]     = "alert",
-  [Logger.LEVELS.FATAL]     = "fatal",
-  [Logger.LEVELS.ERROR]     = "error",
-  [Logger.LEVELS.WARNING]   = "warning",
-  [Logger.LEVELS.NOTICE]    = "notice",
-  [Logger.LEVELS.INFO]      = "info",
-  [Logger.LEVELS.DEBUG]     = "debug",
-  [Logger.LEVELS.TRACE]     = "trace",
+  [LogLevel.EMERGENCY] = "emerg",
+  [LogLevel.ALERT]     = "alert",
+  [LogLevel.FATAL]     = "fatal",
+  [LogLevel.ERROR]     = "error",
+  [LogLevel.WARNING]   = "warning",
+  [LogLevel.NOTICE]    = "notice",
+  [LogLevel.INFO]      = "info",
+  [LogLevel.DEBUG]     = "debug",
+  [LogLevel.TRACE]     = "trace",
 }
 local function lua_log_writer_name(level)
   return LUA_LOG_WRITER_NAMES[level]

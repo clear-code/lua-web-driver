@@ -22,8 +22,7 @@ function methods:log_prefix()
 end
 
 function methods:create_logger()
-  self.logger = RemoteLogger.new(self.loop,
-                                 self.log_receiver_host,
+  self.logger = RemoteLogger.new(self.log_receiver_host,
                                  self.log_receiver_port,
                                  self.log_level)
 end
@@ -41,20 +40,22 @@ function methods:process_job(job)
     job_pusher = self.job_pusher,
     job = job,
   }
-  self.logger:debug(string.format("%s: Consuming job: <%s>",
-                                  self:log_prefix(),
-                                  pp.format(job)))
-  local success, why = pcall(self.consumer, context)
-  self.logger:debug(string.format("%s: Consumed job: <%s>: <%s>",
-                                  self:log_prefix(),
-                                  success,
-                                  pp.format(job)))
-  if not success then
-    self.logger:error(string.format("%s: consumer: Error: %s: <%s>",
+  self.loop:wrap(function()
+    self.logger:debug(string.format("%s: Consuming job: <%s>",
                                     self:log_prefix(),
-                                    why,
                                     pp.format(job)))
-  end
+    local success, why = pcall(self.consumer, context)
+    self.logger:debug(string.format("%s: Consumed job: <%s>: <%s>",
+                                    self:log_prefix(),
+                                    success,
+                                    pp.format(job)))
+    if not success then
+      self.logger:error(string.format("%s: consumer: Error: %s: <%s>",
+                                      self:log_prefix(),
+                                      why,
+                                      pp.format(job)))
+    end
+  end)
   self.loop:loop()
   return success
 end

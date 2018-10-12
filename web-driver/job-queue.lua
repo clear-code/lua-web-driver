@@ -17,8 +17,7 @@ function metatable.__index(job_pusher, key)
 end
 
 function methods:create_logger()
-  self.logger = RemoteLogger.new(self.loop,
-                                 self.log_receiver_host,
+  self.logger = RemoteLogger.new(self.log_receiver_host,
                                  self.log_receiver_port,
                                  self.log_level)
 end

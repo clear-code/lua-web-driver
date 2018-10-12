@@ -60,6 +60,7 @@ build = {
     ["web-driver.json"] = "web-driver/json.lua",
     ["web-driver.logger"] = "web-driver/logger.lua",
     ["web-driver.log-formatter"] = "web-driver/log-formatter.lua",
+    ["web-driver.log-level"] = "web-driver/log-level.lua",
     ["web-driver.keys"] = "web-driver/keys.lua",
     ["web-driver.pool"] = "web-driver/pool.lua",
     ["web-driver.pp"] = "web-driver/pp.lua",

@@ -1,7 +1,7 @@
 local process = require("process")
 local socket = require("socket")
 
-local Logger = require("web-driver/logger")
+local LogLevel = require("web-driver/log-level")
 
 local Geckodriver = {}
 
@@ -17,7 +17,7 @@ local function log_level_from_geckodriver(geckodriver_log_level)
   if logger_log_level == "WARN" then
     logger_log_level = "WARNING"
   end
-  return Logger.LEVELS[logger_log_level] or
+  return LogLevel[logger_log_level] or
     error("web-driver: geckodriver: Unknown log level: " ..
             "<" .. geckodriver_log_level .. ">")
 end

@@ -1,5 +1,6 @@
 local socket = require("cqueues.socket")
 
+local LogLevel = require("web-driver/log-level")
 local IPCProtocol = require("web-driver/ipc-protocol")
 local pp = require("web-driver/pp")
 
@@ -12,16 +13,23 @@ function metatable.__index(geckodriver, key)
   return methods[key]
 end
 
+function methods:need_log(level)
+  level = LogLevel.resolve(level)
+  return level <= self.level
+end
+
 function methods:log(level, message)
-  self.loop:wrap(function()
-    local log_receiver = socket.connect(self.host, self.port)
-    IPCProtocol.log(log_receiver, level, message)
-  end)
-  self.loop:step()
-  self.loop:step()
+  if not self:need_log(level) then
+    return
+  end
+  local log_receiver = socket.connect(self.host, self.port)
+  IPCProtocol.log(log_receiver, level, message)
 end
 
 function methods:traceback(level)
+  if not self:need_log(level) then
+    return
+  end
   self:log(level, "web-driver: Traceback:")
   local offset = 2
   local deep_level = offset
@@ -75,9 +83,8 @@ function methods:trace(...)
   self:log("trace", ...)
 end
 
-function RemoteLogger.new(loop, host, port, level)
+function RemoteLogger.new(host, port, level)
   local remote_logger = {
-    loop = loop,
     host = host,
     port = port,
     level = level,

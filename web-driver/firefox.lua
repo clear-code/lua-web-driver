@@ -7,6 +7,7 @@ local socket = require("socket")
 local Geckodriver = require("web-driver/geckodriver")
 local Client = require("web-driver/client")
 local Session = require("web-driver/session")
+local LogLevel = require("web-driver/log-level")
 local Logger = require("web-driver/logger")
 
 local Firefox = {}
@@ -59,23 +60,23 @@ end
 
 local function log_level_to_firefox_name(level)
   -- https://firefox-source-docs.mozilla.org/testing/geckodriver/geckodriver/Capabilities.html#log-object
-  if level == Logger.LEVELS.TRACE then
+  if level == LogLevel.TRACE then
     return "trace"
-  elseif level == Logger.LEVELS.DEBUG then
+  elseif level == LogLevel.DEBUG then
     return "debug"
-  elseif level == Logger.LEVELS.INFO then
+  elseif level == LogLevel.INFO then
     return "info"
-  elseif level == Logger.LEVELS.NOTICE then
+  elseif level == LogLevel.NOTICE then
     return "warn"
-  elseif level == Logger.LEVELS.WARNING then
+  elseif level == LogLevel.WARNING then
     return "warn"
-  elseif level == Logger.LEVELS.ERROR then
+  elseif level == LogLevel.ERROR then
     return "error"
-  elseif level == Logger.LEVELS.FATAL then
+  elseif level == LogLevel.FATAL then
     return "fatal"
-  elseif level == Logger.LEVELS.ALERT then
+  elseif level == LogLevel.ALERT then
     return "fatal"
-  elseif level == Logger.LEVELS.EMERGENCY then
+  elseif level == LogLevel.EMERGENCY then
     return "fatal"
   else
     -- Unknown level
