@@ -177,6 +177,18 @@ local function create_queue(pool)
   pool.producer_host = pipe:read("*l")
   pool.producer_port = tonumber(pipe:read("*l"))
   IPCProtocol.read(pipe)
+  if not (pool.queue_host and
+          pool.queue_port and
+          pool.producer_host and
+          pool.producer_port) then
+    local local_error, why = pool.queue:join()
+    if why then
+      local message = "web-driver: pool: Failed to run queue thread: " .. why
+      pool.logger:error(message)
+      pool.logger:traceback("error")
+      error(message)
+    end
+  end
   pool.job_pusher = JobPusher.new(pool.queue_host, pool.queue_port)
 end
 
