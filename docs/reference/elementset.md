@@ -86,6 +86,35 @@ driver:start_session(function(session)
 end)
 ```
 
+### `get_attribute(name) -> table` {#get_attribute}
+
+`name`: Specify the attribute name.
+
+It returns the value of the specified attribute in each element.
+
+Example:
+
+```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+driver:start_session(function(session)
+  session:navigate_to(URL)
+
+  local body = session:css_select('body')
+  local elements = body:find_elements("css selector", 'p')
+  for _,v in pairs(elements:get_attribute("id")) do
+    print(v)
+-- p1
+-- p2
+-- p3
+  end
+end)
+```
+
 ### `insert(element_or_position, element) -> void` {#insert}
 
 This method inserts specify [`web-driver.Element`][element] into [`web-driver.ElementSet`][elementset].

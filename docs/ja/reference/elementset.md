@@ -86,6 +86,35 @@ driver:start_session(function(session)
 end)
 ```
 
+### `get_attribute(name) -> table` {#get_attribute}
+
+`name`: 属性名を指定します。
+
+それぞれの要素の指定した属性の値を返します。
+
+例:
+
+```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+driver:start_session(function(session)
+  session:navigate_to(URL)
+
+  local body = session:css_select('body')
+  local elements = body:find_elements("css selector", 'p')
+  for _,v in pairs(elements:get_attribute("id")) do
+    print(v)
+-- p1
+-- p2
+-- p3
+  end
+end)
+```
+
 ### `insert(element_or_position, element) -> void` {#insert}
 
 このメソッドは、指定した[`web-driver.Element`][element]を[`web-driver.ElementSet`][elementset]へ挿入します。
@@ -155,7 +184,7 @@ end)
 
 このメソッドは、指定した[`web-driver.ElementSet`][elementset]をマージします。
 
-It returns [`web_driver.ElementSet`][elementset] after merging the specified [`web-driver.ElementSet`][elementset].
+指定した[`web-driver.ElemetSet`][elementset]をマージした後の[`web-driver.ElementSet`][elementset]を返します。
 
 例:
 

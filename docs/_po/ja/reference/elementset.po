@@ -112,6 +112,28 @@ msgstr ""
 msgid "It returns text elements of the myself as a table."
 msgstr "自分自身のテキスト要素をテーブルとして返します。"
 
+msgid "### `get_attribute(name) -> table` {#get_attribute}"
+msgstr ""
+
+msgid "`name`: Specify the attribute name."
+msgstr "`name`: 属性名を指定します。"
+
+msgid "It returns the value of the specified attribute in each element."
+msgstr "それぞれの要素の指定した属性の値を返します。"
+
+msgid ""
+"  local body = session:css_select('body')\n"
+"  local elements = body:find_elements(\"css selector\", 'p')\n"
+"  for _,v in pairs(elements:get_attribute(\"id\")) do\n"
+"    print(v)\n"
+"-- p1\n"
+"-- p2\n"
+"-- p3\n"
+"  end\n"
+"end)\n"
+"```"
+msgstr ""
+
 msgid "### `insert(element_or_position, element) -> void` {#insert}"
 msgstr ""
 
@@ -188,7 +210,7 @@ msgid "This method merge specify [`web-driver.ElementSet`][elementset]."
 msgstr "このメソッドは、指定した[`web-driver.ElementSet`][elementset]をマージします。"
 
 msgid ""
-"It returns [`web-driver.ElementSet`][elementset] after merging the specified ["
+"It returns [`web_driver.ElementSet`][elementset] after merging the specified ["
 "`web-driver.ElementSet`][elementset]."
 msgstr ""
 "指定した[`web-driver.ElemetSet`][elementset]をマージした後の[`web-driver.ElementSet`][elem"
