@@ -3,6 +3,7 @@ local socket = require("cqueues.socket")
 
 local RemoteLogger = require("web-driver/remote-logger")
 local IPCProtocol = require("web-driver/ipc-protocol")
+local JobPusher = require("web-driver/job-pusher")
 local pp = require("web-driver/pp")
 
 local JobQueue = {
@@ -34,16 +35,29 @@ function methods:listen()
   local _type, producers_host, producers_port = self.producers:localname()
   self.pipe:write(producers_host, "\n")
   self.pipe:write(producers_port, "\n")
+  self.producers_host = producers_host
+  self.producers_port = producers_port
   local _type, consumers_host, consumers_port = self.consumers:localname()
   self.pipe:write(consumers_host, "\n")
   self.pipe:write(consumers_port, "\n")
   IPCProtocol.write(self.pipe, nil)
 end
 
+function methods:job_completed()
+  self.n_jobs = self.n_jobs - 1
+  if self.n_jobs == 0 then
+    self.loop:wrap(function()
+      local job_pusher = JobPusher.new(self.producers_host, self.producers_port)
+      job_pusher:push(nil)
+    end)
+  end
+end
+
 function methods:accept_consumer(job)
   local consumer = self.consumers:accept()
   if IPCProtocol.write(consumer, job) then
     self.failure_counts[job] = 0
+    self:job_completed()
   else
     self.failure_counts[job] = self.failure_counts[job] + 1
     local n_failures = self.failure_counts[job]
@@ -62,6 +76,7 @@ function methods:accept_consumer(job)
                                       JobQueue.log_prefix,
                                       n_failures,
                                       pp.format(job)))
+      self:job_completed()
     end
   end
 end
@@ -84,6 +99,7 @@ function methods:accept_jobs()
     end
 
     if need_consume then
+      self.n_jobs = self.n_jobs + 1
       self.loop:wrap(function() self:accept_consumer(job) end)
     else
       self.logger:debug(string.format("%s: Duplicated: <%s>",
@@ -115,7 +131,6 @@ function JobQueue.new(pipe,
                       log_receiver_host,
                       log_receiver_port,
                       log_level,
-                      n_consumers,
                       unique,
                       max_n_failures)
   local job_queue = {
@@ -124,10 +139,10 @@ function JobQueue.new(pipe,
     log_receiver_host = log_receiver_host,
     log_receiver_port = log_receiver_port,
     log_level = log_level,
-    n_consumers = n_consumers,
     unique = unique,
     max_n_failures = max_n_failures,
     failure_counts = {},
+    n_jobs = 0,
   }
   setmetatable(job_queue, metatable)
   return job_queue

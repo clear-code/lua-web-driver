@@ -33,6 +33,7 @@ function methods:create_job_pusher()
 end
 
 function methods:process_job(job)
+  local success = true
   local context = {
     id = self.id,
     loop = self.loop,
@@ -44,7 +45,8 @@ function methods:process_job(job)
     self.logger:debug(string.format("%s: Consuming job: <%s>",
                                     self:log_prefix(),
                                     pp.format(job)))
-    local success, why = pcall(self.consumer, context)
+    local why
+    success, why = pcall(self.consumer, context)
     self.logger:debug(string.format("%s: Consumed job: <%s>: <%s>",
                                     self:log_prefix(),
                                     success,

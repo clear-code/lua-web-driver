@@ -80,7 +80,6 @@ local function create_queue(pool)
                                      log_receiver_host,
                                      log_receiver_port,
                                      log_level,
-                                     n_consumers,
                                      unique,
                                      max_n_failures)
       job_queue:run()
@@ -166,7 +165,7 @@ function Pool.new(consumer, options)
   local pool = {
     loop = cqueues.new(),
     consumer = consumer,
-    size = options.size or 8,
+    size = options.size or 4,
     consumers = {},
     logger = Logger.new(options.logger),
     unique_job = true,

@@ -12,8 +12,13 @@ function IPCProtocol.write(socket, task)
 end
 
 function IPCProtocol.read(socket, callback)
-  local data = socket:read("*a")
-  local success = true
+  local read_success, data = pcall(function() return socket:read("*a") end)
+  if not read_success then
+    local why = data
+    -- TODO: Report why?
+    data = nil
+  end
+  local success = read_success
   if callback then
     success = callback(data)
   end
@@ -22,8 +27,10 @@ function IPCProtocol.read(socket, callback)
   else
     socket:write("ERROR")
   end
-  socket:flush()
-  socket:shutdown("w")
+  if read_success then
+    socket:flush()
+    socket:shutdown("w")
+  end
   socket:close()
   return data
 end

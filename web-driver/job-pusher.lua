@@ -11,9 +11,9 @@ function metatable.__index(job_pusher, key)
   return methods[key]
 end
 
-function methods:push(task)
+function methods:push(job)
   local queue = socket.connect(self.host, self.port)
-  IPCProtocol.write(queue, task)
+  IPCProtocol.write(queue, job)
 end
 
 function JobPusher.new(host, port)
