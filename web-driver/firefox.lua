@@ -23,6 +23,7 @@ local DEFAULT_HOST = "127.0.0.1"
 local DEFAULT_PORT = "4444"
 local DEFAULT_ARGS = { "-headless" }
 local DEFAULT_START_TIMEOUT = 5
+local DEFAULT_HTTP_REQUEST_TIMEOUT = 5
 local DEFAULT_GET_REQUEST_TIMEOUT = 5
 local DEFAULT_POST_REQUEST_TIMEOUT = 5
 local DEFAULT_DELETE_REQUEST_TIMEOUT = 5
@@ -32,6 +33,16 @@ if start_timeout_env then
   local start_timeout_env_value = tonumber(start_timeout_env, 10)
   if start_timeout_env_value then
     DEFAULT_START_TIMEOUT = start_timeout_env_value
+  end
+end
+
+local http_request_timeout_env =
+  process.getenv()["LUA_WEB_DRIVER_HTTP_REQUEST_TIMEOUT"]
+if http_request_timeout_env then
+  local http_request_timeout_env_value =
+    tonumber(http_request_timeout_env, 10)
+  if http_request_timeout_env_value then
+    DEFAULT_HTTP_REQUEST_TIMEOUT = http_request_timeout_env_value
   end
 end
 
@@ -130,11 +141,17 @@ local function apply_options(firefox, options)
     end
   end
 
-  local get_request_timeout = options.get_request_timeout
+  local get_request_timeout = options.http_request_timeout
+                              or DEFAULT_HTTP_REQUEST_TIMEOUT
+                              or options.get_request_timeout
                               or DEFAULT_GET_REQUEST_TIMEOUT
-  local post_request_timeout = options.post_request_timeout
+  local post_request_timeout = options.http_request_timeout
+                               or DEFAULT_HTTP_REQUEST_TIMEOUT
+                               or options.post_request_timeout
                                or DEFAULT_POST_REQUEST_TIMEOUT
-  local delete_request_timeout = options.delete_request_timeout
+  local delete_request_timeout = options.http_request_timeout
+                                 or DEFAULT_HTTP_REQUEST_TIMEOUT
+                                 or options.delete_request_timeout
                                  or DEFAULT_DELETE_REQUEST_TIMEOUT
   firefox.client = Client.new(host,
                               port,
