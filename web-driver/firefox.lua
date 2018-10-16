@@ -104,7 +104,7 @@ function methods:start_session(callback)
     if not success then
       why = return_value
     end
-    pcall(function() session:destroy() end)
+    pcall(function() session:delete() end)
   else
     why = session
   end

@@ -22,10 +22,10 @@ function metatable.__index(session, key)
     Searchable[key]
 end
 
---- Destroy the session.
+--- Delete the session.
 -- <https://www.w3.org/TR/webdriver/#dfn-delete-session>
--- @function Session:destroy
-function methods:destroy()
+-- @function Session:delete
+function methods:delete()
   self.client:delete_session()
 end
 
