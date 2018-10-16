@@ -19,14 +19,20 @@ function methods:execute(verb, path, params, data)
   local response
   local url = self:endpoint(path, params)
   if verb == "get" then
-    response = requests.get(url)
+    response = requests.get(url,
+                            {
+                              timeout = self.get_request_timeout,
+                            })
   elseif verb == "post" then
     response = requests.post(url,
                              { data = (data or {}),
                                timeout = self.post_request_timeout,
                              })
   elseif verb == "delete" then
-    response = requests.delete(url)
+    response = requests.delete(url,
+                               {
+                                 timeout = self.delete_request_timeout,
+                               })
   else
     error("web-driver: client: Unknown verb: <" .. verb .. ">")
   end
@@ -77,7 +83,9 @@ function Client.new(host, port, logger, options)
     base_url = "http://"..host..":"..port.."/",
     logger = logger,
     post_request_hook = options.post_request_hook,
+    get_request_timeout = options.get_request_timeout,
     post_request_timeout = options.post_request_timeout,
+    delete_request_timeout = options.delete_request_timeout,
   }
   setmetatable(client, metatable)
   return client

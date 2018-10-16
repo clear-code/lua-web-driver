@@ -23,13 +23,25 @@ local DEFAULT_HOST = "127.0.0.1"
 local DEFAULT_PORT = "4444"
 local DEFAULT_ARGS = { "-headless" }
 local DEFAULT_START_TIMEOUT = 5
+local DEFAULT_GET_REQUEST_TIMEOUT = 5
 local DEFAULT_POST_REQUEST_TIMEOUT = 5
+local DEFAULT_DELETE_REQUEST_TIMEOUT = 5
 
 local start_timeout_env = process.getenv()["LUA_WEB_DRIVER_START_TIMEOUT"]
 if start_timeout_env then
   local start_timeout_env_value = tonumber(start_timeout_env, 10)
   if start_timeout_env_value then
     DEFAULT_START_TIMEOUT = start_timeout_env_value
+  end
+end
+
+local get_request_timeout_env =
+  process.getenv()["LUA_WEB_DRIVER_GET_REQUEST_TIMEOUT"]
+if get_request_timeout_env then
+  local get_request_timeout_env_value =
+    tonumber(get_request_timeout_env, 10)
+  if get_request_timeout_env_value then
+    DEFAULT_GET_REQUEST_TIMEOUT = get_request_timeout_env_value
   end
 end
 
@@ -40,6 +52,16 @@ if post_request_timeout_env then
     tonumber(post_request_timeout_env, 10)
   if post_request_timeout_env_value then
     DEFAULT_POST_REQUEST_TIMEOUT = post_request_timeout_env_value
+  end
+end
+
+local delete_request_timeout_env =
+  process.getenv()["LUA_WEB_DRIVER_DELETE_REQUEST_TIMEOUT"]
+if delete_request_timeout_env then
+  local delete_request_timeout_env_value =
+    tonumber(delete_request_timeout_env, 10)
+  if delete_request_timeout_env_value then
+    DEFAULT_DELETE_REQUEST_TIMEOUT = delete_request_timeout_env_value
   end
 end
 
@@ -107,14 +129,21 @@ local function apply_options(firefox, options)
       firefox.geckodriver:log_outputs()
     end
   end
-  local post_request_timeout =
-    options.post_request_timeout or DEFAULT_POST_REQUEST_TIMEOUT
+
+  local get_request_timeout = options.get_request_timeout
+                              or DEFAULT_GET_REQUEST_TIMEOUT
+  local post_request_timeout = options.post_request_timeout
+                               or DEFAULT_POST_REQUEST_TIMEOUT
+  local delete_request_timeout = options.delete_request_timeout
+                                 or DEFAULT_DELETE_REQUEST_TIMEOUT
   firefox.client = Client.new(host,
                               port,
                               firefox.logger,
                               {
                                 post_request_hook = post_request_hook,
+                                get_request_timeout = get_request_timeout,
                                 post_request_timeout = post_request_timeout,
+                                delete_request_timeout = delete_request_timeout,
                               }
                              )
   firefox.capabilities = {
