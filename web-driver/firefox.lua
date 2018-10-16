@@ -39,7 +39,7 @@ end
 local http_request_timeout_env =
   process.getenv()["LUA_WEB_DRIVER_HTTP_REQUEST_TIMEOUT"]
 if http_request_timeout_env then
-  local http_request_timeout_env_value =
+  http_request_timeout_env_value =
     tonumber(http_request_timeout_env, 10)
   if http_request_timeout_env_value then
     DEFAULT_HTTP_REQUEST_TIMEOUT = http_request_timeout_env_value
@@ -49,7 +49,7 @@ end
 local get_request_timeout_env =
   process.getenv()["LUA_WEB_DRIVER_GET_REQUEST_TIMEOUT"]
 if get_request_timeout_env then
-  local get_request_timeout_env_value =
+  get_request_timeout_env_value =
     tonumber(get_request_timeout_env, 10)
   if get_request_timeout_env_value then
     DEFAULT_GET_REQUEST_TIMEOUT = get_request_timeout_env_value
@@ -59,7 +59,7 @@ end
 local post_request_timeout_env =
   process.getenv()["LUA_WEB_DRIVER_POST_REQUEST_TIMEOUT"]
 if post_request_timeout_env then
-  local post_request_timeout_env_value =
+  post_request_timeout_env_value =
     tonumber(post_request_timeout_env, 10)
   if post_request_timeout_env_value then
     DEFAULT_POST_REQUEST_TIMEOUT = post_request_timeout_env_value
@@ -69,7 +69,7 @@ end
 local delete_request_timeout_env =
   process.getenv()["LUA_WEB_DRIVER_DELETE_REQUEST_TIMEOUT"]
 if delete_request_timeout_env then
-  local delete_request_timeout_env_value =
+  delete_request_timeout_env_value =
     tonumber(delete_request_timeout_env, 10)
   if delete_request_timeout_env_value then
     DEFAULT_DELETE_REQUEST_TIMEOUT = delete_request_timeout_env_value
@@ -162,18 +162,30 @@ local function apply_options(firefox, options)
     end
   end
 
-  local get_request_timeout = options.http_request_timeout
-                              or DEFAULT_HTTP_REQUEST_TIMEOUT
-                              or options.get_request_timeout
-                              or DEFAULT_GET_REQUEST_TIMEOUT
-  local post_request_timeout = options.http_request_timeout
-                               or DEFAULT_HTTP_REQUEST_TIMEOUT
-                               or options.post_request_timeout
-                               or DEFAULT_POST_REQUEST_TIMEOUT
-  local delete_request_timeout = options.http_request_timeout
-                                 or DEFAULT_HTTP_REQUEST_TIMEOUT
-                                 or options.delete_request_timeout
-                                 or DEFAULT_DELETE_REQUEST_TIMEOUT
+  local get_request_timeout = DEFAULT_GET_REQUEST_TIMEOUT
+  local post_request_timeout = DEFAULT_POST_REQUEST_TIMEOUT
+  local delete_request_timeout = DEFAULT_DELETE_REQUEST_TIMEOUT
+
+  if options.http_request_timeout or http_request_timeout_env_value then
+    get_request_timeout = options.http_request_timeout
+                          or http_request_timeout_env_value
+    post_request_timeout = options.http_request_timeout
+                           or http_request_timeout_env_value
+    delete_request_timeout = options.http_request_timeout
+                             or http_request_timeout_env_value
+  end
+  if options.get_request_timeout or get_request_timeout_env_value then
+    get_request_timeout = options.get_request_timeout
+                          or get_request_timeout_env_value
+  end
+  if options.post_request_timeout or post_request_timeout_env_value then
+    post_request_timeout = options.post_request_timeout
+                           or post_request_timeout_env_value
+  end
+  if options.delete_request_timeout or delete_request_timeout_env_value then
+    delete_request_timeout = options.delete_request_timeout
+                             or delete_request_timeout_env_value
+  end
   firefox.client = Client.new(host,
                               port,
                               firefox.logger,
