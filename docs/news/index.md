@@ -4,6 +4,16 @@ title: News
 
 # News
 
+## 0.0.4: 2018-10-16 {#version-0-0-4}
+
+### Improvements
+
+  * Modified all default timeout to 60s
+
+### Fixes
+
+  * Fixed a bug that set a wrong timeout of GET, POST and DELETE request.
+
 ## 0.0.3: 2018-10-16 {#version-0-0-3}
 
 ### Improvements

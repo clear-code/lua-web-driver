@@ -16,10 +16,22 @@ msgstr ""
 msgid "# News"
 msgstr ""
 
-msgid "## 0.0.3: 2018-10-16 {#version-0-0-3}"
+msgid "## 0.0.4: 2018-10-16 {#version-0-0-4}"
 msgstr ""
 
 msgid "### Improvements"
+msgstr ""
+
+msgid "  * Modified all default timeout to 60s"
+msgstr ""
+
+msgid "### Fixes"
+msgstr ""
+
+msgid "  * Fixed a bug that set a wrong timeout of GET, POST and DELETE request."
+msgstr ""
+
+msgid "## 0.0.3: 2018-10-16 {#version-0-0-3}"
 msgstr ""
 
 msgid ""
@@ -34,9 +46,6 @@ msgid "  * Added install script for macOS."
 msgstr ""
 
 msgid "  * Updated geckodriver version(0.23.0)."
-msgstr ""
-
-msgid "### Fixes"
 msgstr ""
 
 msgid "  * Fixed install document."
