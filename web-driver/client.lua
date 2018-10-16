@@ -2,7 +2,6 @@
 --
 -- @classmod Client
 -- @local
-local process = require("process")
 local requests = require("requests")
 
 local pp = require("web-driver/pp")
@@ -16,17 +15,6 @@ function metatable.__index(client, key)
   return methods[key]
 end
 
-local DEFAULT_POST_REQUEST_TIMEOUT = 5
-local post_request_timeout_env =
-  process.getenv()["LUA_WEB_DRIVER_POST_REQUEST_TIMEOUT"]
-if post_request_timeout_env then
-  local post_request_timeout_env_value =
-    tonumber(post_request_timeout_env, 10)
-  if post_request_timeout_env_value then
-    DEFAULT_POST_REQUEST_TIMEOUT = post_request_timeout_env_value
-  end
-end
-
 function methods:execute(verb, path, params, data)
   local response
   local url = self:endpoint(path, params)
@@ -35,7 +23,7 @@ function methods:execute(verb, path, params, data)
   elseif verb == "post" then
     response = requests.post(url,
                              { data = (data or {}),
-                               timeout = DEFAULT_POST_REQUEST_TIMEOUT
+                               timeout = self.post_request_timeout,
                              })
   elseif verb == "delete" then
     response = requests.delete(url)
@@ -89,6 +77,7 @@ function Client.new(host, port, logger, options)
     base_url = "http://"..host..":"..port.."/",
     logger = logger,
     post_request_hook = options.post_request_hook,
+    post_request_timeout = options.post_request_timeout,
   }
   setmetatable(client, metatable)
   return client

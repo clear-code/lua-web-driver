@@ -23,12 +23,23 @@ local DEFAULT_HOST = "127.0.0.1"
 local DEFAULT_PORT = "4444"
 local DEFAULT_ARGS = { "-headless" }
 local DEFAULT_START_TIMEOUT = 5
+local DEFAULT_POST_REQUEST_TIMEOUT = 5
 
 local start_timeout_env = process.getenv()["LUA_WEB_DRIVER_START_TIMEOUT"]
 if start_timeout_env then
   local start_timeout_env_value = tonumber(start_timeout_env, 10)
   if start_timeout_env_value then
     DEFAULT_START_TIMEOUT = start_timeout_env_value
+  end
+end
+
+local post_request_timeout_env =
+  process.getenv()["LUA_WEB_DRIVER_POST_REQUEST_TIMEOUT"]
+if post_request_timeout_env then
+  local post_request_timeout_env_value =
+    tonumber(post_request_timeout_env, 10)
+  if post_request_timeout_env_value then
+    DEFAULT_POST_REQUEST_TIMEOUT = post_request_timeout_env_value
   end
 end
 
@@ -96,11 +107,16 @@ local function apply_options(firefox, options)
       firefox.geckodriver:log_outputs()
     end
   end
+  local post_request_timeout =
+    options.post_request_timeout or DEFAULT_POST_REQUEST_TIMEOUT
   firefox.client = Client.new(host,
                               port,
                               firefox.logger,
-                              {post_request_hook = post_request_hook})
-
+                              {
+                                post_request_hook = post_request_hook,
+                                post_request_timeout = post_request_timeout,
+                              }
+                             )
   firefox.capabilities = {
     capabilities = {
       alwaysMatch = {
