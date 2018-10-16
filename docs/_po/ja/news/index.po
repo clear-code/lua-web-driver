@@ -1,0 +1,88 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid ""
+"---\n"
+"title: News\n"
+"---"
+msgstr ""
+
+msgid "# News"
+msgstr ""
+
+msgid "## 0.0.3: 2018-10-16 {#version-0-0-3}"
+msgstr ""
+
+msgid "### Improvements"
+msgstr ""
+
+msgid ""
+"  * Supported for changeing request(POST, GET and DELETE) timeout by options a"
+"nd environment variable."
+msgstr ""
+
+msgid "  * Supported logger."
+msgstr ""
+
+msgid "  * Added install script for macOS."
+msgstr ""
+
+msgid "  * Updated geckodriver version(0.23.0)."
+msgstr ""
+
+msgid "### Fixes"
+msgstr ""
+
+msgid "  * Fixed install document."
+msgstr ""
+
+msgid "## 0.0.2: 2018-10-02 {#version-0-0-2}"
+msgstr ""
+
+msgid "  * Added sample codes."
+msgstr ""
+
+msgid "  * Added tutorials."
+msgstr ""
+
+msgid "  * [`web-driver.ElementSet:send_keys()`][elementset-send_keys]: Added."
+msgstr ""
+
+msgid "  * [`web-driver.ElementSet:click()`][elementset-click]: Added."
+msgstr ""
+
+msgid "  * [`web-driver.ElementSet:texts()`][elementset-texts]: Added."
+msgstr ""
+
+msgid "  * [`web-driver.ElementSet`][elementset]: Added."
+msgstr ""
+
+msgid "  * [`web-driver.Searchable`][searchable]: Added."
+msgstr ""
+
+msgid "## 0.0.1: 2018-09-26 {#version-0-0-1}"
+msgstr ""
+
+msgid "The first release!!!"
+msgstr ""
+
+msgid "[elementset-send_keys]: ../reference/elementset.html#send-keys"
+msgstr ""
+
+msgid "[elementset-click]: ../reference/elementset.html#click"
+msgstr ""
+
+msgid "[elementset-texts]: ../reference/elementset.html#texts"
+msgstr ""
+
+msgid "[elementset]: ../reference/elementset.html"
+msgstr ""
+
+msgid "[searchable]: ../reference/searchable.html"
+msgstr ""
