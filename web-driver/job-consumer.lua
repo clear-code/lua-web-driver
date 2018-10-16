@@ -40,7 +40,7 @@ function methods:process_job(job)
     loop = self.loop,
     logger = self.logger,
     job_pusher = self.job_pusher,
-    driver = self.driver,
+    session = self.session,
     job = job,
   }
   self.loop:wrap(function()
@@ -79,7 +79,7 @@ function methods:consume_job()
   return continue
 end
 
-function methods:start_driver()
+function methods:start_session()
   local options = {
     port = 4444 + self.id,
     logger = self.logger,
@@ -87,18 +87,18 @@ function methods:start_driver()
     http_request_timeout = 60,
   }
   self.driver = Firefox.new(options)
-  self.driver:_start_geckodriver()
+  self.session = self.driver:start_session()
 end
 
-function methods:stop_driver()
-  self.driver:_stop_geckodriver()
+function methods:stop_session()
+  self.session:delete()
 end
 
 function methods:run()
   self:create_logger()
   self:create_job_pusher()
   self.pipe:close()
-  self:start_driver()
+  self:start_session()
   local success, why = pcall(function()
     while self:consume_job() do
       -- Do nothing
@@ -109,7 +109,7 @@ function methods:run()
                                     self:log_prefix(),
                                     why))
   end
-  self:stop_driver()
+  self:stop_session()
 end
 
 function JobConsumer.new(pipe,

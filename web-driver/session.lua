@@ -26,7 +26,14 @@ end
 -- <https://www.w3.org/TR/webdriver/#dfn-delete-session>
 -- @function Session:delete
 function methods:delete()
-  self.client:delete_session()
+  local success, why = pcall(function() self.client:delete_session() end)
+  if self.delete_hook then
+    self.delete_hook()
+  end
+  if not success then
+    -- TODO: Log backtrace
+    error(why)
+  end
 end
 
 --- Fetch timeouts
@@ -283,6 +290,7 @@ function Session.new(driver, options)
     client = SessionClient.new(driver.client, session_id),
     logger = driver.logger,
     id = session_id,
+    delete_hook = options.delete_hook,
   }
   setmetatable(session, metatable)
   return session
