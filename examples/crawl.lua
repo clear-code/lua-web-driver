@@ -13,11 +13,7 @@ local logger = log.new(log_level)
 local function crawler(context)
   local web_driver = require("web-driver")
   local logger = context.logger
-  local options = {
-    port = 4444 + context.id,
-    logger = logger,
-  }
-  local driver = web_driver.Firefox.new(options)
+  local driver = context.driver
   local url = context.job
   logger:debug("Opening...: " .. url)
   driver:start_session(function(session)
@@ -33,7 +29,7 @@ local function crawler(context)
                                   url,
                                   href,
                                   anchor:text()))
-      -- context.job_pusher:push(href)
+      context.job_pusher:push(href)
     end
   end)
 end

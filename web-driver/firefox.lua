@@ -76,28 +76,45 @@ if delete_request_timeout_env then
   end
 end
 
-function methods:start_session(callback)
+-- Package private
+function methods:_start_geckodriver()
   self.geckodriver = Geckodriver.new(self)
   self.geckodriver:start()
+end
+
+-- Package private
+function methods:_stop_geckodriver()
+  self.geckodriver:stop()
+  self.geckodriver = nil
+end
+
+function methods:start_session(callback)
+  local need_to_stop_geckodriver = false
+  if not self.geckodriver then
+    self:_start_geckodriver()
+    need_to_stop_geckodriver = true
+  end
   local success
   local session
   local return_value
-  local err
+  local why
   success, session = pcall(Session.new, self)
   if success then
     success, return_value = pcall(callback, session)
     if not success then
-      err = return_value
+      why = return_value
     end
     pcall(function() session:destroy() end)
   else
-    err = session
+    why = session
   end
-  self.geckodriver:stop()
+  if need_to_stop_geckodriver then
+    self:_stop_geckodriver()
+  end
   if not success then
-    self.logger:error("web-driver: Firefox:start_session: " .. err)
+    self.logger:error("web-driver: Firefox:start_session: " .. why)
     self.logger:traceback("error")
-    error(err)
+    error(why)
   end
   return return_value
 end

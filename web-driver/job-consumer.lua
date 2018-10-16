@@ -1,6 +1,7 @@
 local cqueues = require("cqueues")
 local socket = require("cqueues.socket")
 
+local Firefox = require("web-driver/firefox")
 local RemoteLogger = require("web-driver/remote-logger")
 local JobPusher = require("web-driver/job-pusher")
 local IPCProtocol = require("web-driver/ipc-protocol")
@@ -39,6 +40,7 @@ function methods:process_job(job)
     loop = self.loop,
     logger = self.logger,
     job_pusher = self.job_pusher,
+    driver = self.driver,
     job = job,
   }
   self.loop:wrap(function()
@@ -77,13 +79,37 @@ function methods:consume_job()
   return continue
 end
 
+function methods:start_driver()
+  local options = {
+    port = 4444 + self.id,
+    logger = self.logger,
+    start_timeout = 60,
+    http_request_timeout = 60,
+  }
+  self.driver = Firefox.new(options)
+  self.driver:_start_geckodriver()
+end
+
+function methods:stop_driver()
+  self.driver:_stop_geckodriver()
+end
+
 function methods:run()
   self:create_logger()
   self:create_job_pusher()
   self.pipe:close()
-  while self:consume_job() do
-    -- Do nothing
+  self:start_driver()
+  local success, why = pcall(function()
+    while self:consume_job() do
+      -- Do nothing
+    end
+  end)
+  if not success then
+    self.logger:error(string.format("%s: Error in consume loop: %s",
+                                    self:log_prefix(),
+                                    why))
   end
+  self:stop_driver()
 end
 
 function JobConsumer.new(pipe,
