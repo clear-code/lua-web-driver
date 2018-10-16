@@ -1,7 +1,7 @@
 -- -*- lua -*-
 
 local project_name = "lua-web-driver"
-local package_version = "0.0.3"
+local package_version = "0.0.4"
 
 package = "web-driver"
 version = package_version .. "-0"
