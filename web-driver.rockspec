@@ -23,6 +23,7 @@ dependencies = {
   "inspect",
   "lbase64",
   "lua-log",
+  "luasocket",
   "luautf8",
   "lunajson",
   "process",
