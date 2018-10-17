@@ -39,14 +39,16 @@ Possible options to set in `options.args` as see a below.
 
 [Command Line Options](https://developer.mozilla.org/en-US/docs/Mozilla/Command_Line_Options)
 
-### `web-driver.Firefox.session_start(callback) -> return value of callback` {#session-start}
+### `web-driver.Firefox.start_session(callback) -> return value of callback` {#session-start}
 
-`callback`: Your callback function.
+`callback`: Specify your callback function.
 
 It starts a session with the Firefox and calls the given callback function.
 It returns the return value of the given callback function.
 
-You can write the processing that you want to execute with the Firefox in the callback function.
+If you don't set the argument, this method returns a [`web-driver.Session`][session] object.
+
+You can write the processing that you want to execute with the Firefox in the callback function as below.
 
 Here is an example to start a session and navigate to a website:
 
@@ -64,5 +66,12 @@ driver:start_session(function(session)
 end)
 ```
 
+If you set the callback to the argument, the session is deleted automatically after calling the callback function.
+If you don't set the argument, you must delete session manually with [`web-driver.Session:delete()`][session-delete].
 
-[firefox]:firefox.html
+
+[firefox]: firefox.html
+
+[session]: session.html
+
+[session-delete]: session.html#delete
