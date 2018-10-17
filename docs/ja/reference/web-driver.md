@@ -32,9 +32,19 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 ```
 
+### `ThreadPool` {#thread-pool}
+
+スレッドプールオブジェクトです。マルチスレッドで実行する際に使用します。
+
+このオブジェクトの詳細については、 [`web-driver.ThreadPool`][thread-pool] を参照して下さい。
+
 ## 参照
 
   * [web-driver.Firefox][firefox]
 
+  * [web-driver.ThreadPool][thread-pool]
+
 
 [firefox]:firefox.html
+
+[thread-pool]:thread-pool.html

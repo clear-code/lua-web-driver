@@ -61,11 +61,30 @@ msgid ""
 "```"
 msgstr ""
 
+msgid "### `ThreadPool` {#thread-pool}"
+msgstr ""
+
+msgid ""
+"It is a thread pool object.\n"
+"You use this object when executing for multithread."
+msgstr "スレッドプールオブジェクトです。マルチスレッドで実行する際に使用します。"
+
+msgid ""
+"For more informations about this object, see [`web-driver.ThreadPool`][thread-"
+"pool]."
+msgstr "このオブジェクトの詳細については、 [`web-driver.ThreadPool`][thread-pool] を参照して下さい。"
+
 msgid "## See also"
 msgstr "## 参照"
 
 msgid "  * [web-driver.Firefox][firefox]"
 msgstr ""
 
+msgid "  * [web-driver.ThreadPool][thread-pool]"
+msgstr ""
+
 msgid "[firefox]:firefox.html"
+msgstr ""
+
+msgid "[thread-pool]:thread-pool.html"
 msgstr ""

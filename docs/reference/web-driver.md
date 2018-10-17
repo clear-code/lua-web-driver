@@ -34,9 +34,20 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 ```
 
+### `ThreadPool` {#thread-pool}
+
+It is a thread pool object.
+You use this object when executing for multithread.
+
+For more informations about this object, see [`web-driver.ThreadPool`][thread-pool].
+
 ## See also
 
   * [web-driver.Firefox][firefox]
 
+  * [web-driver.ThreadPool][thread-pool]
+
 
 [firefox]:firefox.html
+
+[thread-pool]:thread-pool.html
