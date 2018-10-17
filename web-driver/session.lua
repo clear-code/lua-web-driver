@@ -173,6 +173,10 @@ function methods:xml()
   return self:execute_script("return new XMLSerializer().serializeToString(document)")
 end
 
+function methods:content_type()
+  return self:execute_script("return document.contentType")
+end
+
 function methods:execute_script(script, args)
   local response = self.client:execute_script(script, args)
   return response.json()["value"]

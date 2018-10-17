@@ -372,6 +372,14 @@ function TestSession:test_xml()
   self.driver:start_session(callback)
 end
 
+function TestSession:test_content_type()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/")
+    luaunit.assert_equals(session:content_type(), "text/html")
+  end
+  self.driver:start_session(callback)
+end
+
 function TestSession:test_execute_script()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
