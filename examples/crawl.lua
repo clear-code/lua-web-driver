@@ -25,12 +25,14 @@ local function crawler(context)
   local anchor
   for _, anchor in pairs(anchors) do
     local href = anchor.href
-    logger:notice(string.format("%s: Link: %s: %s",
+    local normalized_href = href:gsub("#.*$", "")
+    logger:notice(string.format("%s: Link: %s (%s): %s",
                                 url,
                                 href,
+                                normalized_href,
                                 anchor:text()))
-    if href:sub(1, #prefix) == prefix then
-      context.job_pusher:push(href)
+    if normalized_href:sub(1, #prefix) == prefix then
+      context.job_pusher:push(normalized_href)
     end
   end
 end
