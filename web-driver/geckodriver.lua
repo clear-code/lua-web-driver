@@ -1,9 +1,11 @@
 local process = require("process")
+local http_request = require("http.request")
 local socket = require("socket")
 
 local LogLevel = require("web-driver/log-level")
 
 local Geckodriver = {}
+Geckodriver.log_prefix = "web-driver: geckodriver"
 
 local methods = {}
 local metatable = {}
@@ -18,8 +20,9 @@ local function log_level_from_geckodriver(geckodriver_log_level)
     logger_log_level = "WARNING"
   end
   return LogLevel[logger_log_level] or
-    error("web-driver: geckodriver: Unknown log level: " ..
-            "<" .. geckodriver_log_level .. ">")
+    error(string.format("%s: Unknown log level: <%s>",
+                        Geckodriver.log_prefix,
+                        geckodriver_log_level))
 end
 
 local function format_log_message(prefix, timestamp, component, message)
@@ -95,7 +98,7 @@ function methods:log_output(input, label, reader)
     data = data .. chunk
   end
   if #data > 0 then
-    self:log_lines("web-driver: " .. label, data)
+    self:log_lines(Geckodriver.log_prefix .. ": " .. label, data)
   end
 end
 
@@ -131,42 +134,48 @@ end
 function methods:ensure_running()
   local timeout = self.firefox.start_timeout
   local n_tries = 100
-  local sleep_ns_per_trie = (timeout / n_tries) * (10 ^ 6)
+  local sleep_ns_per_try = (timeout / n_tries) * (10 ^ 9)
+  local url = string.format("http://%s:%d/status",
+                            self.firefox.client.host,
+                            self.firefox.client.port)
+  local request = http_request.new_from_uri(url)
   for i = 1, n_tries do
-    local success, _ = pcall(function() return self.firefox.client:status() end)
-    if success then
+    local headers, stream = request:go()
+    if headers then
+      stream:shutdown()
       return true
     end
-    local status, err = process.waitpid(self.process:pid(), process.WNOHANG)
-    if err then
-      local message =
-        "web-driver: geckodriver: " ..
-        "Failed to run: <" .. self.command .. ">: " .. err
+    local status, why = process.waitpid(self.process:pid(), process.WNOHANG)
+    if why then
+      local message = string.format("%s: Failed to run: <%s>: %s",
+                                    Geckodriver.log_prefix,
+                                    self.command,
+                                    why)
       self.firefox.logger:error(message)
       self.firefox.logger:traceback("error")
       error(message)
     end
     self:log_outputs()
-    process.nsleep(sleep_ns_per_trie)
+    process.nsleep(sleep_ns_per_try)
   end
 
   self:kill()
-  local message =
-    "web-driver: geckodriver: " ..
-    "Failed to run in " .. timeout .. " seconds: " ..
-    "<" .. self.command .. ">"
+  local message = string.format("%s: Failed to run in %d seconds: <%s>",
+                                Geckodriver.log_prefix,
+                                timeout,
+                                self.command)
   self.firefox.logger:error(message)
   self.firefox.logger:traceback("error")
   error(message)
 end
 
 function methods:start(callback)
-  local geckodriver_process, err = process.exec(self.command, self.args)
-  if err then
-    local message =
-      "web-driver: geckodriver: " ..
-      "Failed to execute: <" .. self.command .. ">: " ..
-      err
+  local geckodriver_process, why = process.exec(self.command, self.args)
+  if why then
+    local message = string.format("%s: Failed to execute: <%s>: %s",
+                                  Geckodriver.log_prefix,
+                                  self.command,
+                                  why)
     self.firefox.logger:error(message)
     self.firefox.logger:traceback("error")
     error(message)
@@ -177,9 +186,13 @@ function methods:start(callback)
     local success, return_value = pcall(callback, self)
     self:stop()
     if not success then
-      self.firefox.logger:error("web-driver: geckodriver:start: " .. err)
+      why = return_value
+      local message = string.format("%s: Failed in start callback: %s",
+                                    Geckodriver.log_prefix,
+                                    why)
+      self.firefox.logger:error(message)
       self.firefox.logger:traceback("error")
-      error(err)
+      error(message)
     end
     return return_value
   end
