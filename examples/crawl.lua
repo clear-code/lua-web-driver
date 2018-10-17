@@ -34,7 +34,7 @@ local function crawler(context)
     end
   end
 end
-local pool = web_driver.Pool.new(crawler, {logger = logger})
+local pool = web_driver.ThreadPool.new(crawler, {logger = logger})
 logger.debug("Start crawling: " .. url)
 pool:push(url)
 pool:join()
