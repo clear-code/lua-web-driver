@@ -15,6 +15,7 @@ local function crawler(context)
   local logger = context.logger
   local session = context.session
   local url = context.job
+  local prefix = url:match("^https?://[^/]+/")
   logger:debug("Opening...: " .. url)
   session:navigate_to(url)
   logger:notice(string.format("%s: Title: %s",
@@ -28,7 +29,9 @@ local function crawler(context)
                                 url,
                                 href,
                                 anchor:text()))
-    context.job_pusher:push(href)
+    if href:sub(1, #prefix) == prefix then
+      context.job_pusher:push(href)
+    end
   end
 end
 local pool = web_driver.Pool.new(crawler, {logger = logger})
