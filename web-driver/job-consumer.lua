@@ -83,8 +83,6 @@ function methods:start_session()
   local options = {
     port = 4444 + self.id,
     logger = self.logger,
-    start_timeout = 60,
-    http_request_timeout = 60,
   }
   self.driver = Firefox.new(options)
   self.session = self.driver:start_session()
