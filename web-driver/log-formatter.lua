@@ -7,7 +7,7 @@ local LogFormatter = {}
 function LogFormatter.new()
   return function(message, level, now)
     return string.format("%s [%s] %s",
-                         now:fmt("%Y-%m-%dT%H:%m:%\f"),
+                         now:fmt("%Y-%m-%dT%H:%M:%\f"),
                          log.LVL_NAMES[level],
                          message)
   end
