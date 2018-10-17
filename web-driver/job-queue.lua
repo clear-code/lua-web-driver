@@ -91,7 +91,7 @@ function methods:accept_jobs()
     end
     local need_consume = true
     if self.failure_counts[job] then
-      if self.unique_job then
+      if self.unique then
         need_consume = false
       end
     else
@@ -104,7 +104,7 @@ function methods:accept_jobs()
     else
       self.logger:debug(string.format("%s: Duplicated: <%s>",
                                       JobQueue.log_prefix,
-                                      pp.forrmat(job)))
+                                      pp.format(job)))
     end
   end
 end
