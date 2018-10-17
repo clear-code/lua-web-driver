@@ -144,13 +144,15 @@ end
 function methods:execute_script(script, args)
   return self:execute("post", "session/:session_id/execute/sync",
                       { session_id = self.id },
-                      { script = script, args = (args or {1}) })
+                      -- {[0] = 0} is size zero array in Lunajson
+                      { script = script, args = (args or {[0] = 0}) })
 end
 
 function methods:execute_async_script(script, args)
   return self:execute("post", "session/:session_id/execute/async",
                       { session_id = self.id },
-                      { script = script, args = (args or {1}) })
+                      -- {[0] = 0} is size zero array in Lunajson
+                      { script = script, args = (args or {[0] = 0}) })
 end
 
 function methods:get_all_cookies()

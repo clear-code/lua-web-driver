@@ -19,11 +19,12 @@ description = {
 }
 dependencies = {
   "cqueues",
+  "http",
   "inspect",
   "lbase64",
   "lua-log",
-  "lua-requests",
   "luautf8",
+  "lunajson",
   "process",
 }
 source = {

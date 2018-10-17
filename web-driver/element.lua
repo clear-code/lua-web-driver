@@ -125,8 +125,7 @@ end
 -- @function Element:send_keys
 -- @param keys must be string
 function methods:send_keys(keys)
-  local response = self.client:send_keys({ text = keys })
-  return response
+  self.client:send_keys({ text = keys })
 end
 
 function methods:take_screenshot()
