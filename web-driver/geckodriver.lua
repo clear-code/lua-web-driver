@@ -22,35 +22,55 @@ local function log_level_from_geckodriver(geckodriver_log_level)
             "<" .. geckodriver_log_level .. ">")
 end
 
+local function format_log_message(prefix, timestamp, component, message)
+  local time = os.date("*t", timestamp / 1000)
+  local msec = timestamp % 1000
+  return string.format("%s: %04d-%02d-%02dT%02d:%02d:%02d.%03d: %s: %s",
+                       prefix,
+                       time.year,
+                       time.month,
+                       time.day,
+                       time.hour,
+                       time.min,
+                       time.sec,
+                       msec,
+                       component,
+                       message)
+end
+
 function methods:log_lines(prefix, lines)
   local last_timestamp
   local last_component
   local last_level
   for line in string.gmatch(lines, "[^\n]+") do
-    local timestamp, component, level =
+    local timestamp_string, component, level =
       string.match(line, "^(%d+)\t([%a.:]+)\t(%a+)\t")
-    if timestamp then
-      local message = line:sub(1 + #timestamp + 1 + #component + 1 + #level + 1)
+    if timestamp_string then
+      local message = line:sub(1 +
+                                 #timestamp_string + 1 +
+                                 #component + 1
+                                 + #level + 1)
+      local timestamp = tonumber(timestamp_string)
       self.firefox.logger:log(log_level_from_geckodriver(level),
-                              prefix ..
-                                timestamp .. ": " ..
-                                component .. ": " ..
-                                message)
+                              format_log_message(prefix,
+                                                 timestamp,
+                                                 component,
+                                                 message))
       last_timestamp = timestamp
       last_component = component
       last_level = level
     elseif last_timestamp then
       self.firefox.logger:log(log_level_from_geckodriver(last_level),
-                              prefix ..
-                                last_timestamp .. ": " ..
-                                last_component .. ": " ..
-                                line)
+                              format_log_message(prefix,
+                                                 last_timestamp,
+                                                 last_component,
+                                                 line))
     else
       self.firefox.logger:log(self.firefox.logger:level(),
-                              prefix ..
-                                "0: " ..
-                                "Firefox: " ..
-                                line)
+                              format_log_message(prefix,
+                                                 0,
+                                                 "Firefox",
+                                                 line))
     end
   end
 end
@@ -75,7 +95,7 @@ function methods:log_output(input, label, reader)
     data = data .. chunk
   end
   if #data > 0 then
-    self:log_lines("web-driver: " .. label .. ": ", data)
+    self:log_lines("web-driver: " .. label, data)
   end
 end
 
