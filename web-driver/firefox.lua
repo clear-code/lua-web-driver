@@ -2,7 +2,6 @@
 --
 -- @classmod Firefox
 local process = require("process")
-local socket = require("socket")
 
 local Geckodriver = require("web-driver/geckodriver")
 local Client = require("web-driver/client")
