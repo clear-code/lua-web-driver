@@ -16,13 +16,13 @@ geckodriver経由でFirefoxとのセッションを開始できます。
 
 `options`: Firefoxの起動オプション
 
-新しい[`web-driver.Firefox`][firefox]を作成します。
+新しい[`web-driver.Firefox`][firefox]オブジェクトを作成します。
 
 以下のように起動オプションを指定できます。
 
-* `options.host`: ホストを指定します。デフォルトは、127.0.0.1です。
-* `options.port`: ポートを指定します。デフォルトは、4444です。
-* `options.args`: Firefoxのオプションをテーブルで指定します。デフォルトは、`{ -headless }`です。
+* `options.host`: 接続するホスト名を指定します。デフォルト値は、`"127.0.0.1"`です。
+* `options.port`: 接続するポート番号を指定します。デフォルト値は、`"4444"`です。
+* `options.args`: Firefoxのオプションをテーブルで指定します。デフォルト値は、`{ "-headless" }`です。
 
 例:
 
@@ -37,7 +37,7 @@ local driver = web_driver.Firefox.new(options)
 
 `options.args`に設定可能なオプションは、以下を参照してください。
 
-[コマンドラインオプション](https://developer.mozilla.org/en-US/docs/Mozilla/Command_Line_Options)
+[コマンドラインオプション](https://developer.mozilla.org/ja/docs/Mozilla/Command_Line_Options)
 
 ### `web-driver.Firefox.session_start(callback) -> return value of callback` {#session-start}
 

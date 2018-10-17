@@ -20,9 +20,9 @@ It create new [`web-driver.Firefox`][firefox] object.
 
 You can specify startup options as below.
 
-* `options.host`: Specify host. Default is 127.0.0.1.
-* `options.port`: Specify port. Default is 4444.
-* `options.args`: Specify options of the Firefox with a table. Defautl is { -headless }.
+* `options.host`: Specify hostname to connect. The default value is `"127.0.0.1"`.
+* `options.port`: Specify port number to connect. The default value is `"4444"`.
+* `options.args`: Specify options of the Firefox with a table. The default value is `{ "-headless" }`.
 
 Example:
 
