@@ -277,6 +277,94 @@ driver:start_session(function(session)
 end)
 ```
 
+## マルチスレッド
+
+複数のスレッドでLuaWebDriverを使えます。LuaWebDriverを複数のスレッドで使うためには、以下のように[`web-driver.ThreadPool`][thread-pool]オブジェクトを使う必要があります。
+
+以下の例では、[`web-driver.ThreadPool:push()`][thread-pool-push]の引数に与えられたURLを起点にWebページをクロールします。
+
+例:
+
+```lua
+local web_driver = require("web-driver")
+local log = require("log")
+
+
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+local log_level = "notice"
+
+local logger = log.new(log_level)
+local function crawler(context)
+  local web_driver = require("web-driver")
+  local logger = context.logger
+  local session = context.session
+  local url = context.job
+  local prefix = url:match("^https?://[^/]+/")
+  logger:debug("Opening...: " .. url)
+  session:navigate_to(url)
+  logger:notice(string.format("%s: Title: %s",
+                              url,
+                              session:title()))
+  local anchors = session:css_select("a")
+  local anchor
+  for _, anchor in pairs(anchors) do
+    local href = anchor.href
+    local normalized_href = href:gsub("#.*$", "")
+    logger:notice(string.format("%s: Link: %s (%s): %s",
+                                url,
+                                href,
+                                normalized_href,
+                                anchor:text()))
+    if normalized_href:sub(1, #prefix) == prefix then
+      context.job_pusher:push(normalized_href)
+    end
+  end
+end
+local pool = web_driver.ThreadPool.new(crawler, {logger = logger})
+logger.debug("Start crawling: " .. URL)
+pool:push(URL)
+pool:join()
+logger.debug("Done crawling: " .. URL)
+```
+
+[`web-driver.ThreadPool.new()`][thread-pool-new]の引数に与えられる関数の引数の数は1つです。(上の例で、[`web-driver.ThreadPool.new()`][thread-pool-new]の引数に与えられる関数は`crawler`です。)
+この引数は、Webページをクロールするための情報が入っています。(上の例では、この引数は`context`です。)
+
+基本的に1回の呼び出し毎に1つのWebページを処理する想定です。
+
+[`web-driver.ThreadPool.new()`][thread-pool-new]の引数に与えられた関数内で[`web-driver.JobPusher:push()`][job-pusher-push](上の例では、`context.job_pusher:push()`です。)を呼び出した場合は、空いているスレッドがジョブを順に処理します。
+
+同じジョブを登録した場合、LuaWebDriverはデフォルトで同じジョブを無視します。
+
+ジョブは、文字列のみ受け取れます。ジョブには、URLを与えることをおすすめします。
+
+LuaWebDriverは各スレッド間で共通の情報を持ちません。
+もし、各スレッドで共通の情報を使いたい場合は、環境変数を使うか共通の情報を保存したファイルを読み込んで下さい。
+
+失敗したジョブは自動的にリトライします。リトライ回数はデフォルトで3回です。
+
+
+以下のように[`web-driver.ThreadPool.new()`][thread-pool-new]の引数として、リトライ回数を指定することもできます。
+
+例:
+
+```lua
+local pool = web_driver.ThreadPool.new(crawler, {max_n_failures = 5})
+```
+
+LuaWebDriverを複数のスレッドで使うには、以下のような注意が必要です。
+
+* [`web-driver.ThreadPool.new()`][thread-pool-new]の引数として与えられる関数は、その関数の外部の情報を参照してはいけません。
+
+* スレッドは作りすぎないほうが良いです。スレッド毎にFirefoxを起動するので、動作が遅くなるためです。
+
+* LuaWebDriverは、ジョブを中断できません。
+  * `luajit`プロセスを途中で終了した場合、ジョブは最初から実行されます。ジョブの重複チェックもリセットされます。
+
+* 各スレッドを終了する処理は特に実装する必要はありません。[`web-driver.ThreadPool:join()`][thread-pool-join]内で各スレッドの終了処理を実行しているためです。
+
 ## 次のステップ {#next-step}
 
 これで、LuaWebDriverのすべての主な機能を学びました！それぞれの機能をより理解したい場合は、各機能の[リファレンスマニュアル][reference]を見てください。
@@ -321,5 +409,15 @@ end)
 [element-get-attribute]:../reference/element.html#get_attribute
 
 [element-text]:../reference/element.html#text
+
+[thread-pool]:../reference/thread-pool.html
+
+[thread-pool-new]:../reference/thread-pool.html#new
+
+[thread-pool-push]:../reference/thread-pool.html#push
+
+[thread-pool-join]:../reference/thread-pool.html#join
+
+[job-pusher-push]:../reference/job-pusher.html#push
 
 [reference]:../reference/
