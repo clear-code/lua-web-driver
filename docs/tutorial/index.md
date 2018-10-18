@@ -342,14 +342,11 @@ By executing [`web-driver.JobPusher:push()`][job-pusher-push] ([`web-driver.JobP
 Number of argument of a function given to argument of [`web-driver.ThreadPool.new()`][thread-pool-new] is one. (The function given to argument of [`web-driver.ThreadPool.new()`][thread-pool-new] is `crawler` in the above example.)
 This argument has all informations for crawl on web pages. (The argument is `context` in the above example.)
 
-We have supposed execute one web page every one call basically.
 
 If you register the same job, LuaWebDriver ignores the same job by default.
 
 A job only recives the string. We suggest give URL to the job.
 
-LuaWebDriver has not common information between each thread.
-If you want to use common information in each thread, you use environment value or read a file saved common information.
 
 A failed job retry automatically. A Number of retries are three by default.
 If a job failed beyond the number of retries, LuaWebDriver deletes it.
@@ -364,9 +361,20 @@ local pool = web_driver.ThreadPool.new(crawler, {max_n_failures = 5})
 
 Some notes as below for use LuaWebDriver with multiple threads
 
+* When starting a thread, LuaWebDriver currently sometimes crash.
+  * This problem might resolve by specifying `libpthread.so` to `LD_PRELOAD`.
+
+* LuaWebDriver has not common information between each thread.
+  * If you want to use common information in each thread, you use environment value or read a file saved common information.
+  * For example, known information (like login information etc) is saved a file and it becomes easy to access by reading that file in the thread.
+
+* We have supposed execute one web page every one call basically. But if you processing a web page requiring a login, you should also do the after login processing on the same thread.
+  * Because it keeps login status by reusing session in the thread.
+
 * A function given to argument of [`web-driver.ThreadPool.new()`][thread-pool-new] must not reference information of external of one.
 
 * You should not make too many threads. Because eache thread becomes slow due to start the Firefox every each thread.
+  * Guide to the number of a thread is one-third of the number of physical CPU core.
 
 * LuaWebDriver can't resume a job.
   * If you quit `luajit` process in the middle, the job executes from the beginning. A check of a duplicate job is reset also.
