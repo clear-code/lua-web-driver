@@ -329,12 +329,14 @@ pool:join()
 logger.debug("Done crawling: " .. URL)
 ```
 
+[`web-driver.ThreadPool.new()`][thread-pool-new]の引数に与えられた関数内に実行したい処理を書くことができます。
+
+[`web-driver.ThreadPool.new()`][thread-pool-new]の引数に与えられた関数内で[`web-driver.JobPusher:push()`][job-pusher-push](上の例では、`context.job_pusher:push()`です。)を呼び出すことによって、空いているスレッドがジョブを順に処理します。
+
 [`web-driver.ThreadPool.new()`][thread-pool-new]の引数に与えられる関数の引数の数は1つです。(上の例で、[`web-driver.ThreadPool.new()`][thread-pool-new]の引数に与えられる関数は`crawler`です。)
 この引数は、Webページをクロールするための情報が入っています。(上の例では、この引数は`context`です。)
 
 基本的に1回の呼び出し毎に1つのWebページを処理する想定です。
-
-[`web-driver.ThreadPool.new()`][thread-pool-new]の引数に与えられた関数内で[`web-driver.JobPusher:push()`][job-pusher-push](上の例では、`context.job_pusher:push()`です。)を呼び出した場合は、空いているスレッドがジョブを順に処理します。
 
 同じジョブを登録した場合、LuaWebDriverはデフォルトで同じジョブを無視します。
 

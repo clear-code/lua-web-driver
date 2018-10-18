@@ -335,12 +335,14 @@ pool:join()
 logger.debug("Done crawling: " .. URL)
 ```
 
+You can write the processing you want to execute in the function given to argument of [`web-driver.ThreadPool.new()`][thread-pool-new].
+
+By executing [`web-driver.JobPusher:push()`][job-pusher-push] ([`web-driver.JobPusher:push()`][job-pusher-push] is `context.job_pusher:push()` in the above example) in a function given to argument of [`web-driver.ThreadPool.new()`][thread-pool-new], the idle thread executes job one by one.
+
 Number of argument of a function given to argument of [`web-driver.ThreadPool.new()`][thread-pool-new] is one. (The function given to argument of [`web-driver.ThreadPool.new()`][thread-pool-new] is `crawler` in the above example.)
 This argument has all informations for crawl on web pages. (The argument is `context` in the above example.)
 
 We have supposed execute one web page every one call basically.
-
-If you execute [`web-driver.JobPusher:push()`][job-pusher-push] ([`web-driver.JobPusher:push()`][job-pusher-push] is `context.job_pusher:push()` in the above example) in a function given to argument of [`web-driver.ThreadPool.new()`][thread-pool-new], the idle thread executes job one by one.
 
 If you register the same job, LuaWebDriver ignores the same job by default.
 
