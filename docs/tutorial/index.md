@@ -349,10 +349,10 @@ A job only recives the string. We suggest give URL to the job.
 LuaWebDriver has not common information between each thread.
 If you want to use common information in each thread, you use environment value or read a file saved common information.
 
-A failed job retry automatically. A Number of retries are three.
+A failed job retry automatically. A Number of retries are three by default.
 If a job failed beyond the number of retries, LuaWebDriver deletes it.
 
-You can specify the number of retries as an argument of [`web-driver.ThreadPool.new()`] as below.
+You can also specify the number of retries as an argument of [`web-driver.ThreadPool.new()`][thread-pool-new] as below.
 
 Example:
 
@@ -367,7 +367,7 @@ Some notes as below for use LuaWebDriver with multiple threads
 * You should not make too many threads. Because eache thread becomes slow due to start the Firefox every each thread.
 
 * LuaWebDriver can't resume a job.
-  * If you quit `luajit` process in the middle, you must execute job from the beginning. A check of a duplicate job is reset also.
+  * If you quit `luajit` process in the middle, the job executes from the beginning. A check of a duplicate job is reset also.
 
 * You need not implement end processing for each thread especially. Because if end processing for each thread execute in [`web-driver.ThreadPool:join()`][thread-pool-join].
 
