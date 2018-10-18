@@ -2,12 +2,19 @@ local web_driver = require("web-driver")
 local log = require("log")
 
 if #arg < 1 then
-  print(string.format("Usage: %s URL [LOG_LEVEL]", arg[0]))
+  print(string.format("Usage: %s URL [LOG_LEVEL] [N_THREADS]", arg[0]))
   os.exit(1)
 end
 
 local url = arg[1]
 local log_level = arg[2] or "notice"
+local n_threads = arg[3]
+if n_threads then
+  n_threads = tonumber(n_threads)
+end
+if n_threads == nil or n_threads < 1 then
+  n_threads = 2
+end
 
 local logger = log.new(log_level)
 local function crawler(context)
@@ -36,7 +43,11 @@ local function crawler(context)
     end
   end
 end
-local pool = web_driver.ThreadPool.new(crawler, {logger = logger})
+local options = {
+  logger = logger,
+  size = n_threads,
+}
+local pool = web_driver.ThreadPool.new(crawler, options)
 logger.debug("Start crawling: " .. url)
 pool:push(url)
 pool:join()
