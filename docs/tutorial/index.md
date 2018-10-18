@@ -283,6 +283,94 @@ driver:start_session(function(session)
 end)
 ```
 
+## Multithread
+
+You can use LuaWebDriver with multiple threads. You need use [`web-driver.ThreadPool`][thread-pool] object for using LuaWebDriver with multiple threads as below.
+
+Here is an example crawl on web pages with a URL given to argument of [`web-driver.ThreadPool:push()`][thread-pool-push] as the start point.
+
+Example:
+
+```lua
+local web_driver = require("web-driver")
+local log = require("log")
+
+
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+local log_level = "notice"
+
+local logger = log.new(log_level)
+local function crawler(context)
+  local web_driver = require("web-driver")
+  local logger = context.logger
+  local session = context.session
+  local url = context.job
+  local prefix = url:match("^https?://[^/]+/")
+  logger:debug("Opening...: " .. url)
+  session:navigate_to(url)
+  logger:notice(string.format("%s: Title: %s",
+                              url,
+                              session:title()))
+  local anchors = session:css_select("a")
+  local anchor
+  for _, anchor in pairs(anchors) do
+    local href = anchor.href
+    local normalized_href = href:gsub("#.*$", "")
+    logger:notice(string.format("%s: Link: %s (%s): %s",
+                                url,
+                                href,
+                                normalized_href,
+                                anchor:text()))
+    if normalized_href:sub(1, #prefix) == prefix then
+      context.job_pusher:push(normalized_href)
+    end
+  end
+end
+local pool = web_driver.ThreadPool.new(crawler, {logger = logger})
+logger.debug("Start crawling: " .. URL)
+pool:push(URL)
+pool:join()
+logger.debug("Done crawling: " .. URL)
+```
+
+Number of argument of a function given to argument of [`web-driver.ThreadPool.new()`][thread-pool-new] is one. (The function given to argument of [`web-driver.ThreadPool.new()`][thread-pool-new] is `crawler` in the above example.)
+This argument has all informations for crawl on web pages. (The argument is `context` in the above example.)
+
+We have supposed execute one web page every one call basically.
+
+If you execute [`web-driver.JobPusher:push()`][job-pusher-push] ([`web-driver.JobPusher:push()`][job-pusher-push] is `context.job_pusher:push()` in the above example) in a function given to argument of [`web-driver.ThreadPool.new()`][thread-pool-new], the idle thread executes job one by one.
+
+If you register the same job, LuaWebDriver ignores the same job by default.
+
+A job only recives the string. We suggest give URL to the job.
+
+LuaWebDriver has not common information between each thread.
+If you want to use common information in each thread, you use environment value or read a file saved common information.
+
+A failed job retry automatically. A Number of retries are three.
+If a job failed beyond the number of retries, LuaWebDriver deletes it.
+
+You can specify the number of retries as an argument of [`web-driver.ThreadPool.new()`] as below.
+
+Example:
+
+```lua
+local pool = web_driver.ThreadPool.new(crawler, {max_n_failures = 5})
+```
+
+Some notes as below for use LuaWebDriver with multiple threads
+
+* A function given to argument of [`web-driver.ThreadPool.new()`][thread-pool-new] must not reference information of external of one.
+
+* You should not make too many threads. Because eache thread becomes slow due to start the Firefox every each thread.
+
+* LuaWebDriver can't resume a job.
+  * If you quit `luajit` process in the middle, you must execute job from the beginning. A check of a duplicate job is reset also.
+
+* You need not implement end processing for each thread especially. Because if end processing for each thread execute in [`web-driver.ThreadPool:join()`][thread-pool-join].
+
 ## Next step {#next-step}
 
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
@@ -327,5 +415,15 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [element-get-attribute]:../reference/element.html#get_attribute
 
 [element-text]:../reference/element.html#text
+
+[thread-pool]:../reference/thread-pool.html
+
+[thread-pool-new]:../reference/thread-pool.html#new
+
+[thread-pool-push]:../reference/thread-pool.html#push
+
+[thread-pool-join]:../reference/thread-pool.html#join
+
+[job-pusher-push]:../reference/job-pusher.html#push
 
 [reference]:../reference/
