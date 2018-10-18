@@ -18,7 +18,6 @@ end
 
 local logger = log.new(log_level)
 local function crawler(context)
-  local web_driver = require("web-driver")
   local logger = context.logger
   local session = context.session
   local url = context.job
