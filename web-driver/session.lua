@@ -57,7 +57,13 @@ end
 -- @function Session:navigate_to
 function methods:navigate_to(url)
   self.client:navigate_to(url)
+  self._status_code = self.driver:last_status_code()
 end
+
+-- This is useless.
+-- function methods:status_code()
+--   return self._status_code
+-- end
 
 --- Retrieve current URL
 -- @function Session:url
@@ -291,10 +297,12 @@ function Session.new(driver, options)
   local response = driver.client:create_session(capabilities)
   local session_id = response.json()["value"]["sessionId"]
   local session = {
+    driver = driver,
     client = SessionClient.new(driver.client, session_id),
     logger = driver.logger,
     id = session_id,
     delete_hook = options.delete_hook,
+    _status_code = nil,
   }
   setmetatable(session, metatable)
   return session

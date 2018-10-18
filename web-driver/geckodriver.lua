@@ -20,15 +20,31 @@ local function log_level_from_geckodriver(geckodriver_log_level)
     logger_log_level = "WARNING"
   end
   return LogLevel[logger_log_level] or
-    error(string.format("%s: Unknown log level: <%s>",
+    error(string.format("%s: Unknown geckodriver log level: <%s>",
                         Geckodriver.log_prefix,
                         geckodriver_log_level))
 end
 
+local function log_level_from_firefox(firefox_log_level)
+  if firefox_log_level == "E" then -- TODO: Really?
+    return LogLevel.ERROR
+  elseif firefox_log_level == "I" then
+    return LogLevel.INFO
+  elseif firefox_log_level == "D" then
+    return LogLevel.DEBUG
+  elseif firefox_log_level == "V" then
+    return LogLevel.TRACE
+  else
+    error(string.format("%s: Unknown Firefox log level: <%s>",
+                        Geckodriver.log_prefix,
+                        firefox_log_level))
+  end
+end
+
 local function format_log_message(prefix, timestamp, component, message)
-  local time = os.date("*t", timestamp / 1000)
-  local msec = timestamp % 1000
-  return string.format("%s: %04d-%02d-%02dT%02d:%02d:%02d.%03d: %s: %s",
+  local time = os.date("*t", timestamp / (10 ^ 6))
+  local micro_second = timestamp % (10 ^ 6)
+  return string.format("%s: %04d-%02d-%02dT%02d:%02d:%02d.%06d: %s: %s",
                        prefix,
                        time.year,
                        time.month,
@@ -36,24 +52,86 @@ local function format_log_message(prefix, timestamp, component, message)
                        time.hour,
                        time.min,
                        time.sec,
-                       msec,
+                       micro_second,
                        component,
                        message)
+end
+
+function methods:log_firefox_line(prefix, line)
+  local year, month, day, hour, minute, second, micro_second, context, firefox_log_level, firefox_component, message =
+    line:match("^(%d+)-(%d+)-(%d+) (%d+):(%d+):(%d+)%.(%d+) UTC %- " ..
+                 "%[([^%]]+)%]: (.)/([^ ]+) (.*)$")
+  if year then
+    -- TODO: Convert UTC to local time
+    local time = {
+      year = tonumber(year),
+      month = tonumber(month),
+      day = tonumber(day),
+      hour = tonumber(hour),
+      min = tonumber(minute),
+      sec = tonumber(second),
+      isdst = false,
+    }
+    local timestamp = os.time(time) * (10 ^ 6) + tonumber(micro_second)
+    local component = string.format("Firefox: %s: %s",
+                                    context,
+                                    firefox_component)
+    local log_level = log_level_from_firefox(firefox_log_level)
+    if log_level == LogLevel.INFO and firefox_component == "nsHttp" then
+      if self.firefox_log_context.in_http_response then
+        if message == "]" then
+          self.firefox_log_context.in_http_response = false
+        elseif message:sub(1, 7) == "  HTTP/" then
+          self.last_status_code = tonumber(message:match("^  [^ ]+ (%d+)"))
+        elseif message == "    OriginalHeaders" then
+          self.firefox_log_context.in_original_response_headers = true
+        else
+          local response_headers
+          if self.firefox_log_context.in_original_response_headers then
+            response_headers = self.last_original_response_headers
+          else
+            response_headers = self.last_response_headers
+          end
+          local name, value = message:match("^  ([^:]+): (.*)$")
+          response_headers[name] = value
+        end
+      else
+        if message == "http response [" then
+          self.firefox_log_context.in_http_response = true
+          self.firefox_log_context.in_original_response_headers = false
+          self.last_status_code = nil
+          self.last_response_headers = {}
+          self.last_original_response_headers = {}
+        end
+      end
+    end
+    self.firefox.logger:log(log_level,
+                            format_log_message(prefix,
+                                               timestamp,
+                                               component,
+                                               message))
+  else
+    self.firefox.logger:log(self.firefox.logger:level(),
+                            format_log_message(prefix,
+                                               0,
+                                               "Firefox",
+                                               line))
+  end
 end
 
 function methods:log_lines(prefix, lines)
   local last_timestamp
   local last_component
   local last_level
-  for line in string.gmatch(lines, "[^\n]+") do
+  for line in lines:gmatch("[^\n]+") do
     local timestamp_string, component, level =
-      string.match(line, "^(%d+)\t([%a.:]+)\t(%a+)\t")
+      line:match("^(%d+)\t([%a.:]+)\t(%a+)\t")
     if timestamp_string then
       local message = line:sub(1 +
                                  #timestamp_string + 1 +
-                                 #component + 1
-                                 + #level + 1)
-      local timestamp = tonumber(timestamp_string)
+                                 #component + 1 +
+                                 #level + 1)
+      local timestamp = tonumber(timestamp_string) * (10 ^ 3)
       self.firefox.logger:log(log_level_from_geckodriver(level),
                               format_log_message(prefix,
                                                  timestamp,
@@ -69,11 +147,7 @@ function methods:log_lines(prefix, lines)
                                                  last_component,
                                                  line))
     else
-      self.firefox.logger:log(self.firefox.logger:level(),
-                              format_log_message(prefix,
-                                                 0,
-                                                 "Firefox",
-                                                 line))
+      self:log_firefox_line(prefix, line)
     end
   end
 end
@@ -223,6 +297,8 @@ function Geckodriver.new(firefox)
     command = "geckodriver",
     args = build_args(firefox),
     process = nil,
+    firefox_log_context = {},
+    last_response = nil
   }
   setmetatable(geckodriver, metatable)
   return geckodriver

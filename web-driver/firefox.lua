@@ -122,6 +122,14 @@ function methods:start_session(callback)
   return return_value
 end
 
+function methods:last_status_code()
+  if self.geckodriver then
+    return self.geckodriver.last_status_code
+  else
+    return nil
+  end
+end
+
 local function log_level_to_firefox_name(level)
   -- https://firefox-source-docs.mozilla.org/testing/geckodriver/geckodriver/Capabilities.html#log-object
   if level == LogLevel.TRACE then
