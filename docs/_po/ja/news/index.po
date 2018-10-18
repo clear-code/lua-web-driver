@@ -16,10 +16,26 @@ msgstr ""
 msgid "# News"
 msgstr ""
 
-msgid "## 0.0.4: 2018-10-16 {#version-0-0-4}"
+msgid "## 0.0.5: 2018-10-18 {#version-0-0-5}"
 msgstr ""
 
 msgid "### Improvements"
+msgstr ""
+
+msgid ""
+"  * Supported multithread.\n"
+"    * [`web-driver.ThreadPool`][thread-pool]: Added."
+msgstr ""
+
+msgid "  * [`Web-driver.Session:content_type()`][session-content-type]: Added."
+msgstr ""
+
+msgid ""
+"  * Used http and lunajson module instead of lua-requests\n"
+"    * Because lua-requests and cqueues are conflicted."
+msgstr ""
+
+msgid "## 0.0.4: 2018-10-16 {#version-0-0-4}"
 msgstr ""
 
 msgid "  * Modified all default timeout to 60s"
@@ -79,6 +95,12 @@ msgid "## 0.0.1: 2018-09-26 {#version-0-0-1}"
 msgstr ""
 
 msgid "The first release!!!"
+msgstr ""
+
+msgid "[thread-pool]: ../reference/thread-pool.html"
+msgstr ""
+
+msgid "[session-content-type]: ../reference/session.html#content-type"
 msgstr ""
 
 msgid "[elementset-send_keys]: ../reference/elementset.html#send-keys"

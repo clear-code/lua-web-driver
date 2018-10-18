@@ -4,6 +4,18 @@ title: News
 
 # News
 
+## 0.0.5: 2018-10-18 {#version-0-0-5}
+
+### Improvements
+
+  * Supported multithread.
+    * [`web-driver.ThreadPool`][thread-pool]: Added.
+
+  * [`Web-driver.Session:content_type()`][session-content-type]: Added.
+
+  * Used http and lunajson module instead of lua-requests
+    * Because lua-requests and cqueues are conflicted.
+
 ## 0.0.4: 2018-10-16 {#version-0-0-4}
 
 ### Improvements
@@ -52,6 +64,10 @@ title: News
 
 The first release!!!
 
+
+[thread-pool]: ../reference/thread-pool.html
+
+[session-content-type]: ../reference/session.html#content-type
 
 [elementset-send_keys]: ../reference/elementset.html#send-keys
 
