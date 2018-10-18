@@ -529,8 +529,8 @@ msgstr ""
 "end)\n"
 "```"
 
-msgid "## Multithread"
-msgstr "## マルチスレッド"
+msgid "## Multithread {#multi-thread}"
+msgstr "## マルチスレッド {#multi-thread}"
 
 msgid ""
 "You can use LuaWebDriver with multiple threads. You need use [`web-driver.Thre"

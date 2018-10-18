@@ -277,7 +277,7 @@ driver:start_session(function(session)
 end)
 ```
 
-## マルチスレッド
+## マルチスレッド {#multi-thread}
 
 複数のスレッドでLuaWebDriverを使えます。LuaWebDriverを複数のスレッドで使うためには、以下のように[`web-driver.ThreadPool`][thread-pool]オブジェクトを使う必要があります。
 

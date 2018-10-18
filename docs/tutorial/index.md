@@ -283,7 +283,7 @@ driver:start_session(function(session)
 end)
 ```
 
-## Multithread
+## Multithread {#multi-thread}
 
 You can use LuaWebDriver with multiple threads. You need use [`web-driver.ThreadPool`][thread-pool] object for using LuaWebDriver with multiple threads as below.
 
