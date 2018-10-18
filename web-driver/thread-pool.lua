@@ -7,7 +7,7 @@ local JobPusher = require("web-driver/job-pusher")
 local IPCProtocol = require("web-driver/ipc-protocol")
 local pp = require("web-driver/pp")
 
-local Pool = {}
+local ThreadPool = {}
 
 local methods = {}
 local metatable = {}
@@ -160,7 +160,7 @@ local function run_consumers(pool)
   end
 end
 
-function Pool.new(consumer, options)
+function ThreadPool.new(consumer, options)
   options = options or {}
   local pool = {
     loop = cqueues.new(),
@@ -185,4 +185,4 @@ function Pool.new(consumer, options)
   return pool
 end
 
-return Pool
+return ThreadPool
