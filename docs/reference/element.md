@@ -339,7 +339,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `click() -> nil` {#click}
+### `click() -> void` {#click}
 
 This method click web element.
 
@@ -365,7 +365,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `clear() -> nil` {#clear}
+### `clear() -> void` {#clear}
 
 This method clear a content editable element and a resettable element.
 

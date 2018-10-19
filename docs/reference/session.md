@@ -57,7 +57,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `forward() -> nil` {#forward}
+### `forward() -> void` {#forward}
 
 This method traverse one step forwards in the history from the current website.
 
@@ -84,7 +84,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `back() -> nil` {#back}
+### `back() -> void` {#back}
 
 This method traverse one step backs in the history from the current website.
 
@@ -108,7 +108,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `refresh() -> nil` {#refresh}
+### `refresh() -> void` {#refresh}
 
 This method reloads the current website.
 
@@ -200,7 +200,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `switch_to_window(handle) -> nil` {#switch-to-window}
+### `switch_to_window(handle) -> void` {#switch-to-window}
 
 This method is a switch to the window of the specify handle.
 
@@ -403,7 +403,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `switch_to_frame(id) -> nil` {#switch-to-frame}
+### `switch_to_frame(id) -> void` {#switch-to-frame}
 
 `id`: Specify id of a frame of want to switch as a number.
 
@@ -430,7 +430,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `switch_to_parent_frame() -> ` {#switch-to-parent-frame}
+### `switch_to_parent_frame() -> void` {#switch-to-parent-frame}
 
 This method switch to the parent frame of the current frame.
 
@@ -668,7 +668,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `add_cookie(cookie) -> nil` {#add-cookie}
+### `add_cookie(cookie) -> void` {#add-cookie}
 
 `cookie`: Specify a cookie to add as a table.
 
@@ -701,7 +701,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `delete_cookie(name) -> nil` {#delete-cookie}
+### `delete_cookie(name) -> void` {#delete-cookie}
 
 `name`: Specify the name of a cookie to delete as a string.
 
@@ -730,7 +730,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `delete_all_cookies() -> nil` {#delete-all-cookies}
+### `delete_all_cookies() -> void` {#delete-all-cookies}
 
 This method delete all cookies in the current website.
 
@@ -755,7 +755,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `dismiss_alert() -> nil` {#dismiss-alert}
+### `dismiss_alert() -> void` {#dismiss-alert}
 
 This method push "Cancel" button on the current dialog.
 
@@ -779,7 +779,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `accept_alert() -> nil` {#accept-alert}
+### `accept_alert() -> void` {#accept-alert}
 
 This method push "OK" button on the current dialog.
 
@@ -825,7 +825,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `set_alert_text(text) -> nil` {#set-alert-text}
+### `set_alert_text(text) -> void` {#set-alert-text}
 
 `text`: Specify the text of a dialog as a string.
 

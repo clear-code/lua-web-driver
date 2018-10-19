@@ -89,7 +89,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `forward() -> nil` {#forward}"
+msgid "### `forward() -> void` {#forward}"
 msgstr ""
 
 msgid ""
@@ -118,7 +118,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `back() -> nil` {#back}"
+msgid "### `back() -> void` {#back}"
 msgstr ""
 
 msgid "This method traverse one step backs in the history from the current website."
@@ -137,7 +137,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `refresh() -> nil` {#refresh}"
+msgid "### `refresh() -> void` {#refresh}"
 msgstr ""
 
 msgid "This method reloads the current website."
@@ -227,7 +227,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `switch_to_window(handle) -> nil` {#switch-to-window}"
+msgid "### `switch_to_window(handle) -> void` {#switch-to-window}"
 msgstr ""
 
 msgid "This method is a switch to the window of the specify handle."
@@ -384,7 +384,7 @@ msgstr ""
 msgid "This method sets window rectangle of the current window."
 msgstr "現在のウインドウのサイズを設定します。"
 
-msgid "### `switch_to_frame(id) -> nil` {#switch-to-frame}"
+msgid "### `switch_to_frame(id) -> void` {#switch-to-frame}"
 msgstr ""
 
 msgid "`id`: Specify id of a frame of want to switch as a number."
@@ -411,7 +411,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `switch_to_parent_frame() -> ` {#switch-to-parent-frame}"
+msgid "### `switch_to_parent_frame() -> void` {#switch-to-parent-frame}"
 msgstr ""
 
 msgid "This method switch to the parent frame of the current frame."
@@ -624,7 +624,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `add_cookie(cookie) -> nil` {#add-cookie}"
+msgid "### `add_cookie(cookie) -> void` {#add-cookie}"
 msgstr ""
 
 msgid "`cookie`: Specify a cookie to add as a table."
@@ -653,7 +653,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `delete_cookie(name) -> nil` {#delete-cookie}"
+msgid "### `delete_cookie(name) -> void` {#delete-cookie}"
 msgstr ""
 
 msgid "`name`: Specify the name of a cookie to delete as a string."
@@ -678,7 +678,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `delete_all_cookies() -> nil` {#delete-all-cookies}"
+msgid "### `delete_all_cookies() -> void` {#delete-all-cookies}"
 msgstr ""
 
 msgid "This method delete all cookies in the current website."
@@ -698,7 +698,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `dismiss_alert() -> nil` {#dismiss-alert}"
+msgid "### `dismiss_alert() -> void` {#dismiss-alert}"
 msgstr ""
 
 msgid "This method push \"Cancel\" button on the current dialog."
@@ -722,7 +722,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `accept_alert() -> nil` {#accept-alert}"
+msgid "### `accept_alert() -> void` {#accept-alert}"
 msgstr ""
 
 msgid "This method push \"OK\" button on the current dialog."
@@ -758,7 +758,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `set_alert_text(text) -> nil` {#set-alert-text}"
+msgid "### `set_alert_text(text) -> void` {#set-alert-text}"
 msgstr ""
 
 msgid "`text`: Specify the text of a dialog as a string."

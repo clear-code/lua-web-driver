@@ -339,7 +339,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `click() -> nil` {#click}
+### `click() -> void` {#click}
 
 要素をクリックします。
 
@@ -365,7 +365,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `clear() -> nil` {#clear}
+### `clear() -> void` {#clear}
 
 編集可能な要素やリセット可能な要素の内容を消します。
 

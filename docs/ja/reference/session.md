@@ -57,7 +57,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `forward() -> nil` {#forward}
+### `forward() -> void` {#forward}
 
 現在のWebサイトから履歴を1つ先へ辿ります。
 
@@ -84,7 +84,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `back() -> nil` {#back}
+### `back() -> void` {#back}
 
 現在のWebサイトから履歴を1つ後ろへ辿ります。
 
@@ -108,7 +108,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `refresh() -> nil` {#refresh}
+### `refresh() -> void` {#refresh}
 
 現在のWebサイトをリロードします。
 
@@ -200,7 +200,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `switch_to_window(handle) -> nil` {#switch-to-window}
+### `switch_to_window(handle) -> void` {#switch-to-window}
 
 指定したハンドルのウインドへ切り替えます。
 
@@ -401,7 +401,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `switch_to_frame(id) -> nil` {#switch-to-frame}
+### `switch_to_frame(id) -> void` {#switch-to-frame}
 
 `id`: 切り替えたいフレームのIDを数字として指定します。
 
@@ -428,7 +428,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `switch_to_parent_frame() -> ` {#switch-to-parent-frame}
+### `switch_to_parent_frame() -> void` {#switch-to-parent-frame}
 
 現在のフレームの親フレームに切り替えます。
 
@@ -663,7 +663,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `add_cookie(cookie) -> nil` {#add-cookie}
+### `add_cookie(cookie) -> void` {#add-cookie}
 
 `cookie`: 追加するクッキーをテーブルとして指定します。
 
@@ -696,7 +696,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `delete_cookie(name) -> nil` {#delete-cookie}
+### `delete_cookie(name) -> void` {#delete-cookie}
 
 `name`: 削除するクッキーの名前を文字列として指定します。
 
@@ -725,7 +725,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `delete_all_cookies() -> nil` {#delete-all-cookies}
+### `delete_all_cookies() -> void` {#delete-all-cookies}
 
 現在のWebサイトの全てのクッキーを削除します。
 
@@ -750,7 +750,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `dismiss_alert() -> nil` {#dismiss-alert}
+### `dismiss_alert() -> void` {#dismiss-alert}
 
 現在のダイアログの"Cancel"ボタンを押下します。
 
@@ -774,7 +774,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `accept_alert() -> nil` {#accept-alert}
+### `accept_alert() -> void` {#accept-alert}
 
 現在のダイアログの"OK"ボタンを押下します。
 
@@ -820,7 +820,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `set_alert_text(text) -> nil` {#set-alert-text}
+### `set_alert_text(text) -> void` {#set-alert-text}
 
 `text`: ダイアログのテキストを文字列として指定します。
 

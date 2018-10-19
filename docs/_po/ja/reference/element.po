@@ -354,7 +354,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `click() -> nil` {#click}"
+msgid "### `click() -> void` {#click}"
 msgstr ""
 
 msgid "This method click web element."
@@ -382,7 +382,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `clear() -> nil` {#clear}"
+msgid "### `clear() -> void` {#clear}"
 msgstr ""
 
 msgid "This method clear a content editable element and a resettable element."
