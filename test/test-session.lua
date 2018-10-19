@@ -3,6 +3,7 @@ local web_driver = require("web-driver")
 
 local base64 = require("base64")
 local helper = require("test/helper")
+local pp = require("web-driver/pp")
 
 TestSession = {}
 
@@ -75,6 +76,23 @@ function TestSession:test_window_handle()
     local handle = session:window_handle()
     local response = session:switch_to_window(handle)
     luaunit.assert_equals(response.status_code, 200)
+  end
+  self.driver:start_session(callback)
+end
+
+function TestSession:test_close_window()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/window.html")
+    local current_handle = session:window_handle()
+    local handles = session:window_handles()
+    local remaining_handles = session:close_window()
+    local i, value
+    for i, value in ipairs(handles) do
+      if value == current_handle then
+        table.remove(handles, i)
+      end
+    end
+    luaunit.assert_equals(remaining_handles, handles)
   end
   self.driver:start_session(callback)
 end

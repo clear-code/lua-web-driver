@@ -96,7 +96,7 @@ end
 
 function methods:close_window()
   local response = self.client:close_window()
-  return response
+  return response.json()["value"]
 end
 
 function methods:switch_to_window(handle)
