@@ -365,7 +365,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `clear() -> void` {#clear}
+### `clear() -> nil` {#clear}
 
 編集可能な要素やリセット可能な要素の内容を消します。
 

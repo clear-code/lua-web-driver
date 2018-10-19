@@ -365,7 +365,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `clear() -> void` {#clear}
+### `clear() -> nil` {#clear}
 
 This method clear a content editable element and a resettable element.
 
