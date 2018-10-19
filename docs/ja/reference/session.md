@@ -154,7 +154,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `windows_handle() -> string` {#window-handle}
+### `window_handle() -> string` {#window-handle}
 
 現在のウインドウのウインドウハンドルを取得します。
 

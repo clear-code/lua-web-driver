@@ -178,7 +178,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `windows_handle() -> string` {#window-handle}"
+msgid "### `window_handle() -> string` {#window-handle}"
 msgstr ""
 
 msgid "This method gets the window handle of the current window."

@@ -154,7 +154,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `windows_handle() -> string` {#window-handle}
+### `window_handle() -> string` {#window-handle}
 
 This method gets the window handle of the current window.
 
