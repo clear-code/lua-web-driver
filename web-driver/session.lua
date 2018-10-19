@@ -81,8 +81,7 @@ function methods:forward()
 end
 
 function methods:refresh()
-  local response = self.client:refresh()
-  return response
+  self.client:refresh()
 end
 
 function methods:title()
