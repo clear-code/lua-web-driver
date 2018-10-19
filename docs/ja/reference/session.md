@@ -165,7 +165,20 @@ end)
 例:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
 
+local URL = "https://clear-code.gitlab.io/lua-web-driver/sample/window.html"
+
+driver:start_session(function(session)
+  session:navigate_to(URL)
+  local next_handle = session:window_handles()[2]
+  print(session:window_handle())
+  -- 2147483649
+  session:switch_to_window(next_handle)
+  print(session:window_handle())
+  -- 2147483656
+end)
 ```
 
 ### `close_window() -> {remaining_window_handle1, remaining_window_handle2, ...}` {#close-window}
