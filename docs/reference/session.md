@@ -108,7 +108,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `refresh() -> void` {#refresh}
+### `refresh() -> nil` {#refresh}
 
 This method reloads the current website.
 
