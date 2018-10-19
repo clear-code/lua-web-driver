@@ -820,7 +820,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `set_alert_text(text) -> void` {#set-alert-text}
+### `set_alert_text(text) -> nil` {#set-alert-text}
 
 現在のダイアログに指定したテキストを設定します。
 

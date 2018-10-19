@@ -825,7 +825,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `set_alert_text(text) -> void` {#set-alert-text}
+### `set_alert_text(text) -> nil` {#set-alert-text}
 
 This method sets specify text on the current dialog
 

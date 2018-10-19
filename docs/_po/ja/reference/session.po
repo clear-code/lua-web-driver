@@ -758,7 +758,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `set_alert_text(text) -> void` {#set-alert-text}"
+msgid "### `set_alert_text(text) -> nil` {#set-alert-text}"
 msgstr ""
 
 msgid "This method sets specify text on the current dialog"
