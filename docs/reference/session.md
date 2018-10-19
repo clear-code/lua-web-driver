@@ -194,7 +194,16 @@ This method is a switch to the window of the specify handle.
 Example:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
 
+local URL = "https://clear-code.gitlab.io/lua-web-driver/sample/window.html"
+
+driver:start_session(function(session)
+  session:navigate_to(URL)
+  remaining_handles = session:close_window()
+  session:switch_to_window(remaining_handles[1])
+end)
 ```
 
 ### `window_handles() -> table` {#window-handles}
