@@ -696,7 +696,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `delete_cookie(name) -> void` {#delete-cookie}
+### `delete_cookie(name) -> nil` {#delete-cookie}
 
 指定したクッキーを現在のWebサイトから削除します。
 

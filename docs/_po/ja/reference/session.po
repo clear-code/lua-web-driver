@@ -653,7 +653,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `delete_cookie(name) -> void` {#delete-cookie}"
+msgid "### `delete_cookie(name) -> nil` {#delete-cookie}"
 msgstr ""
 
 msgid "This method deletes a specify cookie from the current website."

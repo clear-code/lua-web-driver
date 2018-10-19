@@ -701,7 +701,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `delete_cookie(name) -> void` {#delete-cookie}
+### `delete_cookie(name) -> nil` {#delete-cookie}
 
 This method deletes a specify cookie from the current website.
 
