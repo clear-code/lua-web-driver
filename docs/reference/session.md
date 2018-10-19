@@ -231,6 +231,25 @@ The window handles is used to switch multiple windows and identify the window al
 Example:
 
 ```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+local URL = "https://clear-code.gitlab.io/lua-web-driver/sample/window.html"
+
+driver:start_session(function(session)
+  session:navigate_to(URL)
+  local window_handles = session:window_handles()
+  for _,handle in pairs(window_handles) do
+    print(handle)
+    --2147483649
+    --2147483656
+    --2147483653
+  end
+  print(session:window_handle())
+  --2147483649
+  session:switch_to_window(window_handles[2])
+  --2147483656
+  print(session:window_handle())
 ```
 
 ### `maximize_window() -> void` {#maximize-windows}
