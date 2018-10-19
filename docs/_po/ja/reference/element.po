@@ -354,7 +354,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `click() -> void` {#click}"
+msgid "### `click() -> nil` {#click}"
 msgstr ""
 
 msgid "This method click web element."

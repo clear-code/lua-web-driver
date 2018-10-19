@@ -339,7 +339,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `click() -> void` {#click}
+### `click() -> nil` {#click}
 
 要素をクリックします。
 
