@@ -100,8 +100,7 @@ end
 function TestSession:test_window_handles()
   local callback = function(session)
     local handles = session:window_handles()
-    luaunit.assert_is_table(handles)
-    luaunit.assert_equals(#handles, 1)
+    luaunit.assert_equals(handles, {session:window_handle()})
   end
   self.driver:start_session(callback)
 end
