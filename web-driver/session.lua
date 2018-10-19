@@ -229,8 +229,7 @@ function methods:dismiss_alert()
 end
 
 function methods:accept_alert()
-  local response = self.client:accept_alert()
-  return response
+  self.client:accept_alert()
 end
 
 function methods:alert_text()
