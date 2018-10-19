@@ -73,8 +73,7 @@ function methods:url()
 end
 
 function methods:back()
-  local response = self.client:back()
-  return response
+  self.client:back()
 end
 
 function methods:forward()
