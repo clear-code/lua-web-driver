@@ -383,9 +383,9 @@ end
 function TestSession:test_execute_script()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
-    local script = [[return 1]]
-    local response = session:execute_script(script)
-    luaunit.assert_equals(response, 1)
+    local script = [[return 1 + arguments[0] + arguments[1];]]
+    local response = session:execute_script(script, {2, 3})
+    luaunit.assert_equals(response, 6)
   end
   self.driver:start_session(callback)
 end
