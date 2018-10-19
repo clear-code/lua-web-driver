@@ -219,7 +219,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `window_handles() -> table` {#window-handles}
+### `window_handles() -> {window_handle1, window_handle2, ...}` {#window-handles}
 
 This method gets the window handles of the current session.
 

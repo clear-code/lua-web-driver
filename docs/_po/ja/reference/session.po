@@ -233,7 +233,9 @@ msgstr ""
 msgid "This method is a switch to the window of the specify handle."
 msgstr "指定したハンドルのウインドへ切り替えます。"
 
-msgid "### `window_handles() -> table` {#window-handles}"
+msgid ""
+"### `window_handles() -> {window_handle1, window_handle2, ...}` {#window-handl"
+"es}"
 msgstr ""
 
 msgid "This method gets the window handles of the current session."
