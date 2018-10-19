@@ -109,8 +109,7 @@ function methods:is_enabled()
 end
 
 function methods:click()
-  local response = self.client:click()
-  return response
+  self.client:click()
 end
 
 function methods:clear()
