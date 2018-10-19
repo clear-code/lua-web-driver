@@ -140,8 +140,7 @@ function methods:switch_to_frame(id)
 end
 
 function methods:switch_to_parent_frame()
-  local response = self.client:switch_to_parent_frame()
-  return response
+  self.client:switch_to_parent_frame()
 end
 
 function methods:find_element(strategy, finder)

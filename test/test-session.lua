@@ -126,11 +126,9 @@ function TestSession:test_frame()
     session:switch_to_frame(0)
     local ps = session:css_select("p")
     luaunit.assert_equals(ps:texts(), {"1"})
-    response = session:switch_to_parent_frame()
-    luaunit.assert_equals(response.status_code, 200)
+    session:switch_to_parent_frame()
     ps = session:css_select("p")
     luaunit.assert_equals(ps:texts(), {"parent"})
-    luaunit.assert_equals(session:title(), "This is parent frame")
   end
   self.driver:start_session(callback)
 end
