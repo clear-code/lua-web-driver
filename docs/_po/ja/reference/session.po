@@ -320,11 +320,15 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `fullscreen_window() -> void` {#fullscreen-window}"
+msgid ""
+"### `fullscreen_window() -> {height=xxxx, width=xxxx, x=xxxx, y=xxxx}` {#fulls"
+"creen-window}"
 msgstr ""
 
-msgid "This method is to fullscreen the current window."
-msgstr "現在のウインドウをフルスクリーンにします。"
+msgid ""
+"This method is to fullscreen the current window.\n"
+"It returns window size and position at the full screen as a table."
+msgstr "現在のウインドウをフルスクリーンにします。フルスクリーン時のウインドウのサイズと位置をテーブルとして返します。"
 
 msgid ""
 "driver:start_session(function(session)\n"

@@ -318,9 +318,9 @@ driver:start_session(function(session)
 end)
 ```
 
-### `fullscreen_window() -> void` {#fullscreen-window}
+### `fullscreen_window() -> {height=xxxx, width=xxxx, x=xxxx, y=xxxx}` {#fullscreen-window}
 
-現在のウインドウをフルスクリーンにします。
+現在のウインドウをフルスクリーンにします。フルスクリーン時のウインドウのサイズと位置をテーブルとして返します。
 
 例:
 

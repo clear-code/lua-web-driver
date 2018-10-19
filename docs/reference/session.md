@@ -318,9 +318,10 @@ driver:start_session(function(session)
 end)
 ```
 
-### `fullscreen_window() -> void` {#fullscreen-window}
+### `fullscreen_window() -> {height=xxxx, width=xxxx, x=xxxx, y=xxxx}` {#fullscreen-window}
 
 This method is to fullscreen the current window.
+It returns window size and position at the full screen as a table.
 
 Example:
 
