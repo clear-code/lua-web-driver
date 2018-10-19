@@ -238,8 +238,7 @@ function methods:alert_text()
 end
 
 function methods:set_alert_text(text)
-  local response = self.client:set_alert_text(text)
-  return response
+  self.client:set_alert_text(text)
 end
 
 --- Take screenshot.
