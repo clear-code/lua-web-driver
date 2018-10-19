@@ -100,8 +100,7 @@ function methods:close_window()
 end
 
 function methods:switch_to_window(handle)
-  local response = self.client:switch_to_window(handle)
-  return response
+  self.client:switch_to_window(handle)
 end
 
 function methods:window_handles()

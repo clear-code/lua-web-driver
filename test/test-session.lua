@@ -110,12 +110,10 @@ end
 function TestSession:test_switch_to_window()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/window.html")
-    local handles = session:window_handles()
-    luaunit.assert_equals(#handles, 3)
-    luaunit.assert_equals(handles[1],
-                          session:window_handle())
-    session:switch_to_window(handles[2])
-    luaunit.assert_equals(handles[2],
+    local remaining_handles = session:close_window()
+    local switched_handle = remaining_handles[1]
+    session:switch_to_window(switched_handle)
+    luaunit.assert_equals(switched_handle,
                           session:window_handle())
   end
   self.driver:start_session(callback)
