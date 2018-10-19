@@ -197,8 +197,7 @@ function methods:add_cookie(cookie)
 end
 
 function methods:delete_cookie(name)
-  local response = self.client:delete_cookie(name)
-  return response
+  self.client:delete_cookie(name)
 end
 
 function methods:delete_all_cookies()
