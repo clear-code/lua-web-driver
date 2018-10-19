@@ -1,6 +1,5 @@
 local process = require("process")
 local http_request = require("http.request")
-local pp = require("web-driver/pp")
 
 local helper = {}
 
