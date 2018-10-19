@@ -400,38 +400,15 @@ function TestSession:test_execute_script_with_error()
   self.driver:start_session(callback)
 end
 
-function TestSession:test_execute_async_script()
-  if true then
-    print("Omit: Because Firefox blocks: TODO: Re-enable me")
-    return
-  end
-
+function TestSession:test_execute_script_async()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
     local script = [[
-function output(string) {
-  return new Promise(function(resolve, reject) {
-    if(string != null) {
-      resolve(string);
-      return;
-    }
-    reject("error")
-  })
-}
-
-function onResolved(string) {
-  return("resolved")
-}
-
-function onRejected(err) {
-  return("rejected")
-}
-
-output("test async script")
-  .then(onResolved, onRejected);
+var resolve = arguments[arguments.length - 1];
+resolve("result");
 ]]
     local response = session:execute_script_async(script)
-    luaunit.assert_equals(response, "resolved")
+    luaunit.assert_equals(response, "result")
   end
   self.driver:start_session(callback)
 end
