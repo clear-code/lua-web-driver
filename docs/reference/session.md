@@ -187,7 +187,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `switch_to_window(handle) -> ` {#switch-to-window}
+### `switch_to_window(handle) -> nil` {#switch-to-window}
 
 This method is a switch to the window of the specify handle.
 
