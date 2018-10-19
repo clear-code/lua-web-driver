@@ -670,9 +670,9 @@ end)
 
 ### `add_cookie(cookie) -> nil` {#add-cookie}
 
-This method adds a specify cookie in the current website.
-
 `cookie`: Specify a cookie to add as a table.
+
+This method adds a specify cookie in the current website.
 
 Example:
 

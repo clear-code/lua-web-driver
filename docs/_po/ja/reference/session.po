@@ -627,11 +627,11 @@ msgstr ""
 msgid "### `add_cookie(cookie) -> nil` {#add-cookie}"
 msgstr ""
 
+msgid "`cookie`: Specify a cookie to add as a table."
+msgstr "`cookie`: 追加するクッキーをテーブルとして指定します。"
+
 msgid "This method adds a specify cookie in the current website."
 msgstr "現在のWebサイトへ指定したクッキーを追加します。"
-
-msgid "`cookie`: Specify a cookie to add as a table."
-msgstr "`cookie`: テーブルとして、追加するクッキーを指定します。"
 
 msgid ""
 "driver:start_session(function(session)\n"
