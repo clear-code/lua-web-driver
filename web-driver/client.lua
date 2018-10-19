@@ -18,10 +18,10 @@ function metatable.__index(client, key)
   return methods[key]
 end
 
-function methods:_request(verb, url, options)
+function methods:_request(method, url, options)
   local req = http_request.new_from_uri(url)
   req.headers:delete(":method")
-  req.headers:append(":method", verb)
+  req.headers:append(":method", method)
   if options.data then
     req:set_body(lunajson.encode(options.data))
   end
@@ -55,40 +55,40 @@ function methods:_request(verb, url, options)
   }
 end
 
-function methods:execute(verb, path, params, data)
+function methods:execute(method, path, params, data)
   local response
   local url = self:endpoint(path, params)
-  if verb == "get" then
+  if method == "get" then
     response = self:_request("GET",
                              url,
                              {
                                timeout = self.get_request_timeout,
                              })
-  elseif verb == "post" then
+  elseif method == "post" then
     response = self:_request("POST",
                              url,
                              {
                                data = (data or {}),
                                timeout = self.post_request_timeout,
                              })
-  elseif verb == "delete" then
+  elseif method == "delete" then
     response = self:_request("DELETE",
                              url,
                              {
                                timeout = self.delete_request_timeout,
                              })
   else
-    error(string.format("%s: Unknown verb: <%s>",
-                        Client.log_prefix, verb))
+    error(string.format("%s: Unknown HTTP method: <%s>",
+                        Client.log_prefix, method))
   end
   if self.post_request_hook then
-    self.post_request_hook(verb, url, data, response)
+    self.post_request_hook(method, url, data, response)
   end
   if response.status_code == 200 then
     if self.logger:need_log("trace") then
       self.logger:trace(string.format("%s: <%s>: <%s>: <%s>: %s",
                                       Client.log_prefix,
-                                      verb,
+                                      method,
                                       path,
                                       pp.format(params),
                                       pp.format(response)))
@@ -98,7 +98,7 @@ function methods:execute(verb, path, params, data)
     local value = response.json()["value"]
     local message = string.format("%s: <%s>: <%s>: <%s>: %s: %s",
                                   Client.log_prefix,
-                                  verb,
+                                  method,
                                   path,
                                   pp.format(params),
                                   value["error"],
