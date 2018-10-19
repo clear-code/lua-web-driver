@@ -155,6 +155,16 @@ local function extract_keys(key_value_list)
   return keys
 end
 
+function TestSession:test_set_window_rect()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local rect = { height = 500, width = 500, x = 0, y = 0 }
+    luaunit.assert_equals(session:set_window_rect(rect),
+                          rect)
+  end
+  self.driver:start_session(callback)
+end
+
 function TestSession:test_fullscreen_window()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")

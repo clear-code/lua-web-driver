@@ -131,7 +131,7 @@ end
 -- rect = { height = h, width = w, x = position_x, y = position_y }
 function methods:set_window_rect(rect)
   local response = self.client:set_window_rect(rect)
-  return response
+  return response.json()["value"]
 end
 
 -- Support iframe only
