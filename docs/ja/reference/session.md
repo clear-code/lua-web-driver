@@ -774,7 +774,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `accept_alert() -> void` {#accept-alert}
+### `accept_alert() -> nil` {#accept-alert}
 
 現在のダイアログの"OK"ボタンを押下します。
 

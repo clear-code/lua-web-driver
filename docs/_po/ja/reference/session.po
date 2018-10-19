@@ -722,7 +722,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `accept_alert() -> void` {#accept-alert}"
+msgid "### `accept_alert() -> nil` {#accept-alert}"
 msgstr ""
 
 msgid "This method push \"OK\" button on the current dialog."
