@@ -3,6 +3,7 @@ local http_request = require("http.request")
 local socket = require("socket")
 
 local LogLevel = require("web-driver/log-level")
+local pp = require("web-driver/pp")
 
 local Geckodriver = {}
 Geckodriver.log_prefix = "web-driver: geckodriver"
@@ -57,6 +58,59 @@ local function format_log_message(prefix, timestamp, component, message)
                        message)
 end
 
+function methods:process_firefox_http_log(message)
+  if self.firefox_log_context.in_http_request then
+    local last_connection_log = self.connection_logs[#self.connection_logs]
+    if message == "]" then
+      self.firefox_log_context.in_http_request = false
+    elseif not last_connection_log.method then
+      last_connection_log.method, last_connection_log.path =
+        message:match("^  ([^ ]+) ([^ ]+) ")
+    else
+      local name, value = message:match("^  ([^:]+): (.*)$")
+      if name:lower() == "host" then
+        last_connection_log.host = value
+      end
+      last_connection_log.request_headers[name] = value
+    end
+  elseif self.firefox_log_context.in_http_response then
+    local last_connection_log = self.connection_logs[#self.connection_logs]
+    if message == "]" then
+      self.firefox_log_context.in_http_response = false
+    elseif message:sub(1, 7) == "  HTTP/" then
+      last_connection_log.status_code = tonumber(message:match("^  [^ ]+ (%d+)"))
+    elseif message == "    OriginalHeaders" then
+      self.firefox_log_context.in_original_response_headers = true
+    else
+      local response_headers
+      if self.firefox_log_context.in_original_response_headers then
+        response_headers = last_connection_log.original_response_headers
+      else
+        response_headers = last_connection_log.response_headers
+      end
+      local name, value = message:match("^  ([^:]+): (.*)$")
+      response_headers[name] = value
+    end
+  else
+    if message == "http request [" then
+      self.firefox_log_context.in_http_request = true
+      table.insert(self.connection_logs, {
+        method = nil,
+        host = nil,
+        path = nil,
+        request_headers = {},
+      })
+    elseif message == "http response [" then
+      self.firefox_log_context.in_http_response = true
+      self.firefox_log_context.in_original_response_headers = false
+      local last_connection_log = self.connection_logs[#self.connection_logs]
+      last_connection_log.status_code = nil
+      last_connection_log.response_headers = {}
+      last_connection_log.original_response_headers = {}
+    end
+  end
+end
+
 function methods:log_firefox_line(prefix, line)
   local year, month, day, hour, minute, second, micro_second, context, firefox_log_level, firefox_component, message =
     line:match("^(%d+)-(%d+)-(%d+) (%d+):(%d+):(%d+)%.(%d+) UTC %- " ..
@@ -78,32 +132,7 @@ function methods:log_firefox_line(prefix, line)
                                     firefox_component)
     local log_level = log_level_from_firefox(firefox_log_level)
     if log_level == LogLevel.INFO and firefox_component == "nsHttp" then
-      if self.firefox_log_context.in_http_response then
-        if message == "]" then
-          self.firefox_log_context.in_http_response = false
-        elseif message:sub(1, 7) == "  HTTP/" then
-          self.last_status_code = tonumber(message:match("^  [^ ]+ (%d+)"))
-        elseif message == "    OriginalHeaders" then
-          self.firefox_log_context.in_original_response_headers = true
-        else
-          local response_headers
-          if self.firefox_log_context.in_original_response_headers then
-            response_headers = self.last_original_response_headers
-          else
-            response_headers = self.last_response_headers
-          end
-          local name, value = message:match("^  ([^:]+): (.*)$")
-          response_headers[name] = value
-        end
-      else
-        if message == "http response [" then
-          self.firefox_log_context.in_http_response = true
-          self.firefox_log_context.in_original_response_headers = false
-          self.last_status_code = nil
-          self.last_response_headers = {}
-          self.last_original_response_headers = {}
-        end
-      end
+      self:process_firefox_http_log(message)
     end
     self.firefox.logger:log(log_level,
                             format_log_message(prefix,
@@ -180,6 +209,10 @@ function methods:log_outputs()
   local stdio, stdout, stderr = self.process:fds()
   self:log_output(stdout, "stdout", function() return self.process:stdout() end)
   self:log_output(stderr, "stderr", function() return self.process:stderr() end)
+end
+
+function methods:clear_connection_logs()
+  self.connection_logs = {}
 end
 
 function methods:kill()
@@ -297,8 +330,11 @@ function Geckodriver.new(firefox)
     command = "geckodriver",
     args = build_args(firefox),
     process = nil,
-    firefox_log_context = {},
-    last_response = nil
+    firefox_log_context = {
+      in_http_request = false,
+      in_http_response = false,
+    },
+    connection_logs = {},
   }
   setmetatable(geckodriver, metatable)
   return geckodriver

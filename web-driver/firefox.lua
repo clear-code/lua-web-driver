@@ -1,8 +1,6 @@
 --- WebDriver for Firefox
 --
 -- @classmod Firefox
-local process = require("process")
-
 local Geckodriver = require("web-driver/geckodriver")
 local Client = require("web-driver/client")
 local Session = require("web-driver/session")
@@ -27,7 +25,7 @@ local DEFAULT_GET_REQUEST_TIMEOUT = 60
 local DEFAULT_POST_REQUEST_TIMEOUT = 60
 local DEFAULT_DELETE_REQUEST_TIMEOUT = 60
 
-local start_timeout_env = process.getenv()["LUA_WEB_DRIVER_START_TIMEOUT"]
+local start_timeout_env = os.getenv("LUA_WEB_DRIVER_START_TIMEOUT")
 if start_timeout_env then
   local start_timeout_env_value = tonumber(start_timeout_env, 10)
   if start_timeout_env_value then
@@ -35,8 +33,7 @@ if start_timeout_env then
   end
 end
 
-local http_request_timeout_env =
-  process.getenv()["LUA_WEB_DRIVER_HTTP_REQUEST_TIMEOUT"]
+local http_request_timeout_env = os.getenv("LUA_WEB_DRIVER_HTTP_REQUEST_TIMEOUT")
 if http_request_timeout_env then
   http_request_timeout_env_value =
     tonumber(http_request_timeout_env, 10)
@@ -45,8 +42,7 @@ if http_request_timeout_env then
   end
 end
 
-local get_request_timeout_env =
-  process.getenv()["LUA_WEB_DRIVER_GET_REQUEST_TIMEOUT"]
+local get_request_timeout_env = os.getenv("LUA_WEB_DRIVER_GET_REQUEST_TIMEOUT")
 if get_request_timeout_env then
   get_request_timeout_env_value =
     tonumber(get_request_timeout_env, 10)
@@ -55,8 +51,7 @@ if get_request_timeout_env then
   end
 end
 
-local post_request_timeout_env =
-  process.getenv()["LUA_WEB_DRIVER_POST_REQUEST_TIMEOUT"]
+local post_request_timeout_env = os.getenv("LUA_WEB_DRIVER_POST_REQUEST_TIMEOUT")
 if post_request_timeout_env then
   post_request_timeout_env_value =
     tonumber(post_request_timeout_env, 10)
@@ -66,13 +61,20 @@ if post_request_timeout_env then
 end
 
 local delete_request_timeout_env =
-  process.getenv()["LUA_WEB_DRIVER_DELETE_REQUEST_TIMEOUT"]
+  os.getenv("LUA_WEB_DRIVER_DELETE_REQUEST_TIMEOUT")
 if delete_request_timeout_env then
   delete_request_timeout_env_value =
     tonumber(delete_request_timeout_env, 10)
   if delete_request_timeout_env_value then
     DEFAULT_DELETE_REQUEST_TIMEOUT = delete_request_timeout_env_value
   end
+end
+
+if not os.getenv("MOZ_LOG") then
+  -- For implementing Session:status_code
+  local ffi = require("ffi")
+  ffi.cdef("int setenv(const char *name, const char *value, int overwrite);")
+  ffi.C.setenv("MOZ_LOG", "timestamp,sync,nsHttp:3", 1)
 end
 
 local function start_geckodriver(firefox)
@@ -122,11 +124,19 @@ function methods:start_session(callback)
   return return_value
 end
 
-function methods:last_status_code()
+function methods:connection_logs()
   if self.geckodriver then
-    return self.geckodriver.last_status_code
+    return self.geckodriver.connection_logs
   else
-    return nil
+    return {}
+  end
+end
+
+function methods:clear_connection_logs()
+  if self.geckodriver then
+    return self.geckodriver:clear_connection_logs()
+  else
+    return {}
   end
 end
 

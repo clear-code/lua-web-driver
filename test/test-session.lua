@@ -47,6 +47,14 @@ function TestSession:test_navigate_to()
   self.driver:start_session(callback)
 end
 
+function TestSession:test_status_code()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/not-found.html")
+    luaunit.assert_equals(session:status_code(), 404)
+  end
+  self.driver:start_session(callback)
+end
+
 function TestSession:test_back_forward()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/1.html")
