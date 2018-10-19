@@ -24,4 +24,4 @@ matrix:
         - rm -rf web-driver.lua web-driver
         - ${LUAROCKS} install luaunit
       script:
-        - luajit test/run-test.lua
+        - luajit test/run-test.lua -v
