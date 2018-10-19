@@ -239,7 +239,7 @@ msgid ""
 msgstr ""
 
 msgid "This method gets the window handles of the current session."
-msgstr "現在のセッションの運動ハンドルを取得します。"
+msgstr "現在のセッションのウインドウハンドルを取得します。"
 
 msgid "It returns the window handles as table."
 msgstr "テーブルとして、ウインドウハンドルを返します。"

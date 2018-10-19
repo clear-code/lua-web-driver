@@ -221,7 +221,7 @@ end)
 
 ### `window_handles() -> {window_handle1, window_handle2, ...}` {#window-handles}
 
-現在のセッションの運動ハンドルを取得します。
+現在のセッションのウインドウハンドルを取得します。
 
 テーブルとして、ウインドウハンドルを返します。
 
