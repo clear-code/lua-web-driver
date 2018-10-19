@@ -20,8 +20,7 @@ end
 
 function methods:_request(method, url, options)
   local req = http_request.new_from_uri(url)
-  req.headers:delete(":method")
-  req.headers:append(":method", method)
+  req.headers:upsert(":method", method)
   if options.data then
     req:set_body(lunajson.encode(options.data))
   end
