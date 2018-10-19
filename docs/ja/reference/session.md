@@ -168,9 +168,9 @@ end)
 
 ```
 
-### `close_window() -> void` {#close-window}
+### `close_window() -> {remaining_window_handle1, remaining_window_handle2, ...}` {#close-window}
 
-現在のウインドウをクローズします。
+現在のウインドウをクローズします。残っているウインドウのハンドルをテーブルとして返します。
 
 例:
 
@@ -178,12 +178,12 @@ end)
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
-local URL = "https://clear-code.gitlab.io/lua-web-driver/sample/"
-local URL = "https://clear-code.gitlab.io/lua-web-driver/sample/button.html"
+local URL = "https://clear-code.gitlab.io/lua-web-driver/sample/window.html"
 
 driver:start_session(function(session)
   session:navigate_to(URL)
-  session:close_window()
+  remaining_handles = session:close_window()
+  session:switch_to_window(remaining_handles[1])
 end)
 ```
 
