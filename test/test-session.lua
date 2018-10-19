@@ -453,16 +453,17 @@ end
 function TestSession:test_add_cookie()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/cookie.html")
-    local cookies = session:all_cookies()
-    luaunit.assert_equals(#cookies, 2)
     local cookie = {
-      name = "data3",
+      name = "new-cookie",
       value = "789",
     }
+    luaunit.assert_error_msg_contains("no such cookie",
+                                      session.get_cookie,
+                                      session,
+                                      cookie.name)
     session:add_cookie(cookie)
-    cookies = session:all_cookies()
-    luaunit.assert_equals(#cookies, 3)
-    luaunit.assert_equals(session:get_cookie("data3")["value"], "789")
+    luaunit.assert_equals(session:get_cookie(cookie.name).value,
+                          cookie.value)
   end
   self.driver:start_session(callback)
 end

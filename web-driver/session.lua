@@ -193,8 +193,7 @@ function methods:get_cookie(name)
 end
 
 function methods:add_cookie(cookie)
-  local response = self.client:add_cookie(cookie)
-  return response
+  self.client:add_cookie(cookie)
 end
 
 function methods:delete_cookie(name)
