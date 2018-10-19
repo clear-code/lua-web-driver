@@ -761,11 +761,11 @@ msgstr ""
 msgid "### `set_alert_text(text) -> nil` {#set-alert-text}"
 msgstr ""
 
+msgid "`text`: Specify the text of a dialog as a string."
+msgstr "`text`: ダイアログのテキストを文字列として指定します。"
+
 msgid "This method sets specify text on the current dialog"
 msgstr "現在のダイアログに指定したテキストを設定します。"
-
-msgid "`text`: Specify the text of a dialog as a string."
-msgstr "`text`: ダイアログにのテキストを文字列として指定します。"
 
 msgid ""
 "driver:start_session(function(session)\n"

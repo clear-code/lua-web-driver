@@ -827,9 +827,9 @@ end)
 
 ### `set_alert_text(text) -> nil` {#set-alert-text}
 
-This method sets specify text on the current dialog
-
 `text`: Specify the text of a dialog as a string.
+
+This method sets specify text on the current dialog
 
 Example:
 
