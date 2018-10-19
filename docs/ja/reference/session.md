@@ -725,7 +725,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `delete_all_cookies() -> void` {#delete-all-cookies}
+### `delete_all_cookies() -> nil` {#delete-all-cookies}
 
 現在のWebサイトの全てのクッキーを削除します。
 

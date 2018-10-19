@@ -678,7 +678,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `delete_all_cookies() -> void` {#delete-all-cookies}"
+msgid "### `delete_all_cookies() -> nil` {#delete-all-cookies}"
 msgstr ""
 
 msgid "This method delete all cookies in the current website."
