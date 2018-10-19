@@ -1,6 +1,8 @@
 --- WebDriver for Firefox
 --
 -- @classmod Firefox
+local cqueues = require("cqueues")
+
 local Geckodriver = require("web-driver/geckodriver")
 local Client = require("web-driver/client")
 local Session = require("web-driver/session")
@@ -169,6 +171,16 @@ end
 local function apply_options(firefox, options)
   options = options or {}
 
+  firefox.loop = cqueues.new()
+  firefox.loop:wrap(function()
+    while true do
+      if firefox.geckodriver then
+        firefox.geckodriver:log_outputs()
+      end
+      firefox.loop:sleep(0.1)
+    end
+  end)
+
   firefox.logger = Logger.new(options.logger)
 
   local host = options.host or DEFAULT_HOST
@@ -206,6 +218,7 @@ local function apply_options(firefox, options)
   firefox.client = Client.new(host,
                               port,
                               firefox.logger,
+                              firefox.loop,
                               {
                                 post_request_hook = post_request_hook,
                                 get_request_timeout = get_request_timeout,

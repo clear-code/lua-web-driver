@@ -24,7 +24,15 @@ function methods:_request(method, url, options)
   if options.data then
     req:set_body(lunajson.encode(options.data))
   end
-  local response_headers, response_stream = req:go(options.timeout)
+  local response_headers, response_stream
+  local done = false
+  self.loop:wrap(function ()
+    response_headers, response_stream = req:go(options.timeout)
+    done = true
+  end)
+  while not done do
+    self.loop:step()
+  end
   if not response_headers then
     local why = response_stream
     local message = string.format("%s: Failed to request: %s",
@@ -121,13 +129,14 @@ function methods:create_session(capabilities)
   return self:execute("post", "session", {}, capabilities)
 end
 
-function Client.new(host, port, logger, options)
+function Client.new(host, port, logger, loop, options)
   options = options or {}
   local client = {
     host = host,
     port = port,
     base_url = "http://"..host..":"..port.."/",
     logger = logger,
+    loop = loop,
     post_request_hook = options.post_request_hook,
     get_request_timeout = options.get_request_timeout,
     post_request_timeout = options.post_request_timeout,
