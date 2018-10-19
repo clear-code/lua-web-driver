@@ -485,11 +485,9 @@ end
 function TestSession:test_delete_all_cookies()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/cookie.html")
-    local cookies = session:all_cookies()
-    luaunit.assert_equals(#cookies, 2)
+    luaunit.assert_not_equals(session:all_cookies(), {})
     session:delete_all_cookies()
-    cookies = session:all_cookies()
-    luaunit.assert_equals(#cookies, 0)
+    luaunit.assert_equals(session:all_cookies(), {})
   end
   self.driver:start_session(callback)
 end

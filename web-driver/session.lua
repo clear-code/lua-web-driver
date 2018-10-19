@@ -201,8 +201,7 @@ function methods:delete_cookie(name)
 end
 
 function methods:delete_all_cookies()
-  local response = self.client:delete_all_cookies(self.id)
-  return response
+  self.client:delete_all_cookies(self.id)
 end
 
 --- Create ActionBuilder
