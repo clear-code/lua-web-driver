@@ -4,6 +4,32 @@ title: News
 
 # News
 
+## 0.0.6: 2018-10-19 {#version-0-0-6}
+
+### Improvements
+
+  * Modify return value of below methods.
+    * [`web-driver.Element:click()`][element-click]
+    * [`web-driver.Element:clear()`][element-clear]
+    * [`web-driver.Session:back()`][session-back]
+    * [`web-driver.Session:forward()`][session-forward]
+    * [`web-driver.Session:refresh()`][session-refresh]
+    * [`web-driver.Session:close_window()`][session-close-window]
+    * [`web-driver.Session:switch_to_window()`][session-switch-to-window]
+    * [`web-driver.Session:fullscreen_window()`][session-fullscreen-window]
+    * [`web-driver.Session:set_window_rect()`][session-set-window-rect]
+    * [`web-driver.Session:switch_to_frame()`][session-switch-to-frame]
+    * [`web-driver.Session:switch_to_parent_frame()`][session-switch-to-parent-frame]
+    * [`web-driver.Session:add_cookie()`][session-add-cookie]
+    * [`web-driver.Session:delete_cookie()`][session-delete-cookie]
+    * [`web-driver.Session:delete_all_cookie()`][session-delete-all-cookie]
+    * [`web-driver.Session:dismiss_alert()`][session-dismiss-alert]
+    * [`web-driver.Session:accept_alert()`][session-accept-alert]
+    * [`web-driver.Session:set_alert_text()`][session-set-alert-text]
+
+  * `Web-driver.Session:execute_script_async()`: deleted.
+    * Because unified [`web-driver.Session:execute_script()`][session-execute-script] and `web-driver.Session:execute_script_async()`.
+
 ## 0.0.5: 2018-10-18 {#version-0-0-5}
 
 ### Improvements
@@ -66,6 +92,42 @@ The first release!!!
 
 
 [thread-pool]: ../reference/thread-pool.html
+
+[element-click]: ../reference/element.html#click
+
+[element-clear]: ../reference/element.html#clear
+
+[session-back]: ../reference/session.html#back
+
+[session-forward]: ../reference/session.html#forward
+
+[session-refresh]: ../reference/session.html#refresh
+
+[session-close-window]: ../reference/session.html#close-window
+
+[session-switch-to-window]: ../reference/session.html#switch-to-window
+
+[session-fullscreen-window]: ../reference/session.html#fullscreen-window
+
+[session-set-window-rect]: ../reference/session.html#set-window-rect
+
+[session-switch-to-frame]: ../reference/session.html#switch-to-frame
+
+[session-switch-to-parent-frame]: ../reference/session.html#switch-to-parent-frame
+
+[session-add-cookie]: ../reference/session.html#add-cookie
+
+[session-delete-cookie]: ../reference/session.html#delete-cookie
+
+[session-delete-all-cookie]: ../reference/session.html#delete-all-cookie
+
+[session-dismiss-alert]: ../reference/session.html#dismiss-alert
+
+[session-accept-alert]: ../reference/session.html#accept-alert
+
+[session-set-alert-text]: ../reference/session.html#set-alert-text
+
+[session-execute-script]: ../reference/session.html#execute-script
 
 [session-content-type]: ../reference/session.html#content-type
 
