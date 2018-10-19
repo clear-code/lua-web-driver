@@ -73,7 +73,6 @@ end
 function TestSession:test_window_handle()
   local callback = function(session)
     local handle = session:window_handle()
-    luaunit.assert_is_string(handle)
     local response = session:switch_to_window(handle)
     luaunit.assert_equals(response.status_code, 200)
   end
