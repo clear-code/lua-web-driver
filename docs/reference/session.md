@@ -703,9 +703,9 @@ end)
 
 ### `delete_cookie(name) -> nil` {#delete-cookie}
 
-This method deletes a specify cookie from the current website.
-
 `name`: Specify the name of a cookie to delete as a string.
+
+This method deletes a specify cookie from the current website.
 
 Example:
 

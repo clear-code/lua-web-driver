@@ -656,11 +656,11 @@ msgstr ""
 msgid "### `delete_cookie(name) -> nil` {#delete-cookie}"
 msgstr ""
 
+msgid "`name`: Specify the name of a cookie to delete as a string."
+msgstr "`name`: 削除するクッキーの名前を文字列として指定します。"
+
 msgid "This method deletes a specify cookie from the current website."
 msgstr "指定したクッキーを現在のWebサイトから削除します。"
-
-msgid "`name`: Specify the name of a cookie to delete as a string."
-msgstr "`name`: 削除するクッキーの名前を指定します。"
 
 msgid ""
 "driver:start_session(function(session)\n"
