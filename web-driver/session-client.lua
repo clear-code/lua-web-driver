@@ -141,18 +141,21 @@ function methods:get_page_source()
                       { session_id = self.id })
 end
 
-function methods:execute_script(script, args)
-  return self:execute("post", "session/:session_id/execute/sync",
+function methods:execute_script(script, args, options)
+  options = options or {}
+  local path = "session/:session_id/execute/"
+  if options.async then
+    path = path .. "async"
+  else
+    path = path .. "sync"
+  end
+  args = args or {}
+  if #args == 0 then
+    args = {[0] = 0} -- {[0] = 0} is size zero array in Lunajson
+  end
+  return self:execute("post", path,
                       { session_id = self.id },
-                      -- {[0] = 0} is size zero array in Lunajson
-                      { script = script, args = (args or {[0] = 0}) })
-end
-
-function methods:execute_async_script(script, args)
-  return self:execute("post", "session/:session_id/execute/async",
-                      { session_id = self.id },
-                      -- {[0] = 0} is size zero array in Lunajson
-                      { script = script, args = (args or {[0] = 0}) })
+                      { script = script, args = args })
 end
 
 function methods:get_all_cookies()

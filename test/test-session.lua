@@ -407,7 +407,7 @@ function TestSession:test_execute_script_async()
 var resolve = arguments[arguments.length - 1];
 resolve("result");
 ]]
-    local response = session:execute_script_async(script)
+    local response = session:execute_script(script, {}, {async = true})
     luaunit.assert_equals(response, "result")
   end
   self.driver:start_session(callback)

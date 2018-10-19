@@ -183,14 +183,8 @@ function methods:content_type()
   return self:execute_script("return document.contentType")
 end
 
-function methods:execute_script(script, args)
-  local response = self.client:execute_script(script, args)
-  return response.json()["value"]
-end
-
--- TODO
-function methods:execute_script_async(script, args)
-  local response = self.client:execute_async_script(script, args)
+function methods:execute_script(script, args, options)
+  local response = self.client:execute_script(script, args, options)
   return response.json()["value"]
 end
 
