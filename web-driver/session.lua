@@ -225,8 +225,7 @@ function methods:release_actions()
 end
 
 function methods:dismiss_alert()
-  local response = self.client:dismiss_alert()
-  return response
+  self.client:dismiss_alert()
 end
 
 function methods:accept_alert()
