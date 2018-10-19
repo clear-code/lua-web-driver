@@ -147,21 +147,6 @@ function TestSession:test_window_rect()
   self.driver:start_session(callback)
 end
 
-function TestSession:test_window_fullscreen()
-  local callback = function(session)
-    session:navigate_to("http://localhost:10080/index.html")
-    local rect = { height = 500, width = 500, x = 0, y = 0 }
-    local expected = { height = 500, width = 500, x = 0, y = 0 }
-    session:set_window_rect(rect)
-    local response = session:fullscreen_window()
-    luaunit.assert_equals(response.status_code, 200)
-    session:set_window_rect(rect)
-    local actual = session:window_rect()
-    luaunit.assert_equals(actual, expected)
-  end
-  self.driver:start_session(callback)
-end
-
 local function extract_keys(key_value_list)
   local keys = {}
   for k,_ in pairs(key_value_list) do
@@ -170,15 +155,26 @@ local function extract_keys(key_value_list)
   return keys
 end
 
+function TestSession:test_fullscreen_window()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+
+    local window_geometry = session:fullscreen_window()
+    local keys = extract_keys(window_geometry)
+    table.sort(keys)
+    luaunit.assert_equals(keys, { "height", "width", "x", "y" })
+  end
+  self.driver:start_session(callback)
+end
+
 function TestSession:test_maximize_window()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/index.html")
 
     local window_geometry = session:maximize_window()
-    local expected = { "height", "width", "x", "y" }
-    local actual = extract_keys(window_geometry)
-    table.sort(actual)
-    luaunit.assert_equals(actual, expected)
+    local keys = extract_keys(window_geometry)
+    table.sort(keys)
+    luaunit.assert_equals(keys, { "height", "width", "x", "y" })
   end
   self.driver:start_session(callback)
 end

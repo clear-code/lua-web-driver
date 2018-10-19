@@ -120,7 +120,7 @@ end
 
 function methods:fullscreen_window()
   local response = self.client:fullscreen_window()
-  return response
+  return response.json()["value"]
 end
 
 function methods:window_rect()
