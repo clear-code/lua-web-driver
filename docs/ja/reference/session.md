@@ -750,7 +750,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `dismiss_alert() -> void` {#dismiss-alert}
+### `dismiss_alert() -> nil` {#dismiss-alert}
 
 現在のダイアログの"Cancel"ボタンを押下します。
 

@@ -698,7 +698,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `dismiss_alert() -> void` {#dismiss-alert}"
+msgid "### `dismiss_alert() -> nil` {#dismiss-alert}"
 msgstr ""
 
 msgid "This method push \"Cancel\" button on the current dialog."

@@ -755,7 +755,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `dismiss_alert() -> void` {#dismiss-alert}
+### `dismiss_alert() -> nil` {#dismiss-alert}
 
 This method push "Cancel" button on the current dialog.
 
