@@ -84,7 +84,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `back() -> void` {#back}
+### `back() -> nil` {#back}
 
 現在のWebサイトから履歴を1つ後ろへ辿ります。
 

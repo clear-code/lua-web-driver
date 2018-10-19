@@ -84,7 +84,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `back() -> void` {#back}
+### `back() -> nil` {#back}
 
 This method traverse one step backs in the history from the current website.
 

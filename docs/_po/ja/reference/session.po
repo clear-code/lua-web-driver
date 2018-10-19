@@ -118,7 +118,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `back() -> void` {#back}"
+msgid "### `back() -> nil` {#back}"
 msgstr ""
 
 msgid "This method traverse one step backs in the history from the current website."
