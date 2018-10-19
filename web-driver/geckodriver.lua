@@ -101,12 +101,14 @@ function methods:process_firefox_http_log(message)
         request_headers = {},
       })
     elseif message == "http response [" then
-      self.firefox_log_context.in_http_response = true
-      self.firefox_log_context.in_original_response_headers = false
       local last_connection_log = self.connection_logs[#self.connection_logs]
-      last_connection_log.status_code = nil
-      last_connection_log.response_headers = {}
-      last_connection_log.original_response_headers = {}
+      if last_connection_log then
+        self.firefox_log_context.in_http_response = true
+        self.firefox_log_context.in_original_response_headers = false
+        last_connection_log.status_code = nil
+        last_connection_log.response_headers = {}
+        last_connection_log.original_response_headers = {}
+      end
     end
   end
 end
@@ -213,6 +215,8 @@ end
 
 function methods:clear_connection_logs()
   self.connection_logs = {}
+  self.firefox_log_context.in_http_request = false
+  self.firefox_log_context.in_http_response = false
 end
 
 function methods:kill()
