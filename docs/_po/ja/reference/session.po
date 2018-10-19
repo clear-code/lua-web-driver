@@ -624,7 +624,7 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `add_cookie(cookie) -> void` {#add-cookie}"
+msgid "### `add_cookie(cookie) -> nil` {#add-cookie}"
 msgstr ""
 
 msgid "This method adds a specify cookie in the current website."

@@ -668,7 +668,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `add_cookie(cookie) -> void` {#add-cookie}
+### `add_cookie(cookie) -> nil` {#add-cookie}
 
 This method adds a specify cookie in the current website.
 

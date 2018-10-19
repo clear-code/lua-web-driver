@@ -663,7 +663,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `add_cookie(cookie) -> void` {#add-cookie}
+### `add_cookie(cookie) -> nil` {#add-cookie}
 
 現在のWebサイトへ指定したクッキーを追加します。
 
