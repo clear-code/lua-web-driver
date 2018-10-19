@@ -77,8 +77,7 @@ function methods:back()
 end
 
 function methods:forward()
-  local response = self.client:forward()
-  return response
+  self.client:forward()
 end
 
 function methods:refresh()
