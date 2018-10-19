@@ -9,7 +9,7 @@ local Element = require("web-driver/element")
 local ElementSet = require("web-driver/element-set")
 local Searchable = require("web-driver/searchable")
 local Interactions = require("web-driver/interactions")
-local ActionBuilder = require("web-driver/action-builder")
+-- local ActionBuilder = require("web-driver/action-builder")
 local pp = require("web-driver/pp")
 
 local Session = {}
@@ -204,24 +204,20 @@ function methods:delete_all_cookies()
   self.client:delete_all_cookies(self.id)
 end
 
---- Create ActionBuilder
--- @function Session:action
-function methods:action(async)
-  local mouse = Interactions.pointer("mouse", "mouse")
-  local keyboard = Interactions.key("keyboard")
-  return ActionBuilder.new(self, mouse, keyboard, async)
-end
+-- --- Create ActionBuilder
+-- -- @function Session:action
+-- function methods:action(async)
+--   local mouse = Interactions.pointer("mouse", "mouse")
+--   local keyboard = Interactions.key("keyboard")
+--   return ActionBuilder.new(self, mouse, keyboard, async)
+-- end
 
--- TODO
 function methods:perform_actions(actions)
-  local response = self.client:perform_actions({ actions = actions })
-  return response
+  self.client:perform_actions(actions)
 end
 
--- TODO
 function methods:release_actions()
-  local response = self.client:release_actions()
-  return response
+  self.client:release_actions()
 end
 
 function methods:dismiss_alert()

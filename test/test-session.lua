@@ -526,6 +526,75 @@ function TestSession:test_accept_alert()
   self.driver:start_session(callback)
 end
 
+function TestSession:test_actions()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/dropdown.html")
+    local select = session:css_select("select")[1]
+    local move_to_select_action = {
+      type = "pointerMove",
+      duration = 250,
+      x = 0,
+      y = 0,
+      origin = select:to_data(),
+    }
+    local left_button_down_action = {
+      type = "pointerDown",
+      button = 0,
+    }
+    local left_button_up_action = {
+      type = "pointerUp",
+      button = 0,
+    }
+    local pause_action = {
+      type = "pause",
+      duration = 0,
+    }
+    local actions = {
+      {
+        type = "pointer",
+        id = "mouse",
+        actions = {
+          move_to_select_action,
+          left_button_down_action,
+          left_button_up_action,
+          pause_action,
+          pause_action,
+          pause_action,
+          pause_action,
+          pause_action,
+          pause_action,
+          move_to_select_action,
+          left_button_down_action,
+          left_button_up_action,
+        },
+      },
+      {
+        type = "key",
+        id = "keyboard",
+        actions = {
+          pause_action,
+          pause_action,
+          pause_action,
+          {type = "keyDown", value = "l"},
+          {type = "keyUp", value = "l"},
+          {type = "keyDown", value = "u"},
+          {type = "keyUp", value = "u"},
+          {type = "keyDown", value = "a"},
+          {type = "keyUp", value = "a"},
+          pause_action,
+          pause_action,
+          pause_action,
+        },
+      },
+    }
+    luaunit.assert_equals(select.value, "c")
+    session:perform_actions(actions)
+    luaunit.assert_equals(select.value, "lua")
+    session:release_actions()
+  end
+  self.driver:start_session(callback)
+end
+
 function TestSession:test_dismiss_alert()
   local callback = function(session)
     session:navigate_to("http://localhost:10080/alert.html")

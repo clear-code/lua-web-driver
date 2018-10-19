@@ -187,7 +187,7 @@ end
 function methods:perform_actions(actions)
   return self:execute("post", "session/:session_id/actions",
                       { session_id = self.id },
-                      actions)
+                      { actions = actions })
 end
 
 function methods:release_actions()
