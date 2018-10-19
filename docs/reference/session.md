@@ -403,7 +403,9 @@ driver:start_session(function(session)
 end)
 ```
 
-### `switch_to_frame(id) -> ` {#switch-to-frame}
+### `switch_to_frame(id) -> nil` {#switch-to-frame}
+
+`id`: Specify id of a frame of want to switch as a number.
 
 This method switch to the frame of the specified frame id.
 

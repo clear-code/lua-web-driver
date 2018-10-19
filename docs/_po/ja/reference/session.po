@@ -384,8 +384,11 @@ msgstr ""
 msgid "This method sets window rectangle of the current window."
 msgstr "現在のウインドウのサイズを設定します。"
 
-msgid "### `switch_to_frame(id) -> ` {#switch-to-frame}"
+msgid "### `switch_to_frame(id) -> nil` {#switch-to-frame}"
 msgstr ""
+
+msgid "`id`: Specify id of a frame of want to switch as a number."
+msgstr "`id`: 切り替えたいフレームのIDを数字として指定します。"
 
 msgid "This method switch to the frame of the specified frame id."
 msgstr "指定したIDのフレームへ切り替えます。"

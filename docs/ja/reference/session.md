@@ -401,7 +401,9 @@ driver:start_session(function(session)
 end)
 ```
 
-### `switch_to_frame(id) -> ` {#switch-to-frame}
+### `switch_to_frame(id) -> nil` {#switch-to-frame}
+
+`id`: 切り替えたいフレームのIDを数字として指定します。
 
 指定したIDのフレームへ切り替えます。
 
