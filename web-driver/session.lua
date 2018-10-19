@@ -136,8 +136,7 @@ end
 
 -- Support iframe only
 function methods:switch_to_frame(id)
-  local response = self.client:switch_to_frame(id)
-  return response
+  self.client:switch_to_frame(id)
 end
 
 function methods:switch_to_parent_frame()
