@@ -352,9 +352,10 @@ driver:start_session(function(session)
 end)
 ```
 
-### `window_rect() -> table` {#window-rect}
+### `window_rect() -> {height=xxxx, width=xxxx, x=xxxx, y=xxxx}` {#window-rect}
 
-This method gets window rectangle of the current window.
+This method gets window size and position of a current window.
+It return window size and position of the current window as a table.
 
 Example:
 

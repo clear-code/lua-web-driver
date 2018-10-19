@@ -351,9 +351,9 @@ driver:start_session(function(session)
 end)
 ```
 
-### `window_rect() -> table` {#window-rect}
+### `window_rect() -> {height=xxxx, width=xxxx, x=xxxx, y=xxxx}` {#window-rect}
 
-現在のウインドウのサイズを取得します。
+現在のウインドウのサイズと位置を取得します。現在のウインドウのサイズと位置をテーブルとして返します。
 
 例:
 

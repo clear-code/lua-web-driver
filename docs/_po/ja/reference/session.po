@@ -353,11 +353,15 @@ msgid ""
 "```"
 msgstr ""
 
-msgid "### `window_rect() -> table` {#window-rect}"
+msgid ""
+"### `window_rect() -> {height=xxxx, width=xxxx, x=xxxx, y=xxxx}` {#window-rect"
+"}"
 msgstr ""
 
-msgid "This method gets window rectangle of the current window."
-msgstr "現在のウインドウのサイズを取得します。"
+msgid ""
+"This method gets window size and position of a current window.\n"
+"It return window size and position of the current window as a table."
+msgstr "現在のウインドウのサイズと位置を取得します。現在のウインドウのサイズと位置をテーブルとして返します。"
 
 msgid ""
 "driver:start_session(function(session)\n"
