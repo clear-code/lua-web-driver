@@ -1,6 +1,7 @@
 local luaunit = require("luaunit")
 local web_driver = require("web-driver")
 local helper = require("test/helper")
+local pp = require("web-driver/pp")
 
 TestElement = {}
 
@@ -125,6 +126,18 @@ function TestElement:test_click()
     luaunit.assert_equals(element:get_property("checked"), false)
     element:click()
     luaunit.assert_equals(element:get_property("checked"), true)
+  end
+  self.driver:start_session(callback)
+end
+
+function TestElement:test_clear()
+  local callback = function(session)
+    session:navigate_to("http://localhost:10080/index.html")
+    local text = session:css_select("input[type=text]")[1]
+    text:send_keys("My Name")
+    luaunit.assert_equals(text.value, "My Name")
+    text:clear()
+    luaunit.assert_equals(text.value, "")
   end
   self.driver:start_session(callback)
 end

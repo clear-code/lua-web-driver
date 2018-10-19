@@ -113,8 +113,7 @@ function methods:click()
 end
 
 function methods:clear()
-  local response = self.client:clear()
-  return response
+  self.client:clear()
 end
 
 --- Send keys to element
