@@ -57,7 +57,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `forward() -> void` {#forward}
+### `forward() -> nil` {#forward}
 
 現在のWebサイトから履歴を1つ先へ辿ります。
 

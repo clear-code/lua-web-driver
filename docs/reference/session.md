@@ -57,7 +57,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `forward() -> void` {#forward}
+### `forward() -> nil` {#forward}
 
 This method traverse one step forwards in the history from the current website.
 
