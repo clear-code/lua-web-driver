@@ -26,7 +26,7 @@ function methods:_request(method, url, options)
   end
   local response_headers, response_stream
   local done = false
-  self.loop:wrap(function ()
+  self.loop:wrap(function()
     response_headers, response_stream = req:go(options.timeout)
     done = true
   end)
