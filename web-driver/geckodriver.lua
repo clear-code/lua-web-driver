@@ -198,7 +198,7 @@ function methods:correct_log(input_type)
   local input = self.process[input_type]
   local pollable = create_pollable(input)
   while true do
-    local ready = cqueues.poll(pollable, 1)
+    local ready = cqueues.poll(pollable)
     if type(ready) == "table" then
       local line = input:read("*l")
       if not line then
