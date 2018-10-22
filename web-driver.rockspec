@@ -26,7 +26,6 @@ dependencies = {
   "luautf8",
   "lunajson",
   "lunix",
-  "spawn",
 }
 source = {
   url = "https://gitlab.com/clear-code/" .. project_name .. "/-/archive/" .. package_version .. "/" .. project_name .. "-" .. package_version .. ".zip",
@@ -65,6 +64,7 @@ build = {
     ["web-driver.keys"] = "web-driver/keys.lua",
     ["web-driver.thread-pool"] = "web-driver/thread-pool.lua",
     ["web-driver.pp"] = "web-driver/pp.lua",
+    ["web-driver.process"] = "web-driver/process.lua",
     ["web-driver.remote-logger"] = "web-driver/remote-logger.lua",
     ["web-driver.searchable"] = "web-driver/searchable.lua",
     ["web-driver.session"] = "web-driver/session.lua",

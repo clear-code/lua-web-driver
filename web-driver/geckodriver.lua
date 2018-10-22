@@ -1,8 +1,8 @@
 local cqueues = require("cqueues")
 local http_request = require("http.request")
-local posix_spawn = require("spawn.posix")
 local unix = require("unix")
 
+local Process = require("web-driver/process")
 local LogLevel = require("web-driver/log-level")
 local pp = require("web-driver/pp")
 
@@ -249,7 +249,15 @@ function methods:wait_log()
   local stdout_pollable = create_pollable(self.process.stdout)
   local stderr_pollable = create_pollable(self.process.stderr)
   while true do
-    local ready = cqueues.poll(stdout_pollabel, stderr_pollable, 0.1)
+    local timeout = 0.1
+    local ready = nil
+    if self.process.stdout and self.process.stderr then
+      ready = cqueues.poll(stdout_pollabel, stderr_pollable, timeout)
+    elseif self.process.stdout then
+      ready = cqueues.poll(stdout_pollabel, timeout)
+    elseif self.process.stderr then
+      ready = cqueues.poll(stderr_pollabel, timeout)
+    end
     if type(ready) ~= "table" then
       break
     end
@@ -265,142 +273,14 @@ function methods:wait_log()
   end
 end
 
-function methods:create_pipe()
-  local success, input, output = pcall(unix.fpipe, "e")
-  if not success then
-    local why = input
-    local errno = output
-    local message = string.format("%s: Failed to create pipe: %s: <%d>",
-                                  Geckodriver.log_prefix,
-                                  why,
-                                  errno)
-    self.firefox.logger:error(message)
-    self.firefox.logger:traceback("error")
-    error(message)
-  end
-  return input, output
-end
-
-function methods:create_spawn_file_actions()
-  local file_actions, why, errno = posix_spawn.new_file_actions()
-  if not file_actions then
-    local message = string.format("%s: %s: %s: <%d>",
-                                  Geckodriver.log_prefix,
-                                  "Failed to create spawn file actions",
-                                  why,
-                                  errno)
-    self.firefox.logger:error(message)
-    self.firefox.logger:traceback("error")
-    error(message)
-  end
-  local stdout, child_stdout = self:create_pipe()
-  self.process.stdout = stdout
-  self.process.child_stdout = child_stdout
-  local stderr, child_stderr = self:create_pipe()
-  self.process.stderr = stderr
-  self.process.child_stderr = child_stderr
-  file_actions:addclose(0)
-  file_actions:adddup2(unix.fileno(child_stdout), 1)
-  file_actions:adddup2(unix.fileno(child_stderr), 2)
-  return file_actions
-end
-
-function methods:create_spawn_attributes()
-  local attributes, why, errno = posix_spawn.new_attr()
-  if not attributes then
-    local message = string.format("%s: %s: %s: <%d>",
-                                  Geckodriver.log_prefix,
-                                  "Failed to create spawn attributes",
-                                  why,
-                                  errno)
-    self.firefox.logger:error(message)
-    self.firefox.logger:traceback("error")
-    error(message)
-  end
-  attributes:setpgroup(0)
-  return attributes
-end
-
 function methods:spawn()
-  local file_actions = self:create_spawn_file_actions()
-  local attributes = self:create_spawn_attributes()
-  local args = {self.command}
-  local i, arg
-  for i, arg in ipairs(self.args) do
-    table.insert(args, arg)
-  end
-  local env = nil
-  local success, pid, why, errno =
-    pcall(posix_spawn.spawnp,
-          self.command,
-          file_actions,
-          attributes,
-          args,
-          env)
-  self.process.child_stdout:close()
-  self.process.child_stdout = nil
-  self.process.child_stderr:close()
-  self.process.child_stderr = nil
-  if not pid then
-    self.process.stdout:close()
-    self.process.stdout = nil
-    self.process.stderr:close()
-    self.process.stderr = nil
-    local message = string.format("%s: Failed to execute: <%s>: %s: <%d>",
-                                  Geckodriver.log_prefix,
-                                  self.command,
-                                  why,
-                                  errno)
-    self.firefox.logger:error(message)
-    self.firefox.logger:traceback("error")
-    error(message)
-  end
-  self.process.id = pid
+  self.process:spawn()
   self:start_log_correctors()
 end
 
-function methods:kill_process_raw(pid, signal)
-  local success, why = pcall(unix.kill, pid, signal)
-  if not success then
-    local message = string.format("%s: Failed to kill process: <%d>: <%d>: %s",
-                                  Geckodriver.log_prefix,
-                                  pid,
-                                  signal,
-                                  why)
-    self.firefox.logger:error(message)
-    self.firefox.logger:traceback("error")
-    error(message)
-  end
-end
-
-function methods:kill_process(force)
-  local pid, signal
-  if force then
-    self:kill_process_raw(-self.process.id, unix.SIGKILL)
-    self:kill_process_raw(self.process.id, unix.SIGKILL)
-  else
-    self:kill_process_raw(self.process.id, unix.SIGTERM)
-  end
-end
-
 function methods:check_process_status(wait)
-  local flags = 0
-  if not wait then
-    flags = unix.WNOHANG
-  end
-  local success, pid, status, exit_code =
-    pcall(unix.waitpid, self.process.id, flags)
-  if not success then
-    local why = pid
-    local message = string.format("%s: Failed to run waitpid(): %s",
-                                  Geckodriver.log_prefix,
-                                  why)
-    self.firefox.logger:error(message)
-    self.firefox.logger:traceback("error")
-    error(message)
-  end
-  if pid == self.process.id then
-    self.process.id = nil
+  local status, exit_code = self.process:check(wait)
+  if status ~= "running" then
     while self.process.stdout or self.process.stderr do
       local success, why, error_context = self.firefox.loop:loop()
       if success then
@@ -414,17 +294,15 @@ function methods:check_process_status(wait)
         self.firefox.logger:error(message)
       end
     end
-    return status, exit_code
-  else
-    return "running", nil
   end
+  return status, exit_code
 end
 
 function methods:kill()
   local timeout = 5
   local n_tries = 100
   local sleep_per_try = (timeout / n_tries)
-  self:kill_process(false)
+  self.process:kill(false)
   for i = 1, n_tries do
     local status, exit_code = self:check_process_status(false)
     if exit_code then
@@ -441,7 +319,7 @@ function methods:kill()
     end
   end
 
-  self:kill_process(true)
+  self.process:kill(true)
   self:check_process_status(true)
 end
 
@@ -551,11 +429,9 @@ end
 function Geckodriver.new(firefox)
   local geckodriver = {
     firefox = firefox,
-    command = "geckodriver",
-    args = build_args(firefox),
-    process = {
-      id = nil,
-    },
+    process = Process.new("geckodriver",
+                          build_args(firefox),
+                          firefox.logger),
     log_context = {
       stdout = {
         last = {
