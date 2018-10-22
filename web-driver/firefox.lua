@@ -72,13 +72,6 @@ if delete_request_timeout_env then
   end
 end
 
-if not os.getenv("MOZ_LOG") then
-  -- For implementing Session:status_code
-  local ffi = require("ffi")
-  ffi.cdef("int setenv(const char *name, const char *value, int overwrite);")
-  ffi.C.setenv("MOZ_LOG", "timestamp,sync,nsHttp:3", 1)
-end
-
 local function start_geckodriver(firefox)
   firefox.geckodriver = Geckodriver.new(firefox)
   firefox.geckodriver:start()
@@ -172,22 +165,13 @@ local function apply_options(firefox, options)
   options = options or {}
 
   firefox.loop = cqueues.new()
-  firefox.loop:wrap(function()
-    while true do
-      if firefox.geckodriver then
-        firefox.geckodriver:log_outputs()
-      end
-      firefox.loop:sleep(0.1)
-    end
-  end)
-
   firefox.logger = Logger.new(options.logger)
 
   local host = options.host or DEFAULT_HOST
   local port = options.port or DEFAULT_PORT
   local post_request_hook = function()
     if firefox.geckodriver then
-      firefox.geckodriver:log_outputs()
+      firefox.geckodriver:wait_log()
     end
   end
 

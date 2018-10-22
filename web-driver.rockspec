@@ -23,10 +23,10 @@ dependencies = {
   "inspect",
   "lbase64",
   "lua-log",
-  "luasocket",
   "luautf8",
   "lunajson",
-  "process",
+  "lunix",
+  "spawn",
 }
 source = {
   url = "https://gitlab.com/clear-code/" .. project_name .. "/-/archive/" .. package_version .. "/" .. project_name .. "-" .. package_version .. ".zip",
