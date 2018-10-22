@@ -359,15 +359,7 @@ function methods:spawn()
   self:start_log_correctors()
 end
 
-function methods:kill_process(force)
-  local pid, signal
-  if force then
-    pid = -self.process.id
-    signal = unix.SIGKILL
-  else
-    pid = self.process.id
-    signal = unix.SIGTERM
-  end
+function methods:kill_process_raw(pid, signal)
   local success, why = pcall(unix.kill, pid, signal)
   if not success then
     local message = string.format("%s: Failed to kill process: <%d>: <%d>: %s",
@@ -378,6 +370,16 @@ function methods:kill_process(force)
     self.firefox.logger:error(message)
     self.firefox.logger:traceback("error")
     error(message)
+  end
+end
+
+function methods:kill_process(force)
+  local pid, signal
+  if force then
+    self:kill_process_raw(-self.process.id, unix.SIGKILL)
+    self:kill_process_raw(self.process.id, unix.SIGKILL)
+  else
+    self:kill_process_raw(self.process.id, unix.SIGTERM)
   end
 end
 
