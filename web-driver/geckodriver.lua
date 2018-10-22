@@ -124,9 +124,22 @@ function methods:process_firefox_http_log(message)
 end
 
 function methods:log_firefox_line(prefix, context, line)
+  local utc = true
   local year, month, day, hour, minute, second, micro_second, log_context, firefox_log_level, firefox_component, message =
     line:match("^(%d+)-(%d+)-(%d+) (%d+):(%d+):(%d+)%.(%d+) UTC %- " ..
                  "%[([^%]]+)%]: (.)/([^ ]+) (.*)$")
+  local log_level = nil
+  if not year then
+    year, month, day, hour, minute, second, milli_second, log_context, message =
+      line:match("^(%d+)-(%d+)-(%d+) (%d+):(%d+):(%d+)%.(%d+) ([^%[]+)" ..
+                   "%[([^%]]+)%] (.*)$")
+    if year then
+      utc = false
+      micro_second = milli_second * 1000
+      log_level = self.firefox.logger:level()
+      firefox_component = "unknown"
+    end
+  end
   if year then
     -- TODO: Convert UTC to local time
     local time = {
@@ -142,7 +155,9 @@ function methods:log_firefox_line(prefix, context, line)
     local component = string.format("Firefox: %s: %s",
                                     log_context,
                                     firefox_component)
-    local log_level = log_level_from_firefox(firefox_log_level)
+    if not log_level then
+      log_level = log_level_from_firefox(firefox_log_level)
+    end
     if log_level == LogLevel.INFO and firefox_component == "nsHttp" then
       self:process_firefox_http_log(message)
     end
