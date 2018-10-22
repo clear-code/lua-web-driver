@@ -173,7 +173,7 @@ function methods:log_firefox_line(prefix, context, line)
                                                last.component,
                                                line))
   else
-    self.firefox.logger:log(self.firefox.logger:level(),
+    self.firefox.logger:log(LogLevel.DEBUG,
                             format_log_message(prefix,
                                                0,
                                                "Firefox",
