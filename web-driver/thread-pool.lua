@@ -28,11 +28,10 @@ function methods:join()
         self.consumers[i]:join()
       end
     end
-    self.loop:wrap(function()
-      local logger = socket.connect(self.log_receiver_host,
-                                    self.log_receiver_port)
-      logger:close()
-    end)
+    local logger = socket.connect(self.log_receiver_host,
+                                  self.log_receiver_port)
+    cqueues.poll(logger)
+    logger:close()
   end)
   local success, why, error_context = self.loop:loop()
   if not success then
