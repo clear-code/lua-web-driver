@@ -42,6 +42,8 @@ function methods:spawn()
     for i, arg in ipairs(self.arguments) do
       table.insert(args, arg)
     end
+    stdout:close()
+    stderr:close()
     local dev_null = io.open("/dev/null", "r")
     unix.dup2(unix.fileno(dev_null), 0)
     unix.dup2(unix.fileno(child_stdout), 1)
