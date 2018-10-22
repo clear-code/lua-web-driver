@@ -4,7 +4,7 @@ stages:
 
 variables:
   GECKODRIVER_VERSION: "0.23.0"
-  # LUA_WEB_DRIVER_LOG_LEVEL: "trace"
+  LUA_WEB_DRIVER_LOG_LEVEL: "notice"
 
 test-centos7:
   image: centos:7
