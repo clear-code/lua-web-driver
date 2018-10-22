@@ -131,8 +131,7 @@ function methods:log_firefox_line(prefix, context, line)
   local log_level = nil
   if not year then
     year, month, day, hour, minute, second, milli_second, log_context, message =
-      line:match("^(%d+)-(%d+)-(%d+) (%d+):(%d+):(%d+)%.(%d+) ([^%[]+)" ..
-                   "%[([^%]]+)%] (.*)$")
+      line:match("^(%d+)-(%d+)-(%d+) (%d+):(%d+):(%d+)%.(%d+) ([^ ]+) (.*)$")
     if year then
       utc = false
       micro_second = milli_second * 1000
@@ -141,7 +140,7 @@ function methods:log_firefox_line(prefix, context, line)
     end
   end
   if year then
-    -- TODO: Convert UTC to local time
+    -- TODO: Convert UTC to local time if utc == true
     local time = {
       year = tonumber(year),
       month = tonumber(month),
