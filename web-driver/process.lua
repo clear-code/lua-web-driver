@@ -46,6 +46,7 @@ function methods:spawn()
     unix.dup2(unix.fileno(dev_null), 0)
     unix.dup2(unix.fileno(child_stdout), 1)
     unix.dup2(unix.fileno(child_stderr), 2)
+    unix.setsid()
     unix.execvp(self.command, args)
     unix._exit(1)
   end
