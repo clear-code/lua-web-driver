@@ -59,6 +59,8 @@ end)
 
 It's a alias of [`web-driver.ElementSet:texts()`][elementset-texts].
 
+It's the only difference that type of return value is a string.
+
 ### `texts() -> table` {#texts}
 
 It returns text elements of the myself as a table.

@@ -59,6 +59,8 @@ end)
 
 [`web-driver.ElementSet:texts()`][elementset-texts]のエイリアスです。
 
+戻り値の型が文字列であることが唯一の違いです。
+
 ### `texts() -> table` {#texts}
 
 自分自身のテキスト要素をテーブルとして返します。

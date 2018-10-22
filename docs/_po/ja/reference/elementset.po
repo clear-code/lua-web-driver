@@ -106,6 +106,9 @@ msgstr ""
 msgid "It's a alias of [`web-driver.ElementSet:texts()`][elementset-texts]."
 msgstr "[`web-driver.ElementSet:texts()`][elementset-texts]のエイリアスです。"
 
+msgid "It's the only difference that type of return value is a string."
+msgstr "戻り値の型が文字列であることが唯一の違いです。"
+
 msgid "### `texts() -> table` {#texts}"
 msgstr ""
 
