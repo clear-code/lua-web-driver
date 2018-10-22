@@ -115,12 +115,11 @@ function methods:run()
   self.loop:wrap(function()
     self:accept_jobs()
   end)
-  local success, why, context = self.loop:loop()
+  local success, why = self.loop:loop()
   if not success then
-    local message = string.format("%s: Failed to run loop: %s: <%s>",
+    local message = string.format("%s: Failed to run loop: %s",
                                   JobQueue.log_prefix,
-                                  why,
-                                  pp.format(context))
+                                  why)
     io.stderr:write(message .. "\n")
     self.logger:error(message)
   end

@@ -277,13 +277,12 @@ function methods:wait_log()
     if type(ready) ~= "table" then
       break
     end
-    local success, why, error_context = self.firefox.loop:step()
+    local success, why = self.firefox.loop:step()
     if not success then
-      local message = string.format("%s: %s: %s: %s",
+      local message = string.format("%s: %s: %s",
                                     Geckodriver.log_prefix,
                                     "Failed to wait log",
-                                    why,
-                                    error_context)
+                                    why)
       self.firefox.logger:error(message)
     end
   end
@@ -298,15 +297,14 @@ function methods:check_process_status(wait)
   local status, exit_code = self.process:check(wait)
   if status ~= "running" then
     while self.process.stdout or self.process.stderr do
-      local success, why, error_context = self.firefox.loop:loop()
+      local success, why = self.firefox.loop:loop()
       if success then
         break
       end
-      local message = string.format("%s: %s: %s: %s",
+      local message = string.format("%s: %s: %s",
                                     Geckodriver.log_prefix,
                                     "Failed to wait log on exit",
-                                    why,
-                                    error_context)
+                                    why)
       self.firefox.logger:error(message)
     end
   end
@@ -323,13 +321,12 @@ function methods:kill()
     if exit_code then
       return
     end
-    local success, why, error_context = self.firefox.loop:loop(sleep_per_try)
+    local success, why = self.firefox.loop:loop(sleep_per_try)
     if not success then
-      local message = string.format("%s: %s: %s: %s",
+      local message = string.format("%s: %s: %s",
                                     Geckodriver.log_prefix,
                                     "Failed to wait stopping geckodriver",
-                                    why,
-                                    error_context)
+                                    why)
       self.firefox.logger:error(message)
     end
   end
@@ -369,26 +366,24 @@ function methods:ensure_running()
       done = true
     end)
     while not done do
-      local success, why, error_context = self.firefox.loop:step()
+      local success, why = self.firefox.loop:step()
       if not success then
-        local message = string.format("%s: %s: %s: %s",
+        local message = string.format("%s: %s: %s",
                                       Geckodriver.log_prefix,
                                       "Failed to connect to geckodriver",
-                                      why,
-                                      error_context)
+                                      why)
         self.firefox.logger:error(message)
       end
     end
     if connected then
       return true
     end
-    local success, why, error_context = self.firefox.loop:loop(sleep_per_try)
+    local success, why = self.firefox.loop:loop(sleep_per_try)
     if not success then
-      local message = string.format("%s: %s: %s: %s",
+      local message = string.format("%s: %s: %s",
                                     Geckodriver.log_prefix,
                                     "Failed to wait running geckodriver",
-                                    why,
-                                    error_context)
+                                    why)
       self.firefox.logger:error(message)
     end
   end

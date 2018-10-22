@@ -31,7 +31,12 @@ function methods:_request(method, url, options)
     done = true
   end)
   while not done do
-    self.loop:step()
+    local success, why = self.loop:step()
+    if not success then
+      self.logger:error(string.format("%s: Failed to wait request: %s",
+                                      Client.log_prefix,
+                                      why))
+    end
   end
   if not response_headers then
     local why = response_stream

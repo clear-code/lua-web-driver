@@ -33,13 +33,12 @@ function methods:join()
     cqueues.poll(logger)
     logger:close()
   end)
-  local success, why, error_context = self.loop:loop()
+  local success, why = self.loop:loop()
   if not success then
-    self.logger:error(string.format("%s: %s: %s: %s",
+    self.logger:error(string.format("%s: %s: %s",
                                     "web-driver: pool",
                                     "Failed to run loop",
-                                    why,
-                                    pp.format(error_context)))
+                                    why))
     self.logger.traceback("error")
   end
 end

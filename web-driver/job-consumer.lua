@@ -61,13 +61,12 @@ function methods:process_job(job)
                                       pp.format(job)))
     end
   end)
-  local loop_success, why, error_context = loop:loop()
+  local loop_success, why = loop:loop()
   if not loop_success then
-    self.logger:error(string.format("%s: consumer: %s: %s: %s",
+    self.logger:error(string.format("%s: consumer: %s: %s",
                                     self:log_prefix(),
                                     "Failed to run loop",
-                                    why,
-                                    error_context))
+                                    why))
   end
   return success
 end
