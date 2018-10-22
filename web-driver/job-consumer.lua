@@ -35,7 +35,9 @@ end
 
 function methods:process_job(job)
   local success = true
-  local loop = self.driver.loop
+  local loop = self.loop
+  -- TODO:
+  -- local loop = self.driver.loop
   local context = {
     id = self.id,
     loop = loop,
@@ -128,6 +130,7 @@ function JobConsumer.new(pipe,
                          producer_port,
                          consumer)
   local job_consumer = {
+    loop = cqueues.new(),
     pipe = pipe,
     id = id,
     log_receiver_host = log_receiver_host,
