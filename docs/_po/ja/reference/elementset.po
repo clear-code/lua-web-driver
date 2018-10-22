@@ -159,6 +159,9 @@ msgid ""
 "nd the second argument is the element to be inserted."
 msgstr "2番目の引数がnilでない場合hあ、最初の引数が挿入位置、2番目の引数が挿入される要素になります。"
 
+msgid "If you don't specify the insert position, element is added on to the end."
+msgstr "挿入位置を指定しない場合、要素は最後に追加されます。"
+
 msgid ""
 "  local p = session:css_select('p')\n"
 "  local checkbox = session:find_element(\"css selector\", 'input[name=cheese]')\n"

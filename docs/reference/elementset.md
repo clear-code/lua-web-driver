@@ -125,6 +125,8 @@ If the second argument is nil, the first argument is the element to be inserted.
 
 If the second argument is not nil, the first argument is the insert position and the second argument is the element to be inserted.
 
+If you don't specify the insert position, element is added on to the end.
+
 Example:
 
 ```lua
