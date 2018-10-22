@@ -109,7 +109,7 @@ msgstr "[`web-driver.ElementSet:texts()`][elementset-texts]のエイリアスで
 msgid "It's the only difference that type of return value is a string."
 msgstr "戻り値の型が文字列であることが唯一の違いです。"
 
-msgid "### `texts() -> table` {#texts}"
+msgid "### `texts() -> {element[1].text(), element[2].text(), ...}` {#texts}"
 msgstr ""
 
 msgid "It returns text elements of the myself as a table."

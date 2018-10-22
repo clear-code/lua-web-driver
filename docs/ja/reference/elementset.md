@@ -61,7 +61,7 @@ end)
 
 戻り値の型が文字列であることが唯一の違いです。
 
-### `texts() -> table` {#texts}
+### `texts() -> {element[1].text(), element[2].text(), ...}` {#texts}
 
 自分自身のテキスト要素をテーブルとして返します。
 
