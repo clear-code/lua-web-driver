@@ -76,10 +76,12 @@ function methods:process_firefox_http_log(message)
         message:match("^  ([^ ]+) ([^ ]+) ")
     else
       local name, value = message:match("^  ([^:]+): (.*)$")
-      if name:lower() == "host" then
-        last_connection_log.host = value
+      if name then
+        if name:lower() == "host" then
+          last_connection_log.host = value
+        end
+        last_connection_log.request_headers[name] = value
       end
-      last_connection_log.request_headers[name] = value
     end
   elseif self.log_context.firefox.in_http_response then
     local last_connection_log = self.connection_logs[#self.connection_logs]
