@@ -24,6 +24,13 @@ local function crawler(context)
   local prefix = url:match("^https?://[^/]+/")
   logger:debug("Opening...: " .. url)
   session:navigate_to(url)
+  local status_code = session:status_code()
+  if status_code and status_code ~= 200 then
+    logger:notice(string.format("%s: Error: %d",
+                                url,
+                                status_code))
+    return
+  end
   logger:notice(string.format("%s: Title: %s",
                               url,
                               session:title()))
