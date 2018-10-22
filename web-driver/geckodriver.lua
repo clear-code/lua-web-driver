@@ -299,9 +299,7 @@ function methods:check_process_status(wait)
   if status ~= "running" then
     while self.process.stdout or self.process.stderr do
       local success, why, error_context = self.firefox.loop:loop()
-      if success then
-        break
-      else
+      if not success then
         local message = string.format("%s: %s: %s: %s",
                                       Geckodriver.log_prefix,
                                       "Failed to wait log on exit",
@@ -309,6 +307,7 @@ function methods:check_process_status(wait)
                                       error_context)
         self.firefox.logger:error(message)
       end
+      break
     end
   end
   return status, exit_code
