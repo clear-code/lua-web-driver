@@ -35,15 +35,16 @@ end
 
 function methods:process_job(job)
   local success = true
+  local loop = self.driver.loop
   local context = {
     id = self.id,
-    loop = self.loop,
+    loop = loop,
     logger = self.logger,
     job_pusher = self.job_pusher,
     session = self.session,
     job = job,
   }
-  self.loop:wrap(function()
+  loop:wrap(function()
     self.logger:debug(string.format("%s: Consuming job: <%s>",
                                     self:log_prefix(),
                                     pp.format(job)))
@@ -60,7 +61,14 @@ function methods:process_job(job)
                                       pp.format(job)))
     end
   end)
-  self.loop:loop()
+  local loop_success, why, error_context = loop:loop()
+  if not loop_success then
+    self.logger:error(string.format("%s: consumer: %s: %s: %s",
+                                    self:log_prefix(),
+                                    "Failed to run loop",
+                                    why,
+                                    error_context))
+  end
   return success
 end
 
@@ -121,7 +129,6 @@ function JobConsumer.new(pipe,
                          producer_port,
                          consumer)
   local job_consumer = {
-    loop = cqueues.new(),
     pipe = pipe,
     id = id,
     log_receiver_host = log_receiver_host,
