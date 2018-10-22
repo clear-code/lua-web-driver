@@ -1,5 +1,3 @@
-local process = require("process")
-
 local LogLevel = {}
 
 LogLevel.EMERGENCY = 1
@@ -25,7 +23,7 @@ function LogLevel.resolve(level)
 end
 
 LogLevel.DEFAULT = LogLevel.NOTICE
-local level_env = process.getenv()["LUA_WEB_DRIVER_LOG_LEVEL"]
+local level_env = os.getenv("LUA_WEB_DRIVER_LOG_LEVEL")
 if level_env then
   LogLevel.DEFAULT = LogLevel.resolve(level_env)
 end

@@ -1,4 +1,3 @@
-local process = require("process")
 local log = require("log")
 
 local LogLevel = require("web-driver/log-level")
@@ -11,8 +10,7 @@ local Logger = {}
 local methods = {}
 local metatable = {}
 
-local create_default_logger =
-  (process.getenv()["LUA_WEB_DRIVER_LOG_LEVEL"] ~= nil)
+local create_default_logger = (os.getenv("LUA_WEB_DRIVER_LOG_LEVEL") ~= nil)
 
 function metatable.__index(geckodriver, key)
   return methods[key]
