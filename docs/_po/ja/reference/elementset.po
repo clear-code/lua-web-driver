@@ -157,7 +157,7 @@ msgstr "2番目の引数がnilの場合は、最初の引数が挿入される�
 msgid ""
 "If the second argument is not nil, the first argument is the insert position a"
 "nd the second argument is the element to be inserted."
-msgstr "2番目の引数がnilでない場合hあ、最初の引数が挿入位置、2番目の引数が挿入される要素になります。"
+msgstr "2番目の引数がnilでない場合は、最初の引数が挿入位置、2番目の引数が挿入される要素になります。"
 
 msgid "If you don't specify the insert position, element is added on to the end."
 msgstr "挿入位置を指定しない場合、要素は最後に追加されます。"
