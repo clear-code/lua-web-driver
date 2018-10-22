@@ -314,7 +314,7 @@ function methods:check_process_status(wait)
 end
 
 function methods:kill()
-  local timeout = 5
+  local timeout = 10
   local n_tries = 100
   local sleep_per_try = (timeout / n_tries)
   self.process:kill(false)
