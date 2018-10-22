@@ -109,13 +109,15 @@ msgstr "[`web-driver.ElementSet:texts()`][elementset-texts]のエイリアスで
 msgid "It's the only difference that type of return value is a string."
 msgstr "戻り値の型が文字列であることが唯一の違いです。"
 
-msgid "### `texts() -> {element[1].text(), element[2].text(), ...}` {#texts}"
+msgid "### `texts() -> {elements[1].text(), elements[2].text(), ...}` {#texts}"
 msgstr ""
 
 msgid "It returns text elements of the myself as a table."
 msgstr "自分自身のテキスト要素をテーブルとして返します。"
 
-msgid "### `get_attribute(name) -> table` {#get_attribute}"
+msgid ""
+"### `get_attribute(name) -> {elements[1][\"name\"], elements[2][\"name\"], ...}` {"
+"#get_attribute}"
 msgstr ""
 
 msgid "`name`: Specify the attribute name."

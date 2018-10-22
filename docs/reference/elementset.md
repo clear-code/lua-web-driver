@@ -61,7 +61,7 @@ It's a alias of [`web-driver.ElementSet:texts()`][elementset-texts].
 
 It's the only difference that type of return value is a string.
 
-### `texts() -> {element[1].text(), element[2].text(), ...}` {#texts}
+### `texts() -> {elements[1].text(), elements[2].text(), ...}` {#texts}
 
 It returns text elements of the myself as a table.
 
@@ -88,7 +88,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `get_attribute(name) -> table` {#get_attribute}
+### `get_attribute(name) -> {elements[1]["name"], elements[2]["name"], ...}` {#get_attribute}
 
 `name`: Specify the attribute name.
 

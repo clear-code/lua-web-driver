@@ -61,7 +61,7 @@ end)
 
 戻り値の型が文字列であることが唯一の違いです。
 
-### `texts() -> {element[1].text(), element[2].text(), ...}` {#texts}
+### `texts() -> {elements[1].text(), elements[2].text(), ...}` {#texts}
 
 自分自身のテキスト要素をテーブルとして返します。
 
@@ -88,7 +88,7 @@ driver:start_session(function(session)
 end)
 ```
 
-### `get_attribute(name) -> table` {#get_attribute}
+### `get_attribute(name) -> {elements[1]["name"], elements[2]["name"], ...}` {#get_attribute}
 
 `name`: 属性名を指定します。
 
