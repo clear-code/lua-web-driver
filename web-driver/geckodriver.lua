@@ -135,7 +135,7 @@ function methods:log_firefox_line(prefix, context, line)
     if year then
       utc = false
       micro_second = milli_second * 1000
-      log_level = self.firefox.logger:level()
+      log_level = LogLevel.DEBUG
       firefox_component = "unknown"
     end
   end
