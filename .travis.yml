@@ -25,6 +25,5 @@ matrix:
         - ${LUAROCKS} install luaunit
       script:
         - luajit test/run-test.lua -v
-        - ps axuwww | grep geckodriver
-        - curl -v https://clear-code.gitlab.io/lua-web-driver/
+        - luajit examples/get-text-of-element.lua
         - luajit examples/crawl.lua https://clear-code.gitlab.io/lua-web-driver/
