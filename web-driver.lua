@@ -7,7 +7,7 @@
 -- @license MIT
 local web_driver = {}
 
-web_driver.VERSION = "0.0.7"
+web_driver.VERSION = "0.0.8"
 web_driver.Firefox = require("web-driver/firefox")
 web_driver.ThreadPool = require("web-driver/thread-pool")
 
