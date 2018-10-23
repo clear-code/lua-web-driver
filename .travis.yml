@@ -25,3 +25,4 @@ matrix:
         - ${LUAROCKS} install luaunit
       script:
         - luajit test/run-test.lua -v
+        - luajit examples/crawl.lua https://clear-code.gitlab.io/lua-web-driver/

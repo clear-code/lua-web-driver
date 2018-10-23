@@ -32,10 +32,9 @@ test-centos7:
     - luarocks make web-driver-${VERSION}-0.rockspec
     - rm -rf web-driver.lua web-driver
     - luarocks install luaunit
-    # TODO: Remove me
-    - luarocks install process
   script:
     - luajit test/run-test.lua -v
+    - luajit examples/crawl.lua https://clear-code.gitlab.io/lua-web-driver/
 
 pages:
   image: ruby:2.5
