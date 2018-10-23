@@ -104,8 +104,10 @@ end
 function methods:run()
   self:create_logger()
   self:create_job_pusher()
-  self.pipe:close()
   self:start_session()
+  self.pipe:write("READY\n")
+  self.pipe:flush()
+  self.pipe:close()
   local success, why = pcall(function()
     while self:consume_job() do
       -- Do nothing

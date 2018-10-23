@@ -154,6 +154,7 @@ local function run_consumers(pool)
                    pool.queue_host, pool.queue_port,
                    pool.producer_host, pool.producer_port,
                    pool.consumer)
+    pipe:read("*l")
     pipe:close()
   end
 end
