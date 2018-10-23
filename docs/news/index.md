@@ -4,6 +4,12 @@ title: News
 
 # News
 
+## 0.0.8: 2018-10-23 {#version-0-0-8}
+
+### Fixes
+
+  * Fixed a bug again that multi-thread doesn't work on macOS.
+
 ## 0.0.7: 2018-10-23 {#version-0-0-7}
 
 ### Improvements
