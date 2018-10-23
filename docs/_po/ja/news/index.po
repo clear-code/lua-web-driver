@@ -16,10 +16,28 @@ msgstr ""
 msgid "# News"
 msgstr ""
 
-msgid "## 0.0.6: 2018-10-19 {#version-0-0-6}"
+msgid "## 0.0.7: 2018-10-23 {#version-0-0-7}"
 msgstr ""
 
 msgid "### Improvements"
+msgstr ""
+
+msgid ""
+"  * Supported action:\n"
+"    * [`web-driver.Session:perform_actions()`][session-perform-actions] Added."
+"\n"
+"    * [`web-driver.Session:release_actions()`][session-release-actions] Added."
+"\n"
+"  * [`web-driver.Session:status_code()`][session-status-code] Added."
+msgstr ""
+
+msgid "### Fixes"
+msgstr ""
+
+msgid "  * Fixed a bug that multi-thread doesn't work on macOS."
+msgstr ""
+
+msgid "## 0.0.6: 2018-10-19 {#version-0-0-6}"
 msgstr ""
 
 msgid ""
@@ -70,9 +88,6 @@ msgid "## 0.0.4: 2018-10-16 {#version-0-0-4}"
 msgstr ""
 
 msgid "  * Modified all default timeout to 60s"
-msgstr ""
-
-msgid "### Fixes"
 msgstr ""
 
 msgid "  * Fixed a bug that set a wrong timeout of GET, POST and DELETE request."
@@ -188,6 +203,15 @@ msgid "[session-execute-script]: ../reference/session.html#execute-script"
 msgstr ""
 
 msgid "[session-content-type]: ../reference/session.html#content-type"
+msgstr ""
+
+msgid "[session-perform-actions]: ../reference/session.html#perform-actions"
+msgstr ""
+
+msgid "[session-release-actions]: ../reference/session.html#release-actions"
+msgstr ""
+
+msgid "[session-status-code]: ../reference/session.html#status-code"
 msgstr ""
 
 msgid "[elementset-send_keys]: ../reference/elementset.html#send-keys"

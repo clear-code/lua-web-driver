@@ -4,6 +4,19 @@ title: News
 
 # News
 
+## 0.0.7: 2018-10-23 {#version-0-0-7}
+
+### Improvements
+
+  * Supported action:
+    * [`web-driver.Session:perform_actions()`][session-perform-actions] Added.
+    * [`web-driver.Session:release_actions()`][session-release-actions] Added.
+  * [`web-driver.Session:status_code()`][session-status-code] Added.
+
+### Fixes
+
+  * Fixed a bug that multi-thread doesn't work on macOS.
+
 ## 0.0.6: 2018-10-19 {#version-0-0-6}
 
 ### Improvements
@@ -130,6 +143,12 @@ The first release!!!
 [session-execute-script]: ../reference/session.html#execute-script
 
 [session-content-type]: ../reference/session.html#content-type
+
+[session-perform-actions]: ../reference/session.html#perform-actions
+
+[session-release-actions]: ../reference/session.html#release-actions
+
+[session-status-code]: ../reference/session.html#status-code
 
 [elementset-send_keys]: ../reference/elementset.html#send-keys
 
