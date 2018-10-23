@@ -14,7 +14,7 @@ end
 
 function TestSession:teardown()
   self.server:kill()
-  self.server:wait(true)
+  self.server:check(true)
 end
 
 function TestSession:test_timeouts()
