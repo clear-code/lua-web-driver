@@ -71,6 +71,35 @@ msgid ""
 "```"
 msgstr ""
 
+msgid "### `status_code() -> number` {#status-code}"
+msgstr ""
+
+msgid "It returns an HTTP status code as a number."
+msgstr "HTTPステータスコードを数値として返します。"
+
+msgid ""
+"If request is normally finished, an HTTP status code is 200.\n"
+"If the request isn't normally finished, an HTTP status code is except for 200."
+msgstr "リクエストが正常に終了した場合は、HTTPステータスコードは200です。リクエストが正常に終了しない場合は、HTTPステータスコードは200以外です。"
+
+msgid ""
+"However, this method may fail.\n"
+"Because the WebDriver isn't supported this feature."
+msgstr "ただし、このメソッドは失敗することがあります。WebDriverがこの機能をサポートしていないためです。"
+
+msgid "If this method fail, it returns nil."
+msgstr "このメソッドが失敗した場合は、nilを返します。"
+
+msgid ""
+"driver:start_session(function(session)\n"
+"  session:navigate_to(CORRECT_URL)\n"
+"  local status_code = session:status_code()\n"
+"  print(status_code)\n"
+"  -- 200\n"
+"end)\n"
+"```"
+msgstr ""
+
 msgid "### `url() -> string` {#url}"
 msgstr ""
 

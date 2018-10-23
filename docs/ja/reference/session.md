@@ -38,6 +38,33 @@ driver:start_session(function(session)
 end)
 ```
 
+### `status_code() -> number` {#status-code}
+
+HTTPステータスコードを数値として返します。
+
+リクエストが正常に終了した場合は、HTTPステータスコードは200です。リクエストが正常に終了しない場合は、HTTPステータスコードは200以外です。
+
+ただし、このメソッドは失敗することがあります。WebDriverがこの機能をサポートしていないためです。
+
+このメソッドが失敗した場合は、nilを返します。
+
+例:
+
+```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+driver:start_session(function(session)
+  session:navigate_to(CORRECT_URL)
+  local status_code = session:status_code()
+  print(status_code)
+  -- 200
+end)
+```
+
 ### `url() -> string` {#url}
 
 現在のWebサイトのURLを文字列として返します。
