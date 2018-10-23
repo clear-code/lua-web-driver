@@ -57,6 +57,7 @@ end
 -- @function Session:navigate_to
 function methods:navigate_to(url)
   self.client:navigate_to(url)
+  self.last_status_code = nil
   local host, path = url:match("^[^:]+://([^/]+)([^#]+)")
   local i, log
   for i, log in ipairs(self.driver:connection_logs()) do
