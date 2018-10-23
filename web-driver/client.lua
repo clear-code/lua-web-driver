@@ -25,19 +25,7 @@ function methods:_request(method, url, options)
     req:set_body(lunajson.encode(options.data))
   end
   local response_headers, response_stream
-  local done = false
-  self.loop:wrap(function()
-    response_headers, response_stream = req:go(options.timeout)
-    done = true
-  end)
-  while not done do
-    local success, why = self.loop:step()
-    if not success then
-      self.logger:error(string.format("%s: Failed to wait request: %s",
-                                      Client.log_prefix,
-                                      why))
-    end
-  end
+  response_headers, response_stream = req:go(options.timeout)
   if not response_headers then
     local why = response_stream
     local message = string.format("%s: Failed to request: %s",

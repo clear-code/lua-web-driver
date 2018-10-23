@@ -35,40 +35,27 @@ end
 
 function methods:process_job(job)
   local success = true
-  local loop = self.loop
-  -- TODO:
-  -- local loop = self.driver.loop
   local context = {
     id = self.id,
-    loop = loop,
     logger = self.logger,
     job_pusher = self.job_pusher,
     session = self.session,
     job = job,
   }
-  loop:wrap(function()
-    self.logger:debug(string.format("%s: Consuming job: <%s>",
+  self.logger:debug(string.format("%s: Consuming job: <%s>",
+                                  self:log_prefix(),
+                                  pp.format(job)))
+  local why
+  success, why = pcall(self.consumer, context)
+  self.logger:debug(string.format("%s: Consumed job: <%s>: <%s>",
+                                  self:log_prefix(),
+                                  success,
+                                  pp.format(job)))
+  if not success then
+    self.logger:error(string.format("%s: consumer: Error: %s: <%s>",
                                     self:log_prefix(),
+                                    why,
                                     pp.format(job)))
-    local why
-    success, why = pcall(self.consumer, context)
-    self.logger:debug(string.format("%s: Consumed job: <%s>: <%s>",
-                                    self:log_prefix(),
-                                    success,
-                                    pp.format(job)))
-    if not success then
-      self.logger:error(string.format("%s: consumer: Error: %s: <%s>",
-                                      self:log_prefix(),
-                                      why,
-                                      pp.format(job)))
-    end
-  end)
-  local loop_success, why = loop:loop()
-  if not loop_success then
-    self.logger:error(string.format("%s: consumer: %s: %s",
-                                    self:log_prefix(),
-                                    "Failed to run loop",
-                                    why))
   end
   return success
 end
@@ -88,13 +75,12 @@ function methods:consume_job()
   return continue
 end
 
-function methods:start_session()
+function methods:create_driver()
   local options = {
     port = 4444 + self.id,
     logger = self.logger,
   }
   self.driver = Firefox.new(options)
-  self.session = self.driver:start_session()
 end
 
 function methods:stop_session()
@@ -104,27 +90,29 @@ end
 function methods:run()
   self:create_logger()
   self:create_job_pusher()
-  self:start_session()
-  self.pipe:write("READY\n")
-  self.pipe:flush()
-  self.pipe:shutdown("w")
-  local pipe_read_pollable = {
-    pollfd = function() return self.pipe:pollfd() end,
-    events = function() return "r" end,
-  }
-  cqueues.poll(pipe_read_pollable)
-  self.pipe:close()
-  local success, why = pcall(function()
-    while self:consume_job() do
-      -- Do nothing
+  self:create_driver()
+  self.driver:start_session(function(session)
+    self.session = session
+    self.pipe:write("READY\n")
+    self.pipe:flush()
+    self.pipe:shutdown("w")
+    local pipe_read_pollable = {
+      pollfd = function() return self.pipe:pollfd() end,
+      events = function() return "r" end,
+    }
+    cqueues.poll(pipe_read_pollable)
+    self.pipe:close()
+    local success, why = pcall(function()
+      while self:consume_job() do
+        -- Do nothing
+      end
+    end)
+    if not success then
+      self.logger:error(string.format("%s: Error in consume loop: %s",
+                                      self:log_prefix(),
+                                      why))
     end
   end)
-  if not success then
-    self.logger:error(string.format("%s: Error in consume loop: %s",
-                                    self:log_prefix(),
-                                    why))
-  end
-  self:stop_session()
 end
 
 function JobConsumer.new(pipe,

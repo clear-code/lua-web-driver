@@ -10,6 +10,7 @@ local LogLevel = require("web-driver/log-level")
 local Logger = require("web-driver/logger")
 
 local Firefox = {}
+Firefox.log_prefix = "web-driver: Firefox"
 
 local methods = {}
 local metatable = {}
@@ -86,33 +87,51 @@ local function stop_geckodriver(firefox)
 end
 
 function methods:start_session(callback)
-  start_geckodriver(self)
-  local success
-  local session
-  local return_value
-  local why
-  local options = {
-    delete_hook = function()
+  local success = true
+  local why = nil
+  local session = nil
+  local return_value = nil
+  self.loop:wrap(function()
+    start_geckodriver(self)
+    local options = {
+      delete_hook = function()
+        stop_geckodriver(self)
+      end
+    }
+    success, session = pcall(Session.new, self, options)
+    if success then
+      if callback then
+        success, return_value = pcall(callback, session)
+        if not success then
+          why = return_value
+        end
+        pcall(function() session:delete() end)
+        session = nil
+      else
+        return_value = session
+      end
+    else
+      why = session
       stop_geckodriver(self)
     end
-  }
-  success, session = pcall(Session.new, self, options)
-  if success then
-    if callback then
-      success, return_value = pcall(callback, session)
-      if not success then
-        why = return_value
-      end
-      pcall(function() session:delete() end)
+  end)
+  local loop_success, loop_why = self.loop:loop()
+  if not loop_success then
+    self.logger:error(string.format("%s: %s: %s",
+                                    Firefox.log_prefix,
+                                    "Failed to run loop for session",
+                                    loop_why))
+    if session then
+      session:delete()
     else
-      return_value = session
+      stop_geckodriver(self)
     end
-  else
-    why = session
-    stop_geckodriver(self)
   end
   if not success then
-    self.logger:error("web-driver: Firefox:start_session: " .. why)
+    self.logger:error(string.format("%s: %s: %s",
+                                      Firefox.log_prefix,
+                                      "Failed in session",
+                                      why))
     self.logger:traceback("error")
     error(why)
   end

@@ -220,6 +220,7 @@ function methods:correct_log(input_type)
     if type(ready) == "table" then
       local line = input:read("*l")
       if not line then
+        cqueues.cancel(pollable)
         input:close()
         break
       end
@@ -227,9 +228,9 @@ function methods:correct_log(input_type)
                     self.log_context[input_type],
                     line)
     else
-      if not self.process.id then
-        break
-      end
+      cqueues.cancel(pollable)
+      input:close()
+      break
     end
   end
 end
@@ -241,6 +242,8 @@ function methods:clear_connection_logs()
 end
 
 function methods:start_log_correctors()
+  -- self.stdout_condition = condition.new()
+  -- self.stderr_condition = condition.new()
   self.firefox.loop:wrap(function()
     local success, why = pcall(function() self:correct_log("stdout") end)
     self.process.stdout = nil
@@ -279,14 +282,6 @@ function methods:wait_log()
     if type(ready) ~= "table" then
       break
     end
-    local success, why = self.firefox.loop:step()
-    if not success then
-      local message = string.format("%s: %s: %s",
-                                    Geckodriver.log_prefix,
-                                    "Failed to wait log",
-                                    why)
-      self.firefox.logger:error(message)
-    end
     timeout = 0
   end
 end
@@ -298,19 +293,6 @@ end
 
 function methods:check_process_status(wait)
   local status, exit_code = self.process:check(wait)
-  if status ~= "running" then
-    while self.process.stdout or self.process.stderr do
-      local success, why = self.firefox.loop:loop()
-      if success then
-        break
-      end
-      local message = string.format("%s: %s: %s",
-                                    Geckodriver.log_prefix,
-                                    "Failed to wait log on exit",
-                                    why)
-      self.firefox.logger:error(message)
-    end
-  end
   return status, exit_code
 end
 
@@ -320,18 +302,11 @@ function methods:kill()
   local sleep_per_try = (timeout / n_tries)
   self.process:kill(false)
   for i = 1, n_tries do
-    local status, exit_code = self:check_process_status(false)
+    local status, exit_code = self:check_process_status()
     if exit_code then
       return
     end
-    local success, why = self.firefox.loop:loop(sleep_per_try)
-    if not success then
-      local message = string.format("%s: %s: %s",
-                                    Geckodriver.log_prefix,
-                                    "Failed to wait stopping geckodriver",
-                                    why)
-      self.firefox.logger:error(message)
-    end
+    cqueues.sleep(sleep_per_try)
   end
 
   self.process:kill(true)
@@ -360,34 +335,10 @@ function methods:ensure_running()
     end
     local done = false
     local connected = false
-    self.firefox.loop:wrap(function()
-      local headers, stream = request:go()
-      if headers then
-        connected = true
-        stream:shutdown()
-      end
-      done = true
-    end)
-    while not done do
-      local success, why = self.firefox.loop:step()
-      if not success then
-        local message = string.format("%s: %s: %s",
-                                      Geckodriver.log_prefix,
-                                      "Failed to connect to geckodriver",
-                                      why)
-        self.firefox.logger:error(message)
-      end
-    end
-    if connected then
-      return true
-    end
-    local success, why = self.firefox.loop:loop(sleep_per_try)
-    if not success then
-      local message = string.format("%s: %s: %s",
-                                    Geckodriver.log_prefix,
-                                    "Failed to wait running geckodriver",
-                                    why)
-      self.firefox.logger:error(message)
+    local headers, stream = request:go()
+    if headers then
+      stream:shutdown()
+      return
     end
   end
 
