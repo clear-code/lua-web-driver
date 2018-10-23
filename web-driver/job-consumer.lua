@@ -107,6 +107,7 @@ function methods:run()
   self:start_session()
   self.pipe:write("READY\n")
   self.pipe:flush()
+  self.pipe:shutdown("w")
   local pipe_read_pollable = {
     pollfd = function() return self.pipe:pollfd() end,
     events = function() return "r" end,
