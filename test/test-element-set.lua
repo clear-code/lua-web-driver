@@ -12,6 +12,7 @@ end
 
 function TestElementSet:teardown()
   self.server:kill()
+  self.server:wait(true)
 end
 
 function TestElementSet:test_css_select()

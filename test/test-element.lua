@@ -13,6 +13,7 @@ end
 
 function TestElement:teardown()
   self.server:kill()
+  self.server:wait(true)
 end
 
 function TestElement:test_get_attribute()
