@@ -264,8 +264,8 @@ end
 function methods:wait_log()
   local stdout_pollable = create_pollable(self.process.stdout)
   local stderr_pollable = create_pollable(self.process.stderr)
+  local timeout = 0.1
   while true do
-    local timeout = 0.1
     local ready = nil
     if self.process.stdout and self.process.stderr then
       ready = cqueues.poll(stdout_pollabel, stderr_pollable, timeout)
@@ -285,6 +285,7 @@ function methods:wait_log()
                                     why)
       self.firefox.logger:error(message)
     end
+    timeout = 0
   end
 end
 
