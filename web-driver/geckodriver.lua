@@ -99,7 +99,9 @@ function methods:process_firefox_http_log(message)
         response_headers = last_connection_log.response_headers
       end
       local name, value = message:match("^  ([^:]+): (.*)$")
-      response_headers[name] = value
+      if response_headers then
+        response_headers[name] = value
+      end
     end
   else
     if message == "http request [" then
