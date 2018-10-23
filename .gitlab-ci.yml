@@ -34,7 +34,7 @@ test-centos7:
     - luarocks install luaunit
   script:
     - luajit test/run-test.lua -v
-    - luajit examples/crawl.lua https://clear-code.gitlab.io/lua-web-driver/
+    - luajit examples/crawl.lua https://clear-code.gitlab.io/lua-web-driver/ debug
 
 pages:
   image: ruby:2.5
