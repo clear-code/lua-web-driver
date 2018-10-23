@@ -107,6 +107,11 @@ function methods:run()
   self:start_session()
   self.pipe:write("READY\n")
   self.pipe:flush()
+  local pipe_read_pollable = {
+    pollfd = function() return self.pipe:pollfd() end,
+    events = function() return "r" end,
+  }
+  cqueues.poll(pipe_read_pollable)
   self.pipe:close()
   local success, why = pcall(function()
     while self:consume_job() do
