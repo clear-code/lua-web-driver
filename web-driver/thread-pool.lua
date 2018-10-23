@@ -181,7 +181,9 @@ function ThreadPool.new(consumer, options)
   setmetatable(pool, metatable)
   create_log_receiver(pool)
   create_queue(pool)
-  run_consumers(pool)
+  pool.loop:wrap(function()
+    run_consumers(pool)
+  end)
   return pool
 end
 
