@@ -1,7 +1,7 @@
 title: LuaWebDriver
 markdown: kramdown
 highlighter: rouge
-version: 0.0.7
+version: 0.0.8
 release_date: 2018-10-23
 copyright_year: 2018
 geckodriver_version: 0.23.0
