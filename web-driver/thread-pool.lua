@@ -155,6 +155,11 @@ local function run_consumers(pool)
                    pool.producer_host, pool.producer_port,
                    pool.consumer)
     pipe:shutdown("w")
+    local pipe_read_pollable = {
+      pollfd = function() return pipe:pollfd() end,
+      events = function() return "r" end,
+    }
+    cqueues.poll(pipe_read_pollable)
     pipe:read("*l")
     pipe:close()
   end
