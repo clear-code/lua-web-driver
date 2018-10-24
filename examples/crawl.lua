@@ -6,6 +6,8 @@ if #arg < 1 then
   os.exit(1)
 end
 
+print("LuaWebDriver: " .. web_driver.VERSION)
+
 local url = arg[1]
 local log_level = arg[2] or "notice"
 local n_threads = arg[3]
