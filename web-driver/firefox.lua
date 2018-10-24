@@ -129,9 +129,9 @@ function methods:start_session(callback)
   end
   if not success then
     self.logger:error(string.format("%s: %s: %s",
-                                      Firefox.log_prefix,
-                                      "Failed in session",
-                                      why))
+                                    Firefox.log_prefix,
+                                    "Failed in session",
+                                    why))
     self.logger:traceback("error")
     error(why)
   end
