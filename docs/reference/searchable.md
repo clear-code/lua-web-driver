@@ -20,25 +20,8 @@ You can specify how to search the element as below.
 
 ### `search(xpath) -> web-driver.ElementSet` {#search}
 
-It searches elements by XPath and returns as [`web-driver.ElementSet`][elementset] object.
-
-Example:
-
-```lua
-local web_driver = require("web-driver")
-local driver = web_driver.Firefox.new()
-
-local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/"
-
-driver:start_session(function(session)
-  session:navigate_to(URL)
-
-  local elements = session:search('/html/body/p')
-  print(elements[1]:text())
-  -- 1
-end)
-```
+It's an alias of [`xpath_search`][xpath-search].
+This method exist fot compatibility with [`XMLua.Searchable:search()`][xmlua-searchable-search]
 
 ### `css_select(selectors) -> web-driver.ElementSet` {#css-selector-search}
 
@@ -68,7 +51,25 @@ end)
 
 ### `xpath_search(xpath) -> web-driver.ElementSet` {#xpath-search}
 
-It's an alias of [`search`][search].
+It searches elements by XPath and returns as [`web-driver.ElementSet`][elementset] object.
+
+Example:
+
+```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+driver:start_session(function(session)
+  session:navigate_to(URL)
+
+  local elements = session:search('/html/body/p')
+  print(elements[1]:text())
+  -- 1
+end)
+```
 
 ### `link_serach(text) -> web-driver.ElementSet` {#link-search}
 
@@ -145,9 +146,13 @@ end)
   * [`web-driver.ElementSet`][elementset]: The class for multiple elements.
 
 
+[xmlua-searchable-search]:https://clear-code.github.io/xmlua/ja/reference/searchable.html#search
+
 [xpath]:https://www.w3.org/TR/xpath/
 
 [search]:#search
+
+[xpath-search]:#xpath-search
 
 [css-selectors]:https://www.w3.org/TR/selectors-3/
 

@@ -20,25 +20,7 @@ title: web-driver.Searchable
 
 ### `search(xpath) -> web-driver.ElementSet` {#search}
 
-XPathを使って要素を検索し[`web-driver.ElementSet`][elementset]オブジェクトとして返します。
-
-例:
-
-```lua
-local web_driver = require("web-driver")
-local driver = web_driver.Firefox.new()
-
-local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/"
-
-driver:start_session(function(session)
-  session:navigate_to(URL)
-
-  local elements = session:search('/html/body/p')
-  print(elements[1]:text())
-  -- 1
-end)
-```
+[`xpath_search`][xpath-search]のエイリアスです。このメソッドは、[`XMLua.Searchable:search()`][xmlua-searchable-search]との互換のためにあります。
 
 ### `css_select(selectors) -> web-driver.ElementSet` {#css-selector-search}
 
@@ -68,7 +50,25 @@ end)
 
 ### `xpath_search(xpath) -> web-driver.ElementSet` {#xpath-search}
 
-[`search`][search]のエイリアスです。
+XPathを使って要素を検索し[`web-driver.ElementSet`][elementset]オブジェクトとして返します。
+
+例:
+
+```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+driver:start_session(function(session)
+  session:navigate_to(URL)
+
+  local elements = session:search('/html/body/p')
+  print(elements[1]:text())
+  -- 1
+end)
+```
 
 ### `link_serach(text) -> web-driver.ElementSet` {#link-search}
 
@@ -145,9 +145,13 @@ end)
   * [`web-driver.ElementSet`][elementset]: 複数の要素を扱うクラスです。
 
 
+[xmlua-searchable-search]:https://clear-code.github.io/xmlua/ja/reference/searchable.html#search
+
 [xpath]:https://www.w3.org/TR/xpath/
 
 [search]:#search
+
+[xpath-search]:#xpath-search
 
 [css-selectors]:https://www.w3.org/TR/selectors-3/
 
