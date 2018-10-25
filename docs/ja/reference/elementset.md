@@ -19,6 +19,7 @@ title: web-driver.ElementSet
 ### `find_elements(strategy, finder) -> web-driver.ElementSet` {#find-elements}
 
 複数の要素をいくつかの検索方法で見つけます。
+しかし、通常はこのメソッドの代わりに[`web-driver.Searchable`][searchable]を使うほうが良いです。
 
 `strategy`: 要素を検索する方法を指定します。引数を以下のように設定できます。
 

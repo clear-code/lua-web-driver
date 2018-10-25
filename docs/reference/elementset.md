@@ -19,6 +19,7 @@ It means that you can use methods in the modules.
 ### `find_elements(strategy, finder) -> web-driver.ElementSet` {#find-elements}
 
 This method is find web elements by some retrieval methods.
+However you should use [`web-driver.Searchable`][searchable] instead of this method normally.
 
 `strategy`: Specify how to search the element. You can set the argument as below.
 
