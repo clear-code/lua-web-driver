@@ -784,6 +784,14 @@ driver:start_session(function(session)
 end)
 ```
 
+### `perform_actions(actions) -> void` {#perform-actions}
+
+`actions`: Specify actions as a table.
+
+This method executes together actions specified as an argument.
+
+You refer to specification of [`WebDriver`][web-driver] about how to make actions.
+
 ### `dismiss_alert() -> void` {#dismiss-alert}
 
 This method push "Cancel" button on the current dialog.
@@ -935,3 +943,5 @@ end)
 [elementset]:elementset.html
 
 [element]:element.html
+
+[web-driver]:https://www.w3.org/TR/webdriver1/#actions

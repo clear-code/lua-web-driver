@@ -727,6 +727,20 @@ msgid ""
 "```"
 msgstr ""
 
+msgid "### `perform_actions(actions) -> void` {#perform-actions}"
+msgstr ""
+
+msgid "`actions`: Specify actions as a table."
+msgstr "`actions`: アクションをテーブルとして指定します。"
+
+msgid "This method executes together actions specified as an argument."
+msgstr "このメソッドは、引数に指定されたアクションをまとめて実行します。"
+
+msgid ""
+"You refer to specification of [`WebDriver`][web-driver] about how to make acti"
+"ons."
+msgstr "アクションの作り方については、[`WebDriver`][web-driver]の仕様を参照して下さい。"
+
 msgid "### `dismiss_alert() -> void` {#dismiss-alert}"
 msgstr ""
 
@@ -856,4 +870,7 @@ msgid "[elementset]:elementset.html"
 msgstr ""
 
 msgid "[element]:element.html"
+msgstr ""
+
+msgid "[web-driver]:https://www.w3.org/TR/webdriver1/#actions"
 msgstr ""

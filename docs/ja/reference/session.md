@@ -777,6 +777,14 @@ driver:start_session(function(session)
 end)
 ```
 
+### `perform_actions(actions) -> void` {#perform-actions}
+
+`actions`: アクションをテーブルとして指定します。
+
+このメソッドは、引数に指定されたアクションをまとめて実行します。
+
+アクションの作り方については、[`WebDriver`][web-driver]の仕様を参照して下さい。
+
 ### `dismiss_alert() -> void` {#dismiss-alert}
 
 現在のダイアログの"Cancel"ボタンを押下します。
@@ -928,3 +936,5 @@ end)
 [elementset]:elementset.html
 
 [element]:element.html
+
+[web-driver]:https://www.w3.org/TR/webdriver1/#actions
