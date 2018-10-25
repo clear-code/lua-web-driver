@@ -741,6 +741,14 @@ msgid ""
 "ons."
 msgstr "アクションの作り方については、[`WebDriver`][web-driver]の仕様を参照して下さい。"
 
+msgid "### `release_actions() -> void` {#release-actions}"
+msgstr ""
+
+msgid ""
+"This method release all the keys and pointer buttons that are currently depres"
+"sed."
+msgstr "このメソッドは、現在押されている全てのキー、ポインタのボタンを離します。"
+
 msgid "### `dismiss_alert() -> void` {#dismiss-alert}"
 msgstr ""
 

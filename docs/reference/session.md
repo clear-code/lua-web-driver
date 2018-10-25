@@ -792,6 +792,10 @@ This method executes together actions specified as an argument.
 
 You refer to specification of [`WebDriver`][web-driver] about how to make actions.
 
+### `release_actions() -> void` {#release-actions}
+
+This method release all the keys and pointer buttons that are currently depressed.
+
 ### `dismiss_alert() -> void` {#dismiss-alert}
 
 This method push "Cancel" button on the current dialog.

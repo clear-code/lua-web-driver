@@ -785,6 +785,10 @@ end)
 
 アクションの作り方については、[`WebDriver`][web-driver]の仕様を参照して下さい。
 
+### `release_actions() -> void` {#release-actions}
+
+このメソッドは、現在押されている全てのキー、ポインタのボタンを離します。
+
 ### `dismiss_alert() -> void` {#dismiss-alert}
 
 現在のダイアログの"Cancel"ボタンを押下します。
