@@ -302,7 +302,7 @@ function methods:kill()
   local sleep_per_try = (timeout / n_tries)
   self.process:kill(false)
   for i = 1, n_tries do
-    local status, exit_code = self:check_process_status()
+    local status, exit_code = self:check_process_status(false)
     if exit_code then
       return
     end
