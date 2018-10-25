@@ -283,6 +283,111 @@ driver:start_session(function(session)
 end)
 ```
 
+## Logger {#logger}
+
+LuaWebDriver has used [`lua-log`][lua-log] to the logger.
+
+You can use the same logger object as the caller by making the logger object at the caller and passing the logger object to as an argument [`web-driver.Firefox.new()`][firefox-new].
+
+You can use log level below.
+* emergency
+* alert
+* fatal
+* error
+* warning
+* notice
+* info
+* debug
+* trace
+
+The above log level specifies as a string.
+
+Example:
+
+```
+local web_driver = require("web-driver")
+local log = require("log")
+
+
+local logger = log.new("trace")
+local options = { logger = logger }
+local driver = web_driver.Firefox.new(options)
+
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+driver:start_session(function(session)
+  session:navigate_to(URL)
+end)
+```
+
+If you use LuaWebDriver with multi-thread, pass the logger object to as an argument of a [`web-driver.ThreadPool.new()`][thread-pool-new].
+
+Example:
+
+```
+local web_driver = require("web-driver")
+local log = require("log")
+
+local url =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+local log_level = "trace"
+local n_threads = 2
+
+local logger = log.new(log_level)
+local function crawler(context)
+  local logger = context.logger
+  local session = context.session
+  local url = context.job
+  local prefix = url:match("^https?://[^/]+/")
+  logger:debug("Opening...: " .. url)
+  session:navigate_to(url)
+  local status_code = session:status_code()
+  if status_code and status_code ~= 200 then
+    logger:notice(string.format("%s: Error: %d",
+                                url,
+                                status_code))
+    return
+  end
+  logger:notice(string.format("%s: Title: %s",
+                              url,
+                              session:title()))
+  local anchors = session:css_select("a")
+  local anchor
+  for _, anchor in pairs(anchors) do
+    local href = anchor.href
+    local normalized_href = href:gsub("#.*$", "")
+    logger:notice(string.format("%s: Link: %s (%s): %s",
+                                url,
+                                href,
+                                normalized_href,
+                                anchor:text()))
+    if normalized_href:sub(1, #prefix) == prefix then
+      context.job_pusher:push(normalized_href)
+    end
+  end
+end
+local options = {
+  logger = logger,
+  size = n_threads,
+}
+local pool = web_driver.ThreadPool.new(crawler, options)
+logger.debug("Start crawling: " .. url)
+pool:push(url)
+pool:join()
+logger.debug("Done crawling: " .. url)
+```
+
+You can also set log level with environment value as below.
+
+Example:
+
+```
+export LUA_WEB_DRIVER_LOG_LEVEL="trace"
+```
+
+If you are not set logger object and environment value, LuaWebDriver output the Firefox's log and geckodriver's log with "info" level.
+
 ## Multithread {#multi-thread}
 
 You can use LuaWebDriver with multiple threads. You need use [`web-driver.ThreadPool`][thread-pool] object for using LuaWebDriver with multiple threads as below.
@@ -386,6 +491,8 @@ Some notes as below for use LuaWebDriver with multiple threads
 Now, you knew all major LuaWebDriver features! If you want to understand each feature, see [reference manual][reference] for each feature.
 
 
+[lua-log]:https://github.com/moteus/lua-log
+
 [install]:../install/
 
 [webdriver-create]:../reference/webdriver.html#create
@@ -393,6 +500,8 @@ Now, you knew all major LuaWebDriver features! If you want to understand each fe
 [firefoxdriver-start]:../reference/firefoxdriver.html#start
 
 [firefoxdriver-stop]:../reference/firefoxdriver.html#stop
+
+[firefox-new]:../reference/firefox.html#new
 
 [firefox-start-session]:../reference/firefox.html#start_session
 
