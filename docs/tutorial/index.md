@@ -304,7 +304,7 @@ The above log level specifies as a string.
 
 Example:
 
-```
+```lua
 local web_driver = require("web-driver")
 local log = require("log")
 
@@ -325,7 +325,7 @@ If you use LuaWebDriver with multi-thread, pass the logger object to as an argum
 
 Example:
 
-```
+```lua
 local web_driver = require("web-driver")
 local log = require("log")
 

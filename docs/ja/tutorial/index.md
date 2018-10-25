@@ -298,7 +298,7 @@ LuaWebDriverはロガーに[`lua-log`][lua-log]を使っています。
 
 例:
 
-```
+```lua
 local web_driver = require("web-driver")
 local log = require("log")
 
@@ -319,7 +319,7 @@ LuaWebDriverをマルチスレッドで使う場合は、[`web-driver.ThreadPool
 
 例:
 
-```
+```lua
 local web_driver = require("web-driver")
 local log = require("log")
 
