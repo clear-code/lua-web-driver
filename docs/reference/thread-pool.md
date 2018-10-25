@@ -36,13 +36,13 @@ You can specify options as below.
 
 `task`: Specify a job to register.
 
-This methods register a job in queue. For example, we recommend specifying URL of a website to crawl.
+This method register a job in a queue. For example, we recommend specifying URL of a website to crawl to a job to register.
 
-You can reference registered a job wiht `context.job` in `consumer` of argument of [`web-driver.ThreadPool.new()`][thread-pool-new].
+You can reference registered a job wiht `context.job` in `consumer` of argument of [`web-driver.ThreadPool.new()`][thread-pool-new] as below.
 
 Example:
 
-```
+```lua
 local web_driver = require("web-driver")
 local log = require("log")
 
@@ -110,7 +110,7 @@ logger.debug("Done crawling: " .. url)
 ### `join() -> void` {#join}
 
 This method start thread and execute `consumer` of argument of [`web-driver.ThreadPool.new()`][thread-pool-new].
-This method executes also end processing of each thread also.
+This method executes also end processing of each thread.
 
 So, this method returns when finished execute of all thread.
 
