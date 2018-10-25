@@ -80,7 +80,7 @@ end)
 
 ### `texts() -> {elements[1].text(), elements[2].text(), ...}` {#texts}
 
-It returns text elements of the myself as a table.
+It returns text of the myself as a table.
 
 Example:
 

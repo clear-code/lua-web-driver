@@ -118,8 +118,8 @@ msgstr ""
 msgid "### `texts() -> {elements[1].text(), elements[2].text(), ...}` {#texts}"
 msgstr ""
 
-msgid "It returns text elements of the myself as a table."
-msgstr "自分自身のテキスト要素をテーブルとして返します。"
+msgid "It returns text of the myself as a table."
+msgstr "自分自身のテキストをテーブルとして返します。"
 
 msgid ""
 "### `get_attribute(name) -> {elements[1][\"name\"], elements[2][\"name\"], ...}` {"
