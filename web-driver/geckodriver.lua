@@ -326,7 +326,7 @@ function methods:ensure_running()
     if exit_code then
       local message = string.format("%s: Failed to run: <%s>: <%s>: <%d>",
                                     Geckodriver.log_prefix,
-                                    self.command,
+                                    self.process.command,
                                     status,
                                     exit_code)
       self.firefox.logger:error(message)
