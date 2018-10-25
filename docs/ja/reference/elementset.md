@@ -57,9 +57,26 @@ end)
 
 ### `text() -> string` {#text}
 
-[`web-driver.ElementSet:texts()`][elementset-texts]のエイリアスです。
+このメソッドは、各要素のテキストを連結したテキストを1つの文字列として返します。
 
-戻り値の型が文字列であることが唯一の違いです。
+例:
+
+```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+driver:start_session(function(session)
+  session:navigate_to(URL)
+
+  local body = session:css_select('body')
+  local elements = body:find_elements("css selector", 'p')
+  print(elements:text())
+-- Hello 1Hello 2Hello 3
+end)
+```
 
 ### `texts() -> {elements[1].text(), elements[2].text(), ...}` {#texts}
 

@@ -57,9 +57,26 @@ end)
 
 ### `text() -> string` {#text}
 
-It's a alias of [`web-driver.ElementSet:texts()`][elementset-texts].
+This method returns text that concatenated text of each element as one string.
 
-It's the only difference that type of return value is a string.
+Example:
+
+```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+driver:start_session(function(session)
+  session:navigate_to(URL)
+
+  local body = session:css_select('body')
+  local elements = body:find_elements("css selector", 'p')
+  print(elements:text())
+-- Hello 1Hello 2Hello 3
+end)
+```
 
 ### `texts() -> {elements[1].text(), elements[2].text(), ...}` {#texts}
 
