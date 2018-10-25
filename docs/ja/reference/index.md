@@ -22,8 +22,6 @@ LuaWebDriverは、共通の機能を提供する内部メソッドがありま�
 
 LuaWebDriverは以下のクラスを提供します。
 
-  * [`web-driver.ActionBuilder`][action-builder]: 複雑なユーザーインタラクションの設定と実行方法をユーザーに提供するためのクラスです。
-
   * [`web-driver.ElementSet`][elementset]: 複数の要素を扱うクラスです。
 
   * [`web-driver.Element`][element]: 要素を取り扱うためのクラスです。
@@ -31,6 +29,8 @@ LuaWebDriverは以下のクラスを提供します。
   * [`web-driver.Firefox`][firefox]: Firefox用のWebDriverクラスです。
 
   * [`web-driver.Session`][session]: WebDriverのセッションを取り扱うためのクラスです。
+
+  * [`web-driver.ThreadPool`][thread-pool]: このクラスは、スレッドプールを制御するためのクラスです。LuaWebDriverをマルチスレッドで使用する時にこのクラスを使います。
 
 [`web-driver.Firefox`][firefox]のみ直接アクセスできます。その他のクラスへは、[`web-driver.Firefox`][firefox]のメソッド経由でアクセスできます。
 
@@ -45,7 +45,7 @@ LuaWebDriverは以下のクラスを提供します。
 
 [searchable]:searchable.html
 
-[action-builder]:action-builder.html
+[thread-pool]:thread-pool.html
 
 [elementset]:elementset.html
 

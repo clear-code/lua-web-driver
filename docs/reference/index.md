@@ -22,8 +22,6 @@ LuaWebDriver has internal modules to provide common methods. They aren't exporte
 
 LuaWebDriver provides the following classes:
 
-  * [`web-driver.ActionBuilder`][action-builder]: The class for providing the user how to set up and perform complex user interactions.
-
   * [`web-driver.ElementSet`][elementset]: The class for multiple elements.
 
   * [`web-driver.Element`][element]: The class for handling web elements.
@@ -31,6 +29,8 @@ LuaWebDriver provides the following classes:
   * [`web-driver.Firefox`][firefox]: The class for WebDriver for Firefox.
 
   * [`web-driver.Session`][session]: The class for handling WebDriver's session.
+
+  * [`web-driver.ThreadPool`][thread-pool]: The class for handling thread pool. When you use LuaWebDriver with multi-thread, you use this calss.
 
 You can access only [`web-driver.Firefox`][firefox] directly. Other classes are accessible via methods of [`web-driver.Firefox`][firefox].
 
@@ -45,7 +45,7 @@ You can access only [`web-driver.Firefox`][firefox] directly. Other classes are 
 
 [searchable]:searchable.html
 
-[action-builder]:action-builder.html
+[thread-pool]:thread-pool.html
 
 [elementset]:elementset.html
 

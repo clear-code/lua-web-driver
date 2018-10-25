@@ -57,13 +57,6 @@ msgstr "## クラス {#classes}"
 msgid "LuaWebDriver provides the following classes:"
 msgstr "LuaWebDriverは以下のクラスを提供します。"
 
-msgid ""
-"  * [`web-driver.ActionBuilder`][action-builder]: The class for providing the "
-"user how to set up and perform complex user interactions."
-msgstr ""
-"  * [`web-driver.ActionBuilder`][action-builder]: 複雑なユーザーインタラクションの設定と実行方法をユーザー"
-"に提供するためのクラスです。"
-
 msgid "  * [`web-driver.ElementSet`][elementset]: The class for multiple elements."
 msgstr "  * [`web-driver.ElementSet`][elementset]: 複数の要素を扱うクラスです。"
 
@@ -77,6 +70,13 @@ msgid ""
 "  * [`web-driver.Session`][session]: The class for handling WebDriver's sessio"
 "n."
 msgstr "  * [`web-driver.Session`][session]: WebDriverのセッションを取り扱うためのクラスです。"
+
+msgid ""
+"  * [`web-driver.ThreadPool`][thread-pool]: The class for handling thread pool"
+". When you use LuaWebDriver with multi-thread, you use this calss."
+msgstr ""
+"  * [`web-driver.ThreadPool`][thread-pool]: このクラスは、スレッドプールを制御するためのクラスです。LuaWeb"
+"Driverをマルチスレッドで使用する時にこのクラスを使います。"
 
 msgid ""
 "You can access only [`web-driver.Firefox`][firefox] directly. Other classes ar"
@@ -100,7 +100,7 @@ msgstr ""
 msgid "[searchable]:searchable.html"
 msgstr ""
 
-msgid "[action-builder]:action-builder.html"
+msgid "[thread-pool]:thread-pool.html"
 msgstr ""
 
 msgid "[elementset]:elementset.html"
