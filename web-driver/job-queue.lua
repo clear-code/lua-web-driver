@@ -45,7 +45,7 @@ end
 
 function methods:job_completed()
   self.n_jobs = self.n_jobs - 1
-  if self.n_jobs == 0 then
+  if self.n_jobs == 0 and self.finish_on_empty then
     self.loop:wrap(function()
       local job_pusher = JobPusher.new(self.producers_host, self.producers_port)
       job_pusher:push(nil)
@@ -131,7 +131,8 @@ function JobQueue.new(pipe,
                       log_receiver_port,
                       log_level,
                       unique,
-                      max_n_failures)
+                      max_n_failures,
+                      finish_on_empty)
   local job_queue = {
     loop = cqueues.new(),
     pipe = pipe,
@@ -140,6 +141,7 @@ function JobQueue.new(pipe,
     log_level = log_level,
     unique = unique,
     max_n_failures = max_n_failures,
+    finish_on_empty = finish_on_empty,
     failure_counts = {},
     n_jobs = 0,
   }

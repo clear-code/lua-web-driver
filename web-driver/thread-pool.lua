@@ -70,7 +70,8 @@ local function create_queue(pool)
                          log_receiver_host, log_receiver_port, log_level,
                          n_consumers,
                          unique,
-                         max_n_failures)
+                         max_n_failures,
+                         finish_on_empty)
     local JobQueue = require("web-driver/job-queue")
     local pp = require("web-driver/pp")
     local success, why = pcall(function()
@@ -79,7 +80,8 @@ local function create_queue(pool)
                                      log_receiver_port,
                                      log_level,
                                      unique,
-                                     max_n_failures)
+                                     max_n_failures,
+                                     finish_on_empty)
       job_queue:run()
     end)
     if not success then
@@ -94,7 +96,8 @@ local function create_queue(pool)
                                   pool.logger:level(),
                                   pool.size,
                                   pool.unique_job,
-                                  pool.max_n_failures)
+                                  pool.max_n_failures,
+                                  pool.finish_on_empty)
   pool.queue_host = pipe:read("*l")
   pool.queue_port = tonumber(pipe:read("*l"))
   pool.producer_host = pipe:read("*l")
