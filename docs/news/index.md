@@ -4,6 +4,12 @@ title: News
 
 # News
 
+## 0.1.0: 2018-10-25 {#version-0-1-0}
+
+### Fixes
+
+  * Fixed a bug that `start_timeout` is ignored.
+
 ## 0.0.9: 2018-10-24 {#version-0-0-9}
 
 ### Fixes
