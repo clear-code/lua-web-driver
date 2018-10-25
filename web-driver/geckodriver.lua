@@ -340,6 +340,7 @@ function methods:ensure_running()
       stream:shutdown()
       return
     end
+    cqueues.sleep(sleep_per_try)
   end
 
   self:kill()
