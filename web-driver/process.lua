@@ -78,7 +78,7 @@ end
 function methods:kill(force)
   if force then
     self:kill_raw(-self.id, unix.SIGKILL)
-    self:kill_raw(self.id, unix.SIGKILL)
+    unix.kill(self.id, unix.SIGKILL)
   else
     self:kill_raw(self.id, unix.SIGTERM)
   end
