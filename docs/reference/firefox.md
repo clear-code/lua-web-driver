@@ -22,6 +22,10 @@ You can specify startup options as below.
 
 * `options.host`: Specify hostname to connect. The default value is `"127.0.0.1"`.
 * `options.port`: Specify port number to connect. The default value is `"4444"`.
+* `options.get_request_timeout`: Specify timeout of HTTP GET request. Default is `60` second.
+* `options.post_request_timeout`: Specify timeout of HTTP POST request. Default is `60` second.
+* `options.delete_request_timeout`: Specify timeout of HTTP DELETE request. Default is `60` second.
+* `options.http_request_timeout`: Specify timeout of HTTP GET and HTTP POST, HTTP DELETE request. Default is `60` second.
 * `options.args`: Specify options of the Firefox with a table. The default value is `{ "-headless" }`.
 
 Example:

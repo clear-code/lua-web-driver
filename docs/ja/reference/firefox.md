@@ -20,9 +20,13 @@ geckodriver経由でFirefoxとのセッションを開始できます。
 
 以下のように起動オプションを指定できます。
 
-* `options.host`: 接続するホスト名を指定します。デフォルト値は、`"127.0.0.1"`です。
-* `options.port`: 接続するポート番号を指定します。デフォルト値は、`"4444"`です。
-* `options.args`: Firefoxのオプションをテーブルで指定します。デフォルト値は、`{ "-headless" }`です。
+* `options.host`: ホストを指定します。デフォルトは、`"127.0.0.1"`です。
+* `options.port`: ポートを指定します。デフォルトは、`"4444"`です。
+* `options.get_request_timeout`: HTTP GET リクエストのタイムアウトを指定します。デフォルトは`60`秒です。
+* `options.post_request_timeout`: HTTP POST リクエストのタイムアウトを指定します。デフォルトは`60`秒です。
+* `options.delete_request_timeout`: HTTP DELETE リクエストのタイムアウトを指定します。デフォルトは`60`秒です。
+* `options.http_request_timeout`: HTTP GET と HTTP POST、HTTP DELETEリクエストのタイムアウトを指定します。デフォルトは`60`秒です。
+* `options.args`: Firefoxのオプションをテーブルで指定します。デフォルトは、`{ -headless }`です。
 
 例:
 
