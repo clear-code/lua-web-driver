@@ -13,7 +13,7 @@ exclude:
 
 description:
   en: This is a browser automation library using WebDriver API
-  ja: WebDriverAPIを使ったブラウザ自動操作ライブラリー
+  ja: WebDriver APIを使ったブラウザ自動操作ライブラリー
 
 kramdown:
   input: GFM
