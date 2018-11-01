@@ -91,7 +91,7 @@ local function create_queue(pool)
       level = pool.logger:level(),
     },
     size = pool.size,
-    unique_job = pool.unique_job,
+    unique = pool.unique_job,
     max_n_failures = pool.max_n_failures,
     finish_on_empty = pool.finish_on_empty,
   }
