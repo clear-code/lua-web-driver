@@ -4,6 +4,13 @@ title: News
 
 # News
 
+## 0.1.2: 2018-11-01 {#version-0-1-2}
+
+### Fixes
+
+  * [`web-driver.ThreadPool`][thread-pool]: Fixed a bug that unique
+    job check doesn't work.
+
 ## 0.1.1: 2018-11-01 {#version-0-1-1}
 
 ### Improvements
