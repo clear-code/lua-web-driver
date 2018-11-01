@@ -233,7 +233,9 @@ local function apply_options(firefox, options)
       level = log_level_to_firefox_name(firefox.logger:level()),
     }
   }
-  if options.args then
+  if options.arguments then
+    firefox_options.args = options.arguments
+  elseif options.args then
     firefox_options.args = options.args
   else
     if options.headless ~= false then
