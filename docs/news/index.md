@@ -4,6 +4,26 @@ title: News
 
 # News
 
+## 0.1.1: 2018-11-01 {#version-0-1-1}
+
+### Improvements
+
+  * Changed to ignore needless kill error.
+
+  * [`web-driver.Firefox.new()`][firefox-new]:
+
+    * Added a new option `"headless"`.
+
+    * Deprecated `"args"` option. Use `"arguments"` instead.
+
+    * Added a new option `"preferences"`.
+
+  * [`web-driver.ThreadPool.new()`][thread-pool-new]:
+
+    * Added a new option `"firefox-options"`.
+
+  * [`web-driver.Session:request_headers()`][session-request-headers]: Added.
+
 ## 0.1.0: 2018-10-25 {#version-0-1-0}
 
 ### Fixes
@@ -124,6 +144,8 @@ The first release!!!
 
 [thread-pool]: ../reference/thread-pool.html
 
+[thread-pool-new]: ../reference/thread-pool.html#new
+
 [element-click]: ../reference/element.html#click
 
 [element-clear]: ../reference/element.html#clear
@@ -168,6 +190,8 @@ The first release!!!
 
 [session-status-code]: ../reference/session.html#status-code
 
+[session-request-headers]: ../reference/session.html#request-headers
+
 [elementset-send_keys]: ../reference/elementset.html#send-keys
 
 [elementset-click]: ../reference/elementset.html#click
@@ -177,3 +201,5 @@ The first release!!!
 [elementset]: ../reference/elementset.html
 
 [searchable]: ../reference/searchable.html
+
+[firefox-new]: ../reference/firefox.html#new
