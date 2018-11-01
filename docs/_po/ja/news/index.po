@@ -16,10 +16,54 @@ msgstr ""
 msgid "# News"
 msgstr ""
 
-msgid "## 0.0.9: 2018-10-24 {#version-0-0-9}"
+msgid "## 0.1.2: 2018-11-01 {#version-0-1-2}"
 msgstr ""
 
 msgid "### Fixes"
+msgstr ""
+
+msgid ""
+"  * [`web-driver.ThreadPool`][thread-pool]: Fixed a bug that unique\n"
+"    job check doesn't work."
+msgstr ""
+
+msgid "## 0.1.1: 2018-11-01 {#version-0-1-1}"
+msgstr ""
+
+msgid "### Improvements"
+msgstr ""
+
+msgid "  * Changed to ignore needless kill error."
+msgstr ""
+
+msgid "  * [`web-driver.Firefox.new()`][firefox-new]:"
+msgstr ""
+
+msgid "    * Added a new option `\"headless\"`."
+msgstr ""
+
+msgid "    * Deprecated `\"args\"` option. Use `\"arguments\"` instead."
+msgstr ""
+
+msgid "    * Added a new option `\"preferences\"`."
+msgstr ""
+
+msgid "  * [`web-driver.ThreadPool.new()`][thread-pool-new]:"
+msgstr ""
+
+msgid "    * Added a new option `\"firefox-options\"`."
+msgstr ""
+
+msgid "  * [`web-driver.Session:request_headers()`][session-request-headers]: Added."
+msgstr ""
+
+msgid "## 0.1.0: 2018-10-25 {#version-0-1-0}"
+msgstr ""
+
+msgid "  * Fixed a bug that `start_timeout` is ignored."
+msgstr ""
+
+msgid "## 0.0.9: 2018-10-24 {#version-0-0-9}"
 msgstr ""
 
 msgid "  * Fixed a bug that missing a need file in a package."
@@ -32,9 +76,6 @@ msgid "  * Fixed a bug again that multi-thread doesn't work on macOS."
 msgstr ""
 
 msgid "## 0.0.7: 2018-10-23 {#version-0-0-7}"
-msgstr ""
-
-msgid "### Improvements"
 msgstr ""
 
 msgid ""
@@ -158,6 +199,9 @@ msgstr ""
 msgid "[thread-pool]: ../reference/thread-pool.html"
 msgstr ""
 
+msgid "[thread-pool-new]: ../reference/thread-pool.html#new"
+msgstr ""
+
 msgid "[element-click]: ../reference/element.html#click"
 msgstr ""
 
@@ -226,6 +270,9 @@ msgstr ""
 msgid "[session-status-code]: ../reference/session.html#status-code"
 msgstr ""
 
+msgid "[session-request-headers]: ../reference/session.html#request-headers"
+msgstr ""
+
 msgid "[elementset-send_keys]: ../reference/elementset.html#send-keys"
 msgstr ""
 
@@ -239,4 +286,7 @@ msgid "[elementset]: ../reference/elementset.html"
 msgstr ""
 
 msgid "[searchable]: ../reference/searchable.html"
+msgstr ""
+
+msgid "[firefox-new]: ../reference/firefox.html#new"
 msgstr ""

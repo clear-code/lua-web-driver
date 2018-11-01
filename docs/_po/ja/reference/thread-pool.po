@@ -185,7 +185,7 @@ msgstr ""
 msgid "[thread-pool-new]: thread-pool.html#new"
 msgstr ""
 
-msgid "[logger]: ../tutorial/index.html#logger"
+msgid "[logger]: ../tutorial/#logger"
 msgstr ""
 
 msgid "[session-delete]: session.html#delete"

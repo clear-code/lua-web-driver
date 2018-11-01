@@ -119,6 +119,6 @@ So, this method returns when finished execute of all thread.
 
 [thread-pool-new]: thread-pool.html#new
 
-[logger]: ../tutorial/index.html#logger
+[logger]: ../tutorial/#logger
 
 [session-delete]: session.html#delete
