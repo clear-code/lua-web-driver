@@ -63,6 +63,8 @@ function methods:navigate_to(url)
   for i, log in ipairs(self.driver:connection_logs()) do
     if log.host == host and log.path == path then
       self.last_status_code = log.status_code
+      self.last_request_headers = log.request_headers
+      break
     end
   end
   self.driver:clear_connection_logs()
@@ -70,6 +72,10 @@ end
 
 function methods:status_code()
   return self.last_status_code
+end
+
+function methods:request_headers()
+  return self.last_request_headers
 end
 
 --- Retrieve current URL
@@ -288,6 +294,7 @@ function Session.new(driver, options)
     id = session_id,
     delete_hook = options.delete_hook,
     last_status_code = nil,
+    last_request_headers = nil,
   }
   setmetatable(session, metatable)
   return session
