@@ -1,7 +1,20 @@
 local luaunit = require("luaunit")
 local Firefox = require("web-driver/firefox")
 
+local helper = require("test/helper")
+
 TestFirefox = {}
+
+function TestFirefox:setup()
+  self.server = nil
+end
+
+function TestFirefox:teardown()
+  if self.server then
+    self.server:kill()
+    self.server:check(true)
+  end
+end
 
 function TestFirefox:test_default_options()
   local firefox = Firefox.new()
@@ -73,4 +86,21 @@ function TestFirefox:test_not_set_request_timeout_options()
                           60,
                           60,
                         })
+end
+
+function TestFirefox:test_preferences()
+  self.server = helper.start_server()
+  local user_agent = "Firefox"
+  local options = {
+    preferences = {
+      ["general.useragent.override"] = user_agent,
+    }
+  }
+  local firefox = Firefox.new(options)
+  local actual_user_agent = nil
+  firefox:start_session(function(session)
+    session:navigate_to("http://localhost:10080/")
+    actual_user_agent = session:request_headers()["User-Agent"]
+  end)
+  luaunit.assert_equals(actual_user_agent, user_agent)
 end
