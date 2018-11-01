@@ -242,6 +242,9 @@ local function apply_options(firefox, options)
       firefox_options.args = {"-headless"}
     end
   end
+  if options.preferences then
+    firefox_options.prefs = options.preferences
+  end
   firefox.capabilities = {
     capabilities = {
       alwaysMatch = {
