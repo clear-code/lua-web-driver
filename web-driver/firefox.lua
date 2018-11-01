@@ -21,7 +21,6 @@ end
 
 local DEFAULT_HOST = "127.0.0.1"
 local DEFAULT_PORT = "4444"
-local DEFAULT_ARGS = { "-headless" }
 local DEFAULT_START_TIMEOUT = 60
 local DEFAULT_HTTP_REQUEST_TIMEOUT = 60
 local DEFAULT_GET_REQUEST_TIMEOUT = 60
@@ -229,15 +228,22 @@ local function apply_options(firefox, options)
                               firefox.logger,
                               firefox.loop,
                               client_options)
+  local firefox_options = {
+    log = {
+      level = log_level_to_firefox_name(firefox.logger:level()),
+    }
+  }
+  if options.args then
+    firefox_options.args = options.args
+  else
+    if options.headless ~= false then
+      firefox_options.args = {"-headless"}
+    end
+  end
   firefox.capabilities = {
     capabilities = {
       alwaysMatch = {
-        ["moz:firefoxOptions"] = {
-          args = options.args or DEFAULT_ARGS,
-          log = {
-            level = log_level_to_firefox_name(firefox.logger:level()),
-          }
-        }
+        ["moz:firefoxOptions"] = firefox_options,
       }
     }
   }
