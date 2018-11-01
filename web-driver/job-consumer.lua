@@ -115,28 +115,19 @@ function methods:run()
   end)
 end
 
-function JobConsumer.new(pipe,
-                         id,
-                         log_receiver_host,
-                         log_receiver_port,
-                         log_level,
-                         queue_host,
-                         queue_port,
-                         producer_host,
-                         producer_port,
-                         consumer)
+function JobConsumer.new(pipe, consumer, options)
   local job_consumer = {
     loop = cqueues.new(),
     pipe = pipe,
-    id = id,
-    log_receiver_host = log_receiver_host,
-    log_receiver_port = log_receiver_port,
-    log_level = log_level,
-    queue_host = queue_host,
-    queue_port = queue_port,
-    producer_host = producer_host,
-    producer_port = producer_port,
     consumer = consumer,
+    id = options.id,
+    log_receiver_host = options.log.receiver.host,
+    log_receiver_port = options.log.receiver.port,
+    log_level = options.log.level,
+    queue_host = options.queue.host,
+    queue_port = options.queue.port,
+    producer_host = options.producer.host,
+    producer_port = options.producer.port,
   }
   setmetatable(job_consumer, metatable)
   return job_consumer

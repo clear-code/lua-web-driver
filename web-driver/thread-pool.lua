@@ -1,6 +1,7 @@
 local cqueues = require("cqueues")
 local thread = require("cqueues.thread")
 local socket = require("cqueues.socket")
+local lunajson = require("lunajson")
 
 local Logger = require("web-driver/logger")
 local JobPusher = require("web-driver/job-pusher")
@@ -66,22 +67,12 @@ local function create_log_receiver(pool)
 end
 
 local function create_queue(pool)
-  local queue = function(pipe,
-                         log_receiver_host, log_receiver_port, log_level,
-                         n_consumers,
-                         unique,
-                         max_n_failures,
-                         finish_on_empty)
+  local queue = function(pipe, options_json)
+    local lunajson = require("lunajson")
     local JobQueue = require("web-driver/job-queue")
     local pp = require("web-driver/pp")
     local success, why = pcall(function()
-      local job_queue = JobQueue.new(pipe,
-                                     log_receiver_host,
-                                     log_receiver_port,
-                                     log_level,
-                                     unique,
-                                     max_n_failures,
-                                     finish_on_empty)
+      local job_queue = JobQueue.new(pipe, lunajson.decode(options_json))
       job_queue:run()
     end)
     if not success then
@@ -91,13 +82,20 @@ local function create_queue(pool)
     end
   end
   local pipe
-  pool.queue, pipe = thread.start(queue,
-                                  pool.log_receiver_host, pool.log_receiver_port,
-                                  pool.logger:level(),
-                                  pool.size,
-                                  pool.unique_job,
-                                  pool.max_n_failures,
-                                  pool.finish_on_empty)
+  local options = {
+    log = {
+      receiver = {
+        host = pool.log_receiver_host,
+        port = pool.log_receiver_port,
+      },
+      level = pool.logger:level(),
+    },
+    size = pool.size,
+    unique_job = pool.unique_job,
+    max_n_failures = pool.max_n_failures,
+    finish_on_empty = pool.finish_on_empty,
+  }
+  pool.queue, pipe = thread.start(queue, lunajson.encode(options))
   pool.queue_host = pipe:read("*l")
   pool.queue_port = tonumber(pipe:read("*l"))
   pool.producer_host = pipe:read("*l")
@@ -120,25 +118,14 @@ end
 
 local function run_consumers(pool)
   for i = 1, pool.size do
-    local consumer = function(pipe,
-                              id,
-                              log_receiver_host, log_receiver_port, log_level,
-                              queue_host, queue_port,
-                              producer_host, producer_port,
-                              consumer)
+    local consumer = function(pipe, consumer, options_json)
+      local lunajson = require("lunajson")
       local JobConsumer = require("web-driver/job-consumer")
       local pp = require("web-driver/pp")
       local success, why = pcall(function()
         local job_consumer = JobConsumer.new(pipe,
-                                             id,
-                                             log_receiver_host,
-                                             log_receiver_port,
-                                             log_level,
-                                             queue_host,
-                                             queue_port,
-                                             producer_host,
-                                             producer_port,
-                                             consumer)
+                                             consumer,
+                                             lunajson.decode(options_json))
         job_consumer:run()
       end)
       if not success then
@@ -149,14 +136,26 @@ local function run_consumers(pool)
       end
     end
     local pipe
+    local options = {
+      id = i,
+      log = {
+        receiver = {
+          host = pool.log_receiver_host,
+          port = pool.log_receiver_port,
+        },
+        level = pool.logger:level(),
+      },
+      queue = {
+        host = pool.queue_host,
+        port = pool.queue_port,
+      },
+      producer = {
+        host = pool.producer_host,
+        port = pool.producer_port,
+      },
+    }
     pool.consumers[i], pipe =
-      thread.start(consumer,
-                   i,
-                   pool.log_receiver_host, pool.log_receiver_port,
-                   pool.logger:level(),
-                   pool.queue_host, pool.queue_port,
-                   pool.producer_host, pool.producer_port,
-                   pool.consumer)
+      thread.start(consumer, pool.consumer, lunajson.encode(options))
     pipe:shutdown("w")
     local pipe_read_pollable = {
       pollfd = function() return pipe:pollfd() end,

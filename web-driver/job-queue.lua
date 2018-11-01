@@ -126,22 +126,16 @@ function methods:run()
   self.consumers:close()
 end
 
-function JobQueue.new(pipe,
-                      log_receiver_host,
-                      log_receiver_port,
-                      log_level,
-                      unique,
-                      max_n_failures,
-                      finish_on_empty)
+function JobQueue.new(pipe, options)
   local job_queue = {
     loop = cqueues.new(),
     pipe = pipe,
-    log_receiver_host = log_receiver_host,
-    log_receiver_port = log_receiver_port,
-    log_level = log_level,
-    unique = unique,
-    max_n_failures = max_n_failures,
-    finish_on_empty = finish_on_empty,
+    log_receiver_host = options.log.receiver.host,
+    log_receiver_port = options.log.receiver.port,
+    log_level = options.log.level,
+    unique = options.unique,
+    max_n_failures = options.max_n_failures,
+    finish_on_empty = options.finish_on_empty,
     failure_counts = {},
     n_jobs = 0,
   }
