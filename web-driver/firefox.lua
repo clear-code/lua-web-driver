@@ -218,17 +218,17 @@ local function apply_options(firefox, options)
     delete_request_timeout = options.delete_request_timeout
                              or delete_request_timeout_env_value
   end
+  local client_options = {
+    post_request_hook = post_request_hook,
+    get_request_timeout = get_request_timeout,
+    post_request_timeout = post_request_timeout,
+    delete_request_timeout = delete_request_timeout,
+  }
   firefox.client = Client.new(host,
                               port,
                               firefox.logger,
                               firefox.loop,
-                              {
-                                post_request_hook = post_request_hook,
-                                get_request_timeout = get_request_timeout,
-                                post_request_timeout = post_request_timeout,
-                                delete_request_timeout = delete_request_timeout,
-                              }
-                             )
+                              client_options)
   firefox.capabilities = {
     capabilities = {
       alwaysMatch = {
