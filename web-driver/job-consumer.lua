@@ -76,10 +76,15 @@ function methods:consume_job()
 end
 
 function methods:create_driver()
-  local options = {
-    port = 4444 + self.id,
-    logger = self.logger,
-  }
+  local options = {}
+  if self.firefox_options then
+    local name, value
+    for name, value in pairs(self.firefox_options) do
+      options[name] = value
+    end
+  end
+  options.port = 4444 + self.id
+  options.logger = self.logger
   self.driver = Firefox.new(options)
 end
 
@@ -128,6 +133,7 @@ function JobConsumer.new(pipe, consumer, options)
     queue_port = options.queue.port,
     producer_host = options.producer.host,
     producer_port = options.producer.port,
+    firefox_options = options.firefox_options,
   }
   setmetatable(job_consumer, metatable)
   return job_consumer

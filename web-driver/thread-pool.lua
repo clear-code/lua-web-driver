@@ -154,6 +154,9 @@ local function run_consumers(pool)
         port = pool.producer_port,
       },
     }
+    if pool.firefox_options then
+      options.firefox_options = pool.firefox_options
+    end
     pool.consumers[i], pipe =
       thread.start(consumer, pool.consumer, lunajson.encode(options))
     pipe:shutdown("w")
@@ -178,6 +181,7 @@ function ThreadPool.new(consumer, options)
     unique_job = true,
     finish_on_empty = true,
     max_n_failures = options.max_n_failures or 3,
+    firefox_options = options.firefox_options,
   }
   if options.unique_job == false then
     pool.unique_job = false
