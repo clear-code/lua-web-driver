@@ -30,7 +30,7 @@ You can specify startup options as below.
   * If this option is `false`, start the Firefox with GUI.
   * If this option isn't set or `true`, start the Firefox with the headless mode.
 * `options.arguments`: Specify options of the Firefox with a table.
-* `options.args`: It's an alias of `options.arguments`.
+* `options.args`: It's an alias of `options.arguments`. This option is deprecate. We suggest that you use `options.arguments` instead.
 * `options.preferences`: Specify preferences of the Firefox.
   * The setting value of this option is same that can set value by `about:config` page of the Firefox.
 
