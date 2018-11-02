@@ -29,7 +29,9 @@ geckodriver経由でFirefoxとのセッションを開始できます。
 * `options.headless`: Firefoxをヘッドレスモードで起動するかどうかを指定します。
   * このオプションが`false`の場合、FirefoxはGUIで起動します。
   * このオプションを設定しないか`true`を設定した場合、Firefoxはヘッドレスモードで起動します。
-* `options.args`: Firefoxのオプションをテーブルで指定します。デフォルトは、`{ -headless }`です。
+* `options.arguments`: Firefoxのオプションをテーブルで指定します。
+* `options.args`: `options.arguments`のエイリアスです。
+
 
 例:
 
@@ -42,7 +44,7 @@ options.port = "1111"
 local driver = web_driver.Firefox.new(options)
 ```
 
-`options.args`に設定可能なオプションは、以下を参照してください。
+`options.arguments`と`options.args`に設定可能なオプションは、以下を参照してください。
 
 [コマンドラインオプション](https://developer.mozilla.org/ja/docs/Mozilla/Command_Line_Options)
 

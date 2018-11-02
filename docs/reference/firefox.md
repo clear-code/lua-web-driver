@@ -29,7 +29,8 @@ You can specify startup options as below.
 * `options.headless`: Specify whether start the Firefox with the headless mode or not.
   * If this option is `false`, start the Firefox with GUI.
   * If this option isn't set or `true`, start the Firefox with the headless mode.
-* `options.args`: Specify options of the Firefox with a table. The default value is `{ "-headless" }`.
+* `options.arguments`: Specify options of the Firefox with a table.
+* `options.args`: It's an alias of `options.arguments`.
 
 Example:
 
@@ -42,7 +43,7 @@ options.port = "1111"
 local driver = web_driver.Firefox.new(options)
 ```
 
-Possible options to set in `options.args` as see a below.
+Possible options to set in `options.arguments` and `options.args` as see a below.
 
 [Command Line Options](https://developer.mozilla.org/en-US/docs/Mozilla/Command_Line_Options)
 
