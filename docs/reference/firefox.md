@@ -26,8 +26,9 @@ You can specify startup options as below.
 * `options.post_request_timeout`: Specify timeout of HTTP POST request. Default is `60` second.
 * `options.delete_request_timeout`: Specify timeout of HTTP DELETE request. Default is `60` second.
 * `options.http_request_timeout`: Specify timeout of HTTP GET and HTTP POST, HTTP DELETE request. Default is `60` second.
-* `options.headless`: Specify whether start the Firefox with the headless mode or not. Default is `true`.
-  * If this option is `true`, start the Firefox with the headless mode.
+* `options.headless`: Specify whether start the Firefox with the headless mode or not.
+  * If this option is `false`, start the Firefox with GUI.
+  * If this option isn't set or `true`, start the Firefox with the headless mode.
 * `options.args`: Specify options of the Firefox with a table. The default value is `{ "-headless" }`.
 
 Example:

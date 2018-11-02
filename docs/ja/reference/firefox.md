@@ -26,8 +26,9 @@ geckodriver経由でFirefoxとのセッションを開始できます。
 * `options.post_request_timeout`: HTTP POST リクエストのタイムアウトを指定します。デフォルトは`60`秒です。
 * `options.delete_request_timeout`: HTTP DELETE リクエストのタイムアウトを指定します。デフォルトは`60`秒です。
 * `options.http_request_timeout`: HTTP GET と HTTP POST、HTTP DELETEリクエストのタイムアウトを指定します。デフォルトは`60`秒です。
-* `options.headless`: Firefoxをヘッドレスモードで起動するかどうかを指定します。デフォルトは`true`です。
-  * このオプションが`true`の場合、Firefoxはヘッドレスモードで起動します。
+* `options.headless`: Firefoxをヘッドレスモードで起動するかどうかを指定します。
+  * このオプションが`false`の場合、FirefoxはGUIで起動します。
+  * このオプションを設定しないか`true`を設定した場合、Firefoxはヘッドレスモードで起動します。
 * `options.args`: Firefoxのオプションをテーブルで指定します。デフォルトは、`{ -headless }`です。
 
 例:
