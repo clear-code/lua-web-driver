@@ -277,7 +277,7 @@ driver:start_session(function(session)
 end)
 ```
 
-## ユーザーエージェントのカスタマイズ
+## ユーザーエージェントのカスタマイズ {#user-agent}
 
 [`web-driver.Firefox.new()`][firefox-new]のオプションを使って、Webブラウザのユーザーエージェントをカスタマイズできます。この機能は、例えば、スマートフォン用のWebサイトをクローリングする時に有用です。
 

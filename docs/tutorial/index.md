@@ -283,7 +283,7 @@ driver:start_session(function(session)
 end)
 ```
 
-## Customize of a user agent
+## Customize of a user agent {#user-agent}
 
 You can customize a user agent of a web browser by option of [`web-driver.Firefox.new()`][firefox-new].
 For example, this feature useful when crawling websites for a smartphone.

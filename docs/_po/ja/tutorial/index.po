@@ -529,8 +529,8 @@ msgstr ""
 "end)\n"
 "```"
 
-msgid "## Customize of a user agent"
-msgstr "## ユーザーエージェントのカスタマイズ"
+msgid "## Customize of a user agent {#user-agent}"
+msgstr "## ユーザーエージェントのカスタマイズ {#user-agent}"
 
 msgid ""
 "You can customize a user agent of a web browser by option of [`web-driver.Fire"
