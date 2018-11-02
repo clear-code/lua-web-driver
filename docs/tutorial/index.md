@@ -283,6 +283,44 @@ driver:start_session(function(session)
 end)
 ```
 
+## Customize of a user agent
+
+You can customize a user agent of a web browser by option of [`web-driver.Firefox.new()`][firefox-new].
+For example, this feature useful when crawling websites for a smartphone.
+
+First of all, you set user agent to `options.preferences` as string.
+
+Second, you set the `options` to argument of [`web-driver.Firefox.new()`][firefox-new] and call.
+
+Here is an example customizing user agent to iPhone's user agent.
+
+Example:
+
+```lua
+local web_driver = require("web-driver")
+
+local user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2 like Mac OS X)"..
+                   " "..
+                   "AppleWebKit/602.3.12 (KHTML, like Gecko)"..
+                   " "..
+                   "Version/10.0 Mobile/14C92 Safari/602.1"
+local options = {
+  preferences = {
+    ["general.useragent.override"] = user_agent,
+  }
+}
+local driver = web_driver.Firefox.new(options)
+
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+driver:start_session(function(session)
+  session:navigate_to(URL)
+  print(session:request_headers()["User-Agent"])
+  -- Mozilla/5.0 (iPhone; CPU iPhone OS 10_2 like Mac OS X) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0 Mobile/14C92 Safari/602.1
+end)
+```
+
 ## Logger {#logger}
 
 LuaWebDriver has used [`lua-log`][lua-log] to the logger.

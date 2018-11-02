@@ -277,6 +277,43 @@ driver:start_session(function(session)
 end)
 ```
 
+## ユーザーエージェントのカスタマイズ
+
+[`web-driver.Firefox.new()`][firefox-new]のオプションを使って、Webブラウザのユーザーエージェントをカスタマイズできます。この機能は、例えば、スマートフォン用のWebサイトをクローリングする時に有用です。
+
+まず始めに、`options.preferences`にユーザーエージェントを文字列として設定します。
+
+次に、その`options`を[`web-driver.Firefox.new()`][firefox-new]の引数に設定して呼び出します。
+
+ここでは、iPhoneのユーザーエージェントへカスタマイズする例を示します。
+
+例:
+
+```lua
+local web_driver = require("web-driver")
+
+local user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2 like Mac OS X)"..
+                   " "..
+                   "AppleWebKit/602.3.12 (KHTML, like Gecko)"..
+                   " "..
+                   "Version/10.0 Mobile/14C92 Safari/602.1"
+local options = {
+  preferences = {
+    ["general.useragent.override"] = user_agent,
+  }
+}
+local driver = web_driver.Firefox.new(options)
+
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+driver:start_session(function(session)
+  session:navigate_to(URL)
+  print(session:request_headers()["User-Agent"])
+  -- Mozilla/5.0 (iPhone; CPU iPhone OS 10_2 like Mac OS X) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0 Mobile/14C92 Safari/602.1
+end)
+```
+
 ## ロガー {#logger}
 
 LuaWebDriverはロガーに[`lua-log`][lua-log]を使っています。
