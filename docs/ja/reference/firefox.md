@@ -31,7 +31,8 @@ geckodriver経由でFirefoxとのセッションを開始できます。
   * このオプションを設定しないか`true`を設定した場合、Firefoxはヘッドレスモードで起動します。
 * `options.arguments`: Firefoxのオプションをテーブルで指定します。
 * `options.args`: `options.arguments`のエイリアスです。
-
+* `options.preferences`: Firefoxの設定を指定します。
+  * このオプションの設定値は、Firefoxの`about:config`ページで設定できる値と同じです。
 
 例:
 
