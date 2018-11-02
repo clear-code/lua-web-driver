@@ -314,6 +314,72 @@ driver:start_session(function(session)
 end)
 ```
 
+LuaWebDriverをマルチスレッドで使う場合は、以下の例のように、[`web-driver.ThreadPool.new()`][thread-pool-new]の引数に`options.preferences`を設定することでユーザーエージェントをカスタマイズできます。
+
+```lua
+local web_driver = require("web-driver")
+local log = require("log")
+
+local url =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+local log_level = "info"
+local n_threads = 2
+
+local logger = log.new(log_level)
+local function crawler(context)
+  local logger = context.logger
+  local session = context.session
+  local url = context.job
+  local prefix = url:match("^https?://[^/]+/")
+  logger:debug("Opening...: " .. url)
+  session:navigate_to(url)
+  local status_code = session:status_code()
+  if status_code and status_code ~= 200 then
+    logger:notice(string.format("%s: Error: %d",
+                                url,
+                                status_code))
+    return
+  end
+  logger:notice(string.format("%s: Title: %s",
+                              url,
+                              session:title()))
+  local anchors = session:css_select("a")
+  local anchor
+  for _, anchor in pairs(anchors) do
+    local href = anchor.href
+    local normalized_href = href:gsub("#.*$", "")
+    logger:notice(string.format("%s: Link: %s (%s): %s",
+                                url,
+                                href,
+                                normalized_href,
+                                anchor:text()))
+    if normalized_href:sub(1, #prefix) == prefix then
+      context.job_pusher:push(normalized_href)
+    end
+  end
+end
+
+local user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2 like Mac OS X)"..
+                   " "..
+                   "AppleWebKit/602.3.12 (KHTML, like Gecko)"..
+                   " "..
+                   "Version/10.0 Mobile/14C92 Safari/602.1"
+local options = {
+  logger = logger,
+  size = n_threads,
+  firefox_options = {
+    preferences = {
+      ["general.useragent.override"] = user_agent,
+    },
+  }
+}
+local pool = web_driver.ThreadPool.new(crawler, options)
+logger.debug("Start crawling: " .. url)
+pool:push(url)
+pool:join()
+logger.debug("Done crawling: " .. url)
+```
+
 ## ロガー {#logger}
 
 LuaWebDriverはロガーに[`lua-log`][lua-log]を使っています。
