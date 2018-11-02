@@ -65,6 +65,35 @@ driver:start_session(function(session)
 end)
 ```
 
+### `request_headers -> {Host="xxxx", Accept-Encoding="xxxx", Connection="xxxx", Accept="xxxx", User-Agent="xxxx", Upgrade-Insecure-Requests="xxxx", Accept-Language="xxxx"}` {#request-headers}
+
+最後のHTTPリクエストのヘッダーをテーブルとして返します。
+
+例:
+
+```lua
+local web_driver = require("web-driver")
+local driver = web_driver.Firefox.new()
+
+local URL =
+  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+
+driver:start_session(function(session)
+  session:navigate_to(URL)
+  local request_headers = session:request_headers()
+  for k,v in pairs(request_headers) do
+    print(k,v)
+    -- Host	clear-code.gitlab.io
+    -- Accept-Encoding	gzip, deflate, br
+    -- Connection	keep-alive
+    -- Accept	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+    -- User-Agent	Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0
+    -- Upgrade-Insecure-Requests	1
+    -- Accept-Language	ja,en-US;q=0.7,en;q=0.3
+  end
+end)
+```
+
 ### `url() -> string` {#url}
 
 現在のWebサイトのURLを文字列として返します。
