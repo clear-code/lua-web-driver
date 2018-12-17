@@ -6,14 +6,17 @@ dist: trusty
 
 sudo: required
 
+addons:
+  homebrew:
+    update: true
+    brewfile: true
+
 matrix:
   include:
     - os: osx
       addons:
         firefox: latest-esr
       install:
-        - brew update > /dev/null
-        - brew bundle
         - sudo -H luarocks install luarocks-fetch-gitrec
         - LUAROCKS="sudo -H luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit)"
         - VERSION=$(grep VERSION web-driver.lua | sed -e 's/.*"\(.*\)"/\1/g')
