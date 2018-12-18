@@ -15,8 +15,6 @@ matrix:
           update: true
           brewfile: true
       install:
-        - brew update > /dev/null
-        - brew bundle
         - sudo -H luarocks install luarocks-fetch-gitrec
         - LUAROCKS="sudo -H luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit)"
         - VERSION=$(grep VERSION web-driver.lua | sed -e 's/.*"\(.*\)"/\1/g')
