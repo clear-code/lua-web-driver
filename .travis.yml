@@ -11,6 +11,9 @@ matrix:
     - os: osx
       addons:
         firefox: latest-esr
+        homebrew:
+          update: true
+          brewfile: true
       install:
         - brew update > /dev/null
         - brew bundle
