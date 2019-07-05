@@ -11,7 +11,6 @@ matrix:
       addons:
         firefox: latest-esr
         homebrew:
-          update: true
           brewfile: true
       install:
         - LUAROCKS="sudo -H luarocks --tree=$(brew --prefix) --lua-dir=$(brew --prefix luajit)"
