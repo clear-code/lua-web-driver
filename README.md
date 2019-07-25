@@ -18,7 +18,7 @@ $ luarocks install web-driver
 ```lua
 local web_driver = require("web-driver")
 
-local firefox = web_driver.Firefox.new(")
+local firefox = web_driver.Firefox.new(''')
 
 function callback(session)
   session:visit("http://example.com")
