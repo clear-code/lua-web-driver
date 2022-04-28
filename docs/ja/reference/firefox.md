@@ -66,7 +66,7 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/"
 
 -- Firefoxとのセッションを開始
 driver:start_session(function(session)

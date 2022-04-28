@@ -22,7 +22,7 @@ title: チュートリアル
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
-local URL = "https://clear-code.gitlab.io/lua-web-driver/sample/"
+local URL = "https://lua-web-driver.gitlab.io/lua-web-driver/sample/"
 
 -- コールバックの作成とセッションの開始
 driver:start_session(function(session)
@@ -47,7 +47,7 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/"
 
 -- コールバックの作成とセッションの開始
 driver:start_session(function(session)
@@ -74,7 +74,7 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/"
 
 driver:start_session(function(session)
   session:navigate_to(URL)
@@ -120,7 +120,7 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/move.html"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/move.html"
 
 -- コールバックの作成とセッションの開始
 driver:start_session(function(session)
@@ -170,7 +170,7 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/button.html"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/button.html"
 
 -- コールバックの作成ｔおセッションの開始
 driver:start_session(function(session)
@@ -206,7 +206,7 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/index.html"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/index.html"
 
 -- コールバックの作成とセッションの開始
 driver:start_session(function(session)
@@ -234,7 +234,7 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/get-attribute.html"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/get-attribute.html"
 
 -- コールバックの作成とセッションの開始
 driver:start_session(function(session)
@@ -264,7 +264,7 @@ end)
 local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
-local URL = "https://clear-code.gitlab.io/lua-web-driver/sample/"
+local URL = "https://lua-web-driver.gitlab.io/lua-web-driver/sample/"
 
 -- コールバックの作成とセッションの開始
 driver:start_session(function(session)
@@ -305,7 +305,7 @@ local options = {
 local driver = web_driver.Firefox.new(options)
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/"
 
 driver:start_session(function(session)
   session:navigate_to(URL)
@@ -321,7 +321,7 @@ local web_driver = require("web-driver")
 local log = require("log")
 
 local url =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/"
 local log_level = "info"
 local n_threads = 2
 
@@ -411,7 +411,7 @@ local options = { logger = logger }
 local driver = web_driver.Firefox.new(options)
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/"
 
 driver:start_session(function(session)
   session:navigate_to(URL)
@@ -427,7 +427,7 @@ local web_driver = require("web-driver")
 local log = require("log")
 
 local url =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/"
 local log_level = "trace"
 local n_threads = 2
 
@@ -499,7 +499,7 @@ local log = require("log")
 
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/"
 
 local log_level = "notice"
 

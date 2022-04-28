@@ -62,7 +62,7 @@ msgid ""
 "local driver = web_driver.Firefox.new()"
 msgstr ""
 
-msgid "local URL = \"https://clear-code.gitlab.io/lua-web-driver/sample/\""
+msgid "local URL = \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/\""
 msgstr ""
 
 msgid ""
@@ -97,7 +97,7 @@ msgstr "そうすると、現在のWebサイトをXMLとしてシリアライズ
 
 msgid ""
 "local URL =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/\""
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/\""
 msgstr ""
 
 msgid ""
@@ -231,7 +231,7 @@ msgstr ""
 
 msgid ""
 "local URL =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/move.html\""
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/move.html\""
 msgstr ""
 
 msgid ""
@@ -327,7 +327,7 @@ msgstr "次に、取得した要素オブジェクトの[`ElementSet:click`][ele
 
 msgid ""
 "local URL =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/button.html\""
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/button.html\""
 msgstr ""
 
 msgid ""
@@ -397,7 +397,7 @@ msgstr ""
 
 msgid ""
 "local URL =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/index.html\""
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/index.html\""
 msgstr ""
 
 msgid ""
@@ -451,7 +451,7 @@ msgstr ""
 
 msgid ""
 "local URL =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/get-attribute.html\""
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/get-attribute.html\""
 msgstr ""
 
 msgid ""
@@ -596,7 +596,7 @@ msgstr ""
 
 msgid ""
 "local url =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/\"\n"
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/\"\n"
 "local log_level = \"info\"\n"
 "local n_threads = 2"
 msgstr ""
@@ -722,7 +722,7 @@ msgstr ""
 
 msgid ""
 "local url =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/\"\n"
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/\"\n"
 "local log_level = \"trace\"\n"
 "local n_threads = 2"
 msgstr ""

@@ -77,7 +77,7 @@ msgstr ""
 
 msgid ""
 "local URL =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/\""
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/\""
 msgstr ""
 
 msgid ""
@@ -161,7 +161,7 @@ msgstr "例えば、属性値がtrueだった場合、戻り値の型はboolean�
 
 msgid ""
 "local URL =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/get-attribute.html\""
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/get-attribute.html\""
 msgstr ""
 
 msgid ""
@@ -270,7 +270,7 @@ msgstr ""
 msgid "It returns text element of the myself as a string."
 msgstr "自分自身のテキスト要素を文字列として返します。"
 
-msgid "local URL = \"https://clear-code.gitlab.io/lua-web-driver/sample/\""
+msgid "local URL = \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/\""
 msgstr ""
 
 msgid ""
@@ -318,7 +318,7 @@ msgstr ""
 "  * `height`: 要素の高さ。\n"
 "  * `width`: 要素の幅。"
 
-msgid "local URL = \"https://clear-code.gitlab.io/lua-web-driver/sample/move.html\""
+msgid "local URL = \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/move.html\""
 msgstr ""
 
 msgid ""
@@ -362,7 +362,7 @@ msgstr "要素をクリックします。"
 
 msgid ""
 "local URL =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/button.html\""
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/button.html\""
 msgstr ""
 
 msgid ""

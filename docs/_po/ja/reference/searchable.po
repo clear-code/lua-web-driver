@@ -71,7 +71,7 @@ msgstr ""
 
 msgid ""
 "local URL =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/\""
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/\""
 msgstr ""
 
 msgid ""
@@ -119,7 +119,7 @@ msgstr ""
 
 msgid ""
 "local URL =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/link.html\""
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/link.html\""
 msgstr ""
 
 msgid ""
@@ -146,7 +146,7 @@ msgstr ""
 
 msgid ""
 "local URL =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/announcement.html\""
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/announcement.html\""
 msgstr ""
 
 msgid ""
@@ -169,7 +169,7 @@ msgstr "タグ名を使って要素を検索し、[`web-driver.ElementSet`][elem
 
 msgid ""
 "local URL =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/1.html\""
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/1.html\""
 msgstr ""
 
 msgid ""

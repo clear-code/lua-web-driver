@@ -146,7 +146,7 @@ msgstr ""
 
 msgid ""
 "local URL =\n"
-"  \"https://clear-code.gitlab.io/lua-web-driver/sample/\""
+"  \"https://lua-web-driver.gitlab.io/lua-web-driver/sample/\""
 msgstr ""
 
 msgid ""

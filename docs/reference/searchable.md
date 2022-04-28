@@ -34,7 +34,7 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/"
 
 driver:start_session(function(session)
   session:navigate_to(URL)
@@ -60,7 +60,7 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/"
 
 driver:start_session(function(session)
   session:navigate_to(URL)
@@ -82,7 +82,7 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/link.html"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/link.html"
 
 driver:start_session(function(session)
   session:navigate_to(URL)
@@ -106,7 +106,7 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/announcement.html"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/announcement.html"
 
 driver:start_session(function(session)
   session:navigate_to(URL)
@@ -130,7 +130,7 @@ local web_driver = require("web-driver")
 local driver = web_driver.Firefox.new()
 
 local URL =
-  "https://clear-code.gitlab.io/lua-web-driver/sample/1.html"
+  "https://lua-web-driver.gitlab.io/lua-web-driver/sample/1.html"
 
 driver:start_session(function(session)
   session:navigate_to(URL)
